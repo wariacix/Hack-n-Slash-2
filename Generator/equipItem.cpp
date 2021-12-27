@@ -107,6 +107,22 @@ void equipItem(int mode, int ID)
 			selectedItem.itemName = L"Potion +50HP";
 			selectedItem.color = 14;
 			break;
+		case 2:
+			selectedItem.itemName = L"Potion +100HP";
+			selectedItem.color = 14;
+			break;
+		case 3:
+			selectedItem.itemName = L"Potion +200HP";
+			selectedItem.color = 14;
+			break;
+		case 4:
+			selectedItem.itemName = L"Potion +50%HP";
+			selectedItem.color = 14;
+			break;
+		case 5:
+			selectedItem.itemName = L"Potion +10MP";
+			selectedItem.color = 14;
+			break;
 		}
 	}
 	else if (ID >= 1000 and ID < 2000)
@@ -312,6 +328,26 @@ void equipItem(int mode, int ID)
 			case 1:
 				mainPlayer.hp = mainPlayer.hp + 50;
 				if (mainPlayer.hp > mainPlayer.maxhp) mainPlayer.hp = mainPlayer.maxhp;
+				item[ID] = item[ID] - 1;
+				break;
+			case 2:
+				mainPlayer.hp = mainPlayer.hp + 100;
+				if (mainPlayer.hp > mainPlayer.maxhp) mainPlayer.hp = mainPlayer.maxhp;
+				item[ID] = item[ID] - 1;
+				break;
+			case 3:
+				mainPlayer.hp = mainPlayer.hp + 200;
+				if (mainPlayer.hp > mainPlayer.maxhp) mainPlayer.hp = mainPlayer.maxhp;
+				item[ID] = item[ID] - 1;
+				break;
+			case 4:
+				mainPlayer.hp = mainPlayer.hp + (0.5 * mainPlayer.maxhp);
+				if (mainPlayer.hp > mainPlayer.maxhp) mainPlayer.hp = mainPlayer.maxhp;
+				item[ID] = item[ID] - 1;
+				break;
+			case 5:
+				mainPlayer.mp = mainPlayer.mp + 10;
+				if (mainPlayer.mp > mainPlayer.maxmp) mainPlayer.mp = mainPlayer.maxmp;
 				item[ID] = item[ID] - 1;
 				break;
 			}
