@@ -221,6 +221,33 @@ void draw(int id, int collumn, int line)
 		wcout << L"<3  {##\\/##}  "; k++; gotoxy(collumn, line + k);
 		wcout << L"    '-####-'  ";
 		break;
+	case 1002:
+		gotoxy(collumn, line + k);
+		wcout << L"  <3   __     "; k++; gotoxy(collumn, line + k);
+		wcout << L" +100 (__)    "; k++; gotoxy(collumn, line + k);
+		wcout << L"  HP  )__( <3 "; k++; gotoxy(collumn, line + k);
+		wcout << L"  <3 /#^^#\\   "; k++; gotoxy(collumn, line + k);
+		wcout << L"<3  {##\\/##}  "; k++; gotoxy(collumn, line + k);
+		wcout << L"    '-####-'<3";
+		break;
+	case 1003:
+		gotoxy(collumn, line + k);
+		wcout << L"  <3   __   <3"; k++; gotoxy(collumn, line + k);
+		wcout << L" +200 (__)    "; k++; gotoxy(collumn, line + k);
+		wcout << L"  HP  )__( <3 "; k++; gotoxy(collumn, line + k);
+		wcout << L"  <3 /#^^#\\   "; k++; gotoxy(collumn, line + k);
+		wcout << L"<3  {##\\/##}  "; k++; gotoxy(collumn, line + k);
+		wcout << L"  <3'-####-'<3";
+		break;
+	case 1004:
+		gotoxy(collumn, line + k);
+		wcout << L"  <3 <3__   <3"; k++; gotoxy(collumn, line + k);
+		wcout << L" +50% (__)<3  "; k++; gotoxy(collumn, line + k);
+		wcout << L"  HP  )__( <3 "; k++; gotoxy(collumn, line + k);
+		wcout << L"  <3 /#^^#\\ <3"; k++; gotoxy(collumn, line + k);
+		wcout << L"<3  {##\\/##}  "; k++; gotoxy(collumn, line + k);
+		wcout << L"  <3'-####-'<3";
+		break;
 	case 2000:
 		gotoxy(collumn, line + k);
 		wcout << L"      /    _/  "; k++; gotoxy(collumn, line + k);

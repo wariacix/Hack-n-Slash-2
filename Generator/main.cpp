@@ -25,7 +25,7 @@
 Map mainMap;
 Player mainPlayer;
 
-int debugMode = 1;
+int debugMode = 0;
 int cityID[48][46], cityGuardian[48][46], item[9999], armory[3], x, y, p, mtnChance;
 std::wstring cityName[30];
 int text[50];
@@ -54,8 +54,11 @@ void setBaseValues()
 	equipItem(2, 2000);
 	equipItem(2, 3000);
 
-	item[0] = 99999;
-	item[1] = 527;
+	item[0] = 200;
+	item[1] = 20;
+	item[2] = 10;
+	item[3] = 5;
+	item[4] = 5;
 	item[1001] = 1;
 	item[1002] = 1;
 	item[2001] = 1;

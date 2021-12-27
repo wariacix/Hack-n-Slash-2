@@ -65,6 +65,16 @@ void Player::movePlayer(Map &map1)
 		{
 			los = true;
 		}
+		else if (wybor == 109)
+		{
+			for (int x0 = 0; x0 < 48; x0++)
+			{
+				for (int y0 = 0; y0 < 46; y0++)
+				{
+					map1.fog[x0][y0] = 0;
+				}
+			}
+		}
 		else a = true;
 	}
 }

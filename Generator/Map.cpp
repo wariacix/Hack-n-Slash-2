@@ -598,7 +598,7 @@ void Map::viewMap()
 							}
 							break;
 						case 1:
-							if (biome[c][u] == 1 and c < 47 and biome[c + 1][u] == 1)
+							if (biome[c][u] == 1 and c < 47 and c > 0 and biome[c + 1][u] == 1 or biome[c - 1][u] != 1)
 							{
 								SetConsoleTextAttribute(hConsole, 120);
 							}
