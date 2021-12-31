@@ -8,30 +8,26 @@
 #include <winuser.h>
 #include <fstream>
 #include "gotoxy.h"
-#include "menu.h"
 #include "fight.h"
-#include "draw.h"
 #include "gameGui.h"
 #include "textbox.h"
 #include "variables.h"
-#include "choice.h"
 
 using namespace std;
 
-class newMap
+class intMap
 {
-private:
-	static const int sizeX = 800;
-	static const int sizeY = 400;
+public:
+	static const int sizeX = 400;
+	static const int sizeY = 200;
 	int mapCollision[sizeX][sizeY];
-	wstring mapGraphics[sizeX][sizeY];
+	wchar_t mapGraphics[sizeX][sizeY];
 	int mapEvents[sizeX][sizeY];
 	int playerX;
 	int playerY;
 	int cameraX;
 	int cameraY;
-public:
-	newMap()
+	intMap()
 	{
 		this->playerX = 0;
 		this->playerY = 0;
@@ -41,28 +37,14 @@ public:
 		{
 			for (int b = 0; b < sizeY; b++)
 			{
+				this->mapGraphics[a][b] = L' ';
 				this->mapCollision[a][b] = 0;
-				this->mapGraphics[a][b] = L" ";
 				this->mapEvents[a][b] = 0;
 			}
 		}
 	}
 
-	void mapViewing()
-	{
+	void viewMap();
 
-	}
-
-	void mapLoading(wstring mapName)
-	{
-		ifstream mapGraphicsFile(mapName);
-		if (mapGraphicsFile.is_open())
-		{
-			while (mapGraphicsFile.eof() == false)
-			{
-
-			}
-		}
-		else wcout << L"Unable to open map file";
-	}
+	void loadMap(wstring mapName);
 };

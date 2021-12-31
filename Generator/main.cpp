@@ -20,6 +20,7 @@
 #include "equipItem.h"
 #include "Map.h"
 #include "Player.h"
+#include "intMap.h"
 
 
 Map mainMap;
@@ -59,6 +60,8 @@ void setBaseValues()
 	item[2] = 10;
 	item[3] = 5;
 	item[4] = 5;
+	item[5] = 5;
+	item[6] = 5;
 	item[1001] = 1;
 	item[1002] = 1;
 	item[2001] = 1;
@@ -76,12 +79,15 @@ int main()
 {
 	_setmode(_fileno(stdout), _O_WTEXT);
 	srand(time(NULL));
+	intMap map1;
+	map1.loadMap(L"map1");
 	while (true)
 	{
 		system("color 0f");
 		system("mode con: cols=126 lines=50");
 		setBaseValues();
 		gameGui();
+		map1.viewMap();
 		menu();
 		mainMap.generateMap();
 

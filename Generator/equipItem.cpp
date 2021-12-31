@@ -123,6 +123,10 @@ void equipItem(int mode, int ID)
 			selectedItem.itemName = L"Potion +10MP";
 			selectedItem.color = 14;
 			break;
+		case 6:
+			selectedItem.itemName = L"Potion +20MP";
+			selectedItem.color = 14;
+			break;
 		}
 	}
 	else if (ID >= 1000 and ID < 2000)
@@ -347,6 +351,11 @@ void equipItem(int mode, int ID)
 				break;
 			case 5:
 				mainPlayer.mp = mainPlayer.mp + 10;
+				if (mainPlayer.mp > mainPlayer.maxmp) mainPlayer.mp = mainPlayer.maxmp;
+				item[ID] = item[ID] - 1;
+				break;
+			case 6:
+				mainPlayer.mp = mainPlayer.mp + 20;
 				if (mainPlayer.mp > mainPlayer.maxmp) mainPlayer.mp = mainPlayer.maxmp;
 				item[ID] = item[ID] - 1;
 				break;

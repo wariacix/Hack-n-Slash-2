@@ -248,6 +248,24 @@ void draw(int id, int collumn, int line)
 		wcout << L"<3  {##\\/##}  "; k++; gotoxy(collumn, line + k);
 		wcout << L"  <3'-####-'<3";
 		break;
+	case 1005:
+		gotoxy(collumn, line + k);
+		wcout << L"       __       "; k++; gotoxy(collumn, line + k);
+		wcout << L" +10  (__)      "; k++; gotoxy(collumn, line + k);
+		wcout << L"  MN  )__(      "; k++; gotoxy(collumn, line + k);
+		wcout << L"     /#**#\\     "; k++; gotoxy(collumn, line + k);
+		wcout << L"    {#****#}    "; k++; gotoxy(collumn, line + k);
+		wcout << L"    '-####-'    ";
+		break;
+	case 1006:
+		gotoxy(collumn, line + k);
+		wcout << L"       __       "; k++; gotoxy(collumn, line + k);
+		wcout << L" +20  (__)   *  "; k++; gotoxy(collumn, line + k);
+		wcout << L"  MN  )__(      "; k++; gotoxy(collumn, line + k);
+		wcout << L"     /#**#\\     "; k++; gotoxy(collumn, line + k);
+		wcout << L"  * {#****#}    "; k++; gotoxy(collumn, line + k);
+		wcout << L"    '-####-'    ";
+		break;
 	case 2000:
 		gotoxy(collumn, line + k);
 		wcout << L"      /    _/  "; k++; gotoxy(collumn, line + k);

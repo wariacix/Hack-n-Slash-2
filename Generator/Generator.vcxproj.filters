@@ -36,7 +36,7 @@
     <ClCompile Include="choice.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="newMap.cpp">
+    <ClCompile Include="intMap.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="equipment.cpp">
@@ -83,7 +83,7 @@
     <ClInclude Include="choice.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="newMap.h">
+    <ClInclude Include="intMap.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="equipment.h">

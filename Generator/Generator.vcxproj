@@ -167,7 +167,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="gotoxy.cpp" />
     <ClCompile Include="menu.cpp" />
-    <ClCompile Include="newMap.cpp" />
+    <ClCompile Include="intMap.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="stringLength.cpp" />
@@ -184,7 +184,7 @@
     <ClInclude Include="gameGui.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="newMap.h" />
+    <ClInclude Include="intMap.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stringLength.h" />

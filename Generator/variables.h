@@ -1,3 +1,4 @@
+#pragma once
 extern int x, y, p;
 extern int cityID[48][46];
 extern int cityGuardian[48][46];
