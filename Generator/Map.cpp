@@ -702,15 +702,16 @@ void Map::clearFog(Player &player1)
 	}
 }
 
-void Map::viewMapSFML(sf::RenderWindow &window)
+void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 {
-	sf::Texture tPlains, tForest, tDesert, tMountains, tArctic;
+	sf::Texture tPlains, tForest, tDesert, tMountains, tArctic, tPlayer;
 	sf::Sprite tileSprite;
 	tPlains.loadFromFile("Textures\\grass.png", sf::IntRect(0, 0, 32, 32));
 	tForest.loadFromFile("Textures\\forest.png", sf::IntRect(0, 0, 32, 32));
 	tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(0, 0, 32, 32));
 	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 32, 32));
 	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 32, 32));
+	tPlayer.loadFromFile("Textures\\player.png", sf::IntRect(0, 0, 16, 16));
 	for (int u = 0; u < 46; u++)
 	{
 		for (int c = 0; c < 48; c++)
@@ -742,6 +743,12 @@ void Map::viewMapSFML(sf::RenderWindow &window)
 			else if (biome[c][u] == 4)
 			{
 				tileSprite.setTexture(tForest);
+				tileSprite.setPosition(c * 16, u * 16);
+				window.draw(tileSprite);
+			}
+			if (player.x == c and player.y == u)
+			{
+				tileSprite.setTexture(tPlayer);
 				tileSprite.setPosition(c * 16, u * 16);
 				window.draw(tileSprite);
 			}
