@@ -85,19 +85,10 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!", sf::Style::Close);
 	font.loadFromFile("consolab.ttf");
 	sf::Text text;
-	sf::Sprite sGrass, sForest, sArctic, sDesert;
-	sf::Texture tGrass, tForest, tArctic, tDesert;
-	tGrass.loadFromFile("Textures\\grass.png", sf::IntRect(0, 0, 32, 32));
-	tForest.loadFromFile("Textures\\forest.png", sf::IntRect(0, 0, 32, 32));
-	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 32, 32));
-	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 32, 32));
-	sGrass.setTexture(tGrass); sForest.setTexture(tForest); sArctic.setTexture(tArctic); sDesert.setTexture(tDesert);
 	text.setFont(font);
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(18);
 	text.setPosition(10.f, 20.f);
-	sGrass.setPosition(50.f, 50.f);
-	sDesert.setPosition(50.f, 82.f);
 	intMap map1;
 	window.setVerticalSyncEnabled(true);
 	while (window.isOpen())
@@ -130,7 +121,7 @@ int main()
 				window.clear();
 				text.setString(to_string(mainPlayer.hp));
 				window.draw(text);
-				mainMap.viewMapSFML(window);
+				mainMap.viewMapSFML(window, mainPlayer);
 				window.display();
 				mainPlayer.movePlayer(mainMap);
 			}
