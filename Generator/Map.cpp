@@ -1,6 +1,9 @@
-﻿#include <iostream>
-#include <cstdlib>
+﻿#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 #include <windows.h>
+#include <cstdlib>
 #include <conio.h>
 #include <stdio.h>
 #include <time.h>
@@ -8,10 +11,10 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
-#include "Map.h"
 #include "variables.h"
 #include "gotoxy.h"
 #include "Player.h"
+#include "Map.h"
 
 using namespace std;
 std::wstring Map::genCityName()
@@ -598,7 +601,7 @@ void Map::viewMap()
 							}
 							break;
 						case 1:
-							if (biome[c][u] == 1 and c < 47 and c > 0 and biome[c + 1][u] == 1 or biome[c - 1][u] != 1)
+							if (biome[c][u] == 1 and c < 47 and c > 1 and biome[c + 1][u] == 1 or biome[c - 1][u] != 1)
 							{
 								SetConsoleTextAttribute(hConsole, 120);
 							}
@@ -694,6 +697,53 @@ void Map::clearFog(Player &player1)
 			if (player1.x + x1 - 2 < 48 and player1.y + y1 - 3 < 46 and player1.x + x1 - 2 > 0 and player1.y + y1 - 3 > 0)
 			{
 				fog[player1.x + x1 - 2][player1.y + y1 - 3] = 0;
+			}
+		}
+	}
+}
+
+void Map::viewMapSFML(sf::RenderWindow &window)
+{
+	sf::Texture tPlains, tForest, tDesert, tMountains, tArctic;
+	sf::Sprite tileSprite;
+	tPlains.loadFromFile("Textures\\grass.png", sf::IntRect(0, 0, 32, 32));
+	tForest.loadFromFile("Textures\\forest.png", sf::IntRect(0, 0, 32, 32));
+	tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(0, 0, 32, 32));
+	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 32, 32));
+	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 32, 32));
+	for (int u = 0; u < 46; u++)
+	{
+		for (int c = 0; c < 48; c++)
+		{
+			if (biome[c][u] == 0)
+			{
+				tileSprite.setTexture(tPlains);
+				tileSprite.setPosition(c * 16, u * 16);
+				window.draw(tileSprite);
+			}
+			else if (biome[c][u] == 1)
+			{
+				tileSprite.setTexture(tMountains);
+				tileSprite.setPosition(c * 16, u * 16);
+				window.draw(tileSprite);
+			}
+			else if (biome[c][u] == 2)
+			{
+				tileSprite.setTexture(tDesert);
+				tileSprite.setPosition(c * 16, u * 16);
+				window.draw(tileSprite);
+			}
+			else if (biome[c][u] == 3)
+			{
+				tileSprite.setTexture(tArctic);
+				tileSprite.setPosition(c * 16, u * 16);
+				window.draw(tileSprite);
+			}
+			else if (biome[c][u] == 4)
+			{
+				tileSprite.setTexture(tForest);
+				tileSprite.setPosition(c * 16, u * 16);
+				window.draw(tileSprite);
 			}
 		}
 	}

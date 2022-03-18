@@ -109,37 +109,197 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico">
-      <Filter>Pliki zasobów</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="grafika.txt" />
     <Text Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-audio-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-network-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-system-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-window-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-window-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-network-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-system-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-system-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-network-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-window-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-audio-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="..\..\SFML-2.5.1\bin\sfml-audio-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-system-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-network-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-window-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="..\..\SFML-2.5.1\bin\openal32.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-main-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-system-2.dll">
       <Filter>Pliki źródłowe</Filter>
     </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-system-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-window-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-window-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\openal32.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-audio-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-audio-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-graphics-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-graphics-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-network-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-network-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\vorbis.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\vorbisenc.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\vorbisfile.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\flac.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\freetype.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\ogg.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\openal32.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-main.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-main-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
   </ItemGroup>
 </Project>

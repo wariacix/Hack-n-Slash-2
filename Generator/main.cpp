@@ -1,6 +1,9 @@
-﻿#include <iostream>
-#include <cstdlib>
+﻿#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <windows.h>
+#include <iostream>
+#include <cstdlib>
 #include <conio.h>
 #include <stdio.h>
 #include <time.h>
@@ -18,10 +21,9 @@
 #include "choice.h"
 #include "equipment.h"
 #include "equipItem.h"
-#include "Map.h"
 #include "Player.h"
 #include "intMap.h"
-
+#include "Map.h"
 
 Map mainMap;
 Player mainPlayer;
@@ -79,27 +81,60 @@ int main()
 {
 	_setmode(_fileno(stdout), _O_WTEXT);
 	srand(time(NULL));
+	sf::Font font;
+	sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!", sf::Style::Close);
+	font.loadFromFile("consolab.ttf");
+	sf::Text text;
+	sf::Sprite sGrass, sForest, sArctic, sDesert;
+	sf::Texture tGrass, tForest, tArctic, tDesert;
+	tGrass.loadFromFile("Textures\\grass.png", sf::IntRect(0, 0, 32, 32));
+	tForest.loadFromFile("Textures\\forest.png", sf::IntRect(0, 0, 32, 32));
+	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 32, 32));
+	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 32, 32));
+	sGrass.setTexture(tGrass); sForest.setTexture(tForest); sArctic.setTexture(tArctic); sDesert.setTexture(tDesert);
+	text.setFont(font);
+	text.setFillColor(sf::Color::White);
+	text.setCharacterSize(18);
+	text.setPosition(10.f, 20.f);
+	sGrass.setPosition(50.f, 50.f);
+	sDesert.setPosition(50.f, 82.f);
 	intMap map1;
-	map1.loadMap(L"map1");
-	while (true)
+	window.setVerticalSyncEnabled(true);
+	while (window.isOpen())
 	{
-		system("color 0f");
-		system("mode con: cols=126 lines=50");
-		setBaseValues();
-		gameGui();
-		map1.viewMap();
-		menu();
-		mainMap.generateMap();
-
-		while (los == false)
+		sf::Event event;
+		while (window.pollEvent(event))
 		{
-			updateHpMp();
-			mainMap.clearFog(mainPlayer);
-			mainMap.viewMap();
-			gameGui();
-			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(3, 0);
-			if (rand() % 7 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
-			mainPlayer.movePlayer(mainMap);
+			if (event.type == sf::Event::Closed)
+				window.close();
 		}
+
+		while (true)
+		{
+			system("color 0f");
+			system("mode con: cols=126 lines=50");
+			setBaseValues();
+			gameGui();
+			menu();
+			mainMap.generateMap();
+			map1.loadMap(L"map1");
+
+			while (los == false)
+			{
+				updateHpMp();
+				mainMap.clearFog(mainPlayer);
+				mainMap.viewMap();
+				gameGui();
+				if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(3, 0);
+				if (rand() % 7 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
+				window.clear();
+				text.setString(to_string(mainPlayer.hp));
+				window.draw(text);
+				mainMap.viewMapSFML(window);
+				window.display();
+				mainPlayer.movePlayer(mainMap);
+			}
+		}
+
 	}
 };

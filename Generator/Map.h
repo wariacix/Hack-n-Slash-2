@@ -1,5 +1,8 @@
 #pragma once
-#include "Player.h"
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 
 class Player;
 
@@ -11,6 +14,7 @@ public:
 	int hero[48][46];
 	int fog[48][46];
 	int path[48][46];
+
 	Map()
 	{
 		for (int x = 0; x < 48; x++)
@@ -29,6 +33,8 @@ public:
 	std::wstring genCityName();
 
 	void clearFog(Player& player1);
+
+	void viewMapSFML(sf::RenderWindow &window);
 
 	void setBaseValues();
 
