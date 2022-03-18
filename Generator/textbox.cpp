@@ -86,10 +86,13 @@ void textWriting(wstring input, int yF = 34, int textColor = 15)
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, textColor);
 	clear();
+
 	wstring* text = new wstring(input);
 	int a = 0; int lines = 0; int lineLength = 59; int waitingTime = 60;
 	const wchar_t* textArray = text->c_str();
+
 	gotoxy(30, yF);
+
 	while (a + (lines * lineLength) < text->length())
 	{
 		if (a > lineLength)

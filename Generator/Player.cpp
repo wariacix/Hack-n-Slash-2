@@ -1,6 +1,9 @@
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
-#include <cstdlib>
 #include <windows.h>
+#include <cstdlib>
 #include <conio.h>
 #include <stdio.h>
 #include <winuser.h>
@@ -9,6 +12,7 @@
 #include "equipment.h"
 #include "variables.h"
 #include "Map.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -18,10 +22,9 @@ void Player::movePlayer(Map &map1)
 	bool a = true;
 	while (a == true)
 	{
-		int wybor = _getch();
 		SetConsoleTextAttribute(hConsole, 15);
 		a = false;
-		if (wybor == 97)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			if (x > 0)
 			{
@@ -30,7 +33,7 @@ void Player::movePlayer(Map &map1)
 				x--;
 			}
 		}
-		else if (wybor == 100)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			if (x < 47)
 			{
@@ -39,11 +42,11 @@ void Player::movePlayer(Map &map1)
 				x++;
 			}
 		}
-		else if (wybor == 101)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) or sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 		{
 			equipment();
 		}
-		else if (wybor == 119)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			if (y > 0)
 			{
@@ -52,7 +55,7 @@ void Player::movePlayer(Map &map1)
 				y--;
 			}
 		}
-		else if (wybor == 115)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			if (y < 45)
 			{
@@ -61,11 +64,11 @@ void Player::movePlayer(Map &map1)
 				y++;
 			}
 		}
-		else if (wybor == 112)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 		{
 			los = true;
 		}
-		else if (wybor == 109)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
 		{
 			for (int x0 = 0; x0 < 48; x0++)
 			{

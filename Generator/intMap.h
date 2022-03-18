@@ -20,26 +20,22 @@ class intMap
 public:
 	static const int sizeX = 400;
 	static const int sizeY = 200;
-	int mapCollision[sizeX][sizeY];
 	wchar_t mapGraphics[sizeX][sizeY];
-	int mapEvents[sizeX][sizeY];
+	wchar_t mapCollision[sizeX][sizeY];
+	wchar_t mapEvents[sizeX][sizeY];
 	int playerX;
 	int playerY;
-	int cameraX;
-	int cameraY;
 	intMap()
 	{
 		this->playerX = 0;
 		this->playerY = 0;
-		this->cameraX = 0;
-		this->cameraY = 0;
 		for (int a = 0; a < sizeX; a++)
 		{
 			for (int b = 0; b < sizeY; b++)
 			{
 				this->mapGraphics[a][b] = L' ';
-				this->mapCollision[a][b] = 0;
-				this->mapEvents[a][b] = 0;
+				this->mapCollision[a][b] = L'0';
+				this->mapEvents[a][b] = '0';
 			}
 		}
 	}
