@@ -704,12 +704,16 @@ void Map::clearFog(Player &player1)
 
 void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 {
-	sf::Texture tPlains, tForest, tDesert, tMountains, tArctic, tPlayer, tCity;
-	sf::Sprite tileSprite;
-	tPlains.loadFromFile("Textures\\grass.png", sf::IntRect(0, 0, 32, 32));
-	tForest.loadFromFile("Textures\\forest.png", sf::IntRect(0, 0, 32, 32));
-	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 32, 32));
-	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 32, 32));
+	sf::Vector2u resolution = window.getSize();
+	int mapWindowX = 960;
+	int mapWindowY = 620;
+	int textureRes = 48;
+	sf::Texture tPlains, tForest, tDesert, tMountains, tArctic, tPlayer, tCity, tInterface;
+	sf::Sprite tileSprite, sInterface;
+	tPlains.loadFromFile("Textures\\grass.png", sf::IntRect(0, 0, 16, 16));
+	tForest.loadFromFile("Textures\\forest.png", sf::IntRect(0, 0, 16, 16));
+	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 16, 16));
+	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 16, 16));
 	tPlayer.loadFromFile("Textures\\player.png", sf::IntRect(0, 0, 16, 16));
 	for (int u = 0; u < 46; u++)
 	{
@@ -721,13 +725,15 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 				{
 					tCity.loadFromFile("Textures\\grasscity.png", sf::IntRect(0, 0, 16, 16));
 					tileSprite.setTexture(tCity);
-					tileSprite.setPosition(c * 16, u * 16);
+					tileSprite.setScale(textureRes/16, textureRes / 16);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 					window.draw(tileSprite);
 				}
 				else
 				{
 					tileSprite.setTexture(tPlains);
-					tileSprite.setPosition(c * 16, u * 16);
+					tileSprite.setScale(textureRes / 16, textureRes / 16);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 					window.draw(tileSprite);
 				}
 			}
@@ -750,7 +756,8 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(240, 0, 16, 16));
 				else tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(0, 0, 16, 16));
 				tileSprite.setTexture(tMountains);
-				tileSprite.setPosition(c * 16, u * 16);
+				tileSprite.setScale(textureRes / 16, textureRes / 16);
+				tileSprite.setPosition((c - player.x) * (textureRes) + (mapWindowX / 2) + 70, (u - player.y) * (textureRes) + (mapWindowY / 2) + 50);
 				window.draw(tileSprite);
 			}
 			else if (biome[c][u] == 2)
@@ -759,34 +766,43 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 				{
 					tCity.loadFromFile("Textures\\desertcity.png", sf::IntRect(0, 0, 16, 16));
 					tileSprite.setTexture(tCity);
-					tileSprite.setPosition(c * 16, u * 16);
+					tileSprite.setScale(textureRes / 16, textureRes / 16);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 					window.draw(tileSprite);
 				}
 				else
 				{
 					tileSprite.setTexture(tDesert);
-					tileSprite.setPosition(c * 16, u * 16);
+					tileSprite.setScale(textureRes / 16, textureRes / 16);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 					window.draw(tileSprite);
 				}
 			}
 			else if (biome[c][u] == 3)
 			{
 				tileSprite.setTexture(tArctic);
-				tileSprite.setPosition(c * 16, u * 16);
+				tileSprite.setScale(textureRes / 16, textureRes / 16);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 				window.draw(tileSprite);
 			}
 			else if (biome[c][u] == 4)
 			{
 				tileSprite.setTexture(tForest);
-				tileSprite.setPosition(c * 16, u * 16);
+				tileSprite.setScale(textureRes / 16, textureRes / 16);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 				window.draw(tileSprite);
 			}
 			if (player.x == c and player.y == u)
 			{
 				tileSprite.setTexture(tPlayer);
-				tileSprite.setPosition(c * 16, u * 16);
+				tileSprite.setScale(textureRes / 16, textureRes / 16);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
 				window.draw(tileSprite);
 			}
 		}
 	}
+	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 1600, 1000));
+	sInterface.setTexture(tInterface);
+	sInterface.setPosition(0.f, 0.f);
+	window.draw(sInterface);
 }
