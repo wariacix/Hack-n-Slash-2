@@ -726,14 +726,14 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 					tCity.loadFromFile("Textures\\grasscity.png", sf::IntRect(0, 0, 16, 16));
 					tileSprite.setTexture(tCity);
 					tileSprite.setScale(textureRes/16, textureRes / 16);
-					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes/2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 					window.draw(tileSprite);
 				}
 				else
 				{
 					tileSprite.setTexture(tPlains);
 					tileSprite.setScale(textureRes / 16, textureRes / 16);
-					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 					window.draw(tileSprite);
 				}
 			}
@@ -757,7 +757,7 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 				else tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(0, 0, 16, 16));
 				tileSprite.setTexture(tMountains);
 				tileSprite.setScale(textureRes / 16, textureRes / 16);
-				tileSprite.setPosition((c - player.x) * (textureRes) + (mapWindowX / 2) + 70, (u - player.y) * (textureRes) + (mapWindowY / 2) + 50);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 				window.draw(tileSprite);
 			}
 			else if (biome[c][u] == 2)
@@ -767,14 +767,14 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 					tCity.loadFromFile("Textures\\desertcity.png", sf::IntRect(0, 0, 16, 16));
 					tileSprite.setTexture(tCity);
 					tileSprite.setScale(textureRes / 16, textureRes / 16);
-					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 					window.draw(tileSprite);
 				}
 				else
 				{
 					tileSprite.setTexture(tDesert);
 					tileSprite.setScale(textureRes / 16, textureRes / 16);
-					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 					window.draw(tileSprite);
 				}
 			}
@@ -782,21 +782,21 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 			{
 				tileSprite.setTexture(tArctic);
 				tileSprite.setScale(textureRes / 16, textureRes / 16);
-				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 				window.draw(tileSprite);
 			}
 			else if (biome[c][u] == 4)
 			{
 				tileSprite.setTexture(tForest);
 				tileSprite.setScale(textureRes / 16, textureRes / 16);
-				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 				window.draw(tileSprite);
 			}
 			if (player.x == c and player.y == u)
 			{
 				tileSprite.setTexture(tPlayer);
 				tileSprite.setScale(textureRes / 16, textureRes / 16);
-				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50);
+				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
 				window.draw(tileSprite);
 			}
 		}
