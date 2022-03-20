@@ -1,4 +1,7 @@
-﻿#include <iostream>
+﻿#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 #include <cstdlib>
 #include <windows.h>
 #include <conio.h>
@@ -9,6 +12,8 @@
 #include <fcntl.h>
 #include <io.h>
 #include <cstring>
+#include "textbox.h"
+#include "Map.h"
 #include "gotoxy.h"
 #include "menu.h"
 #include "fight.h"
@@ -16,7 +21,6 @@
 #include "gameGui.h"
 #include "Player.h"
 #include "main.h"
-#include "textbox.h"
 #include "variables.h"
 #include "choice.h"
 #pragma warning(disable : 4996)
@@ -108,6 +112,45 @@ void textWriting(wstring input, int yF = 34, int textColor = 15)
 		a++;
 	}
 	if (waitingTime == 1) _getch();
+	delete text;
+}
+
+
+void textWritingSFML(wstring input, sf::Text textEnt, sf::RenderWindow &window, Map mainMap, Player mainPlayer)
+{
+	sf::Clock clock;
+
+	wstring* text = new wstring(input);
+	int a = 0; int lines = 0; int lineLength = 56;
+	const wchar_t* textArray = text->c_str();
+	float sec = 3.f;
+
+			for (int i = 1; i < wcslen(textArray); i++)
+			{
+				sf::Event event;
+				a = 0;
+				lines = 0;
+				int charsLeft = i;
+				window.clear();
+				while (window.pollEvent(event)) if (event.type == sf::Event::KeyPressed) sec = 1.f;
+				mainMap.viewMapSFML(window, mainPlayer);
+				while (charsLeft > 0)
+				{
+					if (a > lineLength)
+					{
+						lines++;
+						a = a - lineLength - 1;
+
+					}
+					while (true) { sf::Time time = clock.getElapsedTime(); if (time.asMilliseconds() > sec) break; };
+					textEnt.setString(textArray[a + (lines * lineLength)]);
+					textEnt.setPosition(160 + 14 * a, 755 + lines * 23);
+					window.draw(textEnt);
+					a++;
+					charsLeft--;
+				}
+				window.display();
+			}
 	delete text;
 }
 

@@ -82,50 +82,47 @@ int main()
 	_setmode(_fileno(stdout), _O_WTEXT);
 	srand(time(NULL));
 	sf::Font font;
-	sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!", sf::Style::Close);
-	font.loadFromFile("consolab.ttf");
+	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
+	font.loadFromFile("Chomsky.otf");
 	sf::Text text;
 	text.setFont(font);
 	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(18);
-	text.setPosition(10.f, 20.f);
+	text.setCharacterSize(24);
+	text.setPosition(3.f, 3.f);
 	intMap map1;
 	window.setVerticalSyncEnabled(true);
-	while (window.isOpen())
+
+	while (true)
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
+		system("color 0f");
+		system("mode con: cols=126 lines=50");
+		setBaseValues();
+		gameGui();
+		menu();
+		mainMap.generateMap();
+		map1.loadMap(L"map1");
+		while (window.isOpen() and los == false)
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		while (true)
-		{
-			system("color 0f");
-			system("mode con: cols=126 lines=50");
-			setBaseValues();
-			gameGui();
-			menu();
-			mainMap.generateMap();
-			map1.loadMap(L"map1");
-
-			while (los == false)
+			sf::Event event;
+			while (window.pollEvent(event))
 			{
-				updateHpMp();
-				mainMap.clearFog(mainPlayer);
-				mainMap.viewMap();
-				gameGui();
-				if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(3, 0);
-				if (rand() % 7 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
-				window.clear();
-				text.setString(to_string(mainPlayer.hp));
-				window.draw(text);
-				mainMap.viewMapSFML(window, mainPlayer);
-				window.display();
-				mainPlayer.movePlayer(mainMap);
+				if (event.type == sf::Event::Closed)
+					window.close();
 			}
-		}
 
+			updateHpMp();
+			mainMap.clearFog(mainPlayer);
+			mainMap.viewMap();
+			gameGui();
+			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(3, 0);
+			if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
+			window.clear();
+			mainMap.viewMapSFML(window, mainPlayer);
+			if (rand() % 10 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
+			text.setString(to_string(mainPlayer.hp));
+			window.draw(text);
+			window.display();
+			mainPlayer.movePlayer(mainMap);
+		}
 	}
 };
