@@ -1,4 +1,7 @@
-﻿#include <iostream>
+﻿#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 #include <cstdlib>
 #include <windows.h>
 #include <conio.h>
@@ -8,11 +11,11 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
+#include "equipment.h"
 #include "gotoxy.h"
 #include "draw.h"
 #include "variables.h"
 #include "choice.h"
-#include "equipment.h"
 #include "gameGui.h"
 #include "Player.h"
 

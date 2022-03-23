@@ -122,7 +122,7 @@ int main()
 			text.setString(to_string(mainPlayer.hp));
 			window.draw(text);
 			window.display();
-			mainPlayer.movePlayer(mainMap);
+			mainPlayer.movePlayer(mainMap, window);
 		}
 	}
 };
