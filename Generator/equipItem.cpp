@@ -11,6 +11,7 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
+#include "equipment.h"
 #include "gotoxy.h"
 #include "menu.h"
 #include "fight.h"
@@ -20,7 +21,6 @@
 #include "textbox.h"
 #include "variables.h"
 #include "choice.h"
-#include "equipment.h"
 
 using namespace std;
 

@@ -1,4 +1,7 @@
 #pragma once
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <string>
 
 class Map;
@@ -44,6 +47,6 @@ public:
 		xp = 0;
 		heroName = L"NO NAME";
 	}
-	void movePlayer(Map &map1);
+	void movePlayer(Map &map1, sf::RenderWindow& window);
 };
 extern Player mainPlayer;
