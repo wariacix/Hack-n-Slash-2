@@ -144,7 +144,7 @@ void textWritingSFML(wstring input, sf::Text textEnt, sf::RenderWindow &window, 
 					}
 					while (true) { sf::Time time = clock.getElapsedTime(); if (time.asMilliseconds() > sec) break; };
 					textEnt.setString(textArray[a + (lines * lineLength)]);
-					textEnt.setPosition(160 + 14 * a, 755 + lines * 23);
+					textEnt.setPosition(160 + 12 * a, 755 + lines * 23);
 					window.draw(textEnt);
 					a++;
 					charsLeft--;
@@ -162,7 +162,7 @@ public:
 	int monsterExpLoot;
 	int monsterId;
 	int monsterBiome;
-	void monsterFightFunction()
+	void monsterFightFunction(sf::RenderWindow &window)
 	{
 		bool runawayFlag = false;
 		textWriting(monsterName + L" has approached.");
@@ -172,7 +172,7 @@ public:
 			if (rand() % 100 <= RUNAWAY) runawayFlag = true;
 			else
 			{
-				int wybor = fight(100 + (50 * monsterBiome) + monsterId);
+				int wybor = fight(window, 100 + (50 * monsterBiome) + monsterId);
 				if (wybor == 0) los = true;
 				else if (wybor == 1)
 				{
@@ -183,7 +183,7 @@ public:
 		}
 		else
 		{
-			int wybor = fight(100 + (50 * monsterBiome) + monsterId);
+			int wybor = fight(window, 100 + (50 * monsterBiome) + monsterId);
 			if (wybor == 0) los = true;
 			else if (wybor == 1)
 			{
@@ -196,7 +196,7 @@ public:
 
 
 
-void textbox(int txtBoxType, int npcId)
+void textbox(sf::RenderWindow &window, int txtBoxType, int npcId)
 {
 	MonsterFight monster[2] = { {L"Wolf", 20, 100, 0, 4}, {L"Bear", 20, 120, 1, 4} };
 	textboxAnimation();
@@ -205,10 +205,10 @@ void textbox(int txtBoxType, int npcId)
 		switch (npcId)
 		{
 		case 300:
-			monster[0].monsterFightFunction();
+			monster[0].monsterFightFunction(window);
 			break;
 		case 301:
-			monster[1].monsterFightFunction();
+			monster[1].monsterFightFunction(window);
 			break;
 		}
 		xpCount();

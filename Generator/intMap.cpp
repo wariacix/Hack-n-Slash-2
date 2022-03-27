@@ -36,8 +36,6 @@ void intMap::viewMap()
 			if (mapCollision[playerX][playerY] == L'3')
 			{
 				SetConsoleTextAttribute(hConsole, 60);
-				gotoxy(0, 0);
-				wcout << L"KURWAMACJAPIERDOLEKURWAMACJAPIERDOLE";
 				_getch();
 				for (int xWindow = 0; xWindow < 68; xWindow++)
 				{
@@ -45,7 +43,6 @@ void intMap::viewMap()
 					{
 						if (playerX - 34 >= 0 && playerY - 16 >= 0 && playerX - 34 < sizeX && playerY - 16 > sizeY)
 						{
-							wcout << L"CHUJ0000000______0000001111";
 							gotoxy(offsetX + xWindow, offsetY + yWindow);
 							wcout << mapGraphics[playerX - 34][playerY - 16];
 							_getch();
@@ -75,7 +72,6 @@ void intMap::loadMap(wstring mapName)
 			mapFile >> mapGraphics[a][b];
 			if (a >= 3 and mapGraphics[a-3][b] == L'*' and mapGraphics[a - 2][b] == L'&' and mapGraphics[a - 1][b] == L'&' and mapGraphics[a][b] == L'*')
 			{
-				wcout << L"HAHA ZAŁADOWAŁO SKURWYSYNU";
 				mapGraphics[a - 3][b] = L' ';
 				mapGraphics[a - 2][b] = L' ';
 				mapGraphics[a - 1][b] = L' ';
@@ -101,7 +97,6 @@ void intMap::loadMap(wstring mapName)
 			//Check for the end of this section 9009
 			if (a == 3 and mapCollision[a - 3][b] == L'9' and mapCollision[a - 2][b] == L'0' and mapCollision[a - 1][b] == L'0' and mapCollision[a][b] == L'9')
 			{
-				wcout << L"HAHA ZAŁADOWAŁO SKURWYSYNU999999999999999999999999";
 				mapCollision[a - 3][b] = L'0';
 				mapCollision[a - 2][b] = L'0';
 				mapCollision[a - 1][b] = L'0';

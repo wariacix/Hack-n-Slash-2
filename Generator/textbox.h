@@ -9,5 +9,5 @@ void textWritingSFML(std::wstring input, sf::Text textEnt, sf::RenderWindow& win
 #ifndef textbox_h
 #define textbox_h
 void textboxAnimation();
-void textbox(int txtBoxType, int npcId);
+void textbox(sf::RenderWindow &window, int txtBoxType, int npcId);
 #endif

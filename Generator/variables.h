@@ -1,4 +1,7 @@
 #pragma once
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 extern int x, y, p;
 extern int cityID[48][46];
 extern int cityGuardian[48][46];
@@ -24,7 +27,7 @@ struct items
 	int inReq;
 	int lvlReq;
 	int mpReq;
-	int color;
+	sf::Color color;
 	std::wstring itemName;
 };
 extern items weapon;
