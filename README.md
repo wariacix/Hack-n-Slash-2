@@ -13,7 +13,7 @@ Currently ported most of it.
 - Fights with monsters.
 - Skill tree.
 - Statistics window.
-- 
+
 # Currently working: (as of 27/03/2022)
 - Displaying fully random procedurally generated 2D world with different biomes & cities that you can move on.
 - Camera centered on player.
