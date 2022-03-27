@@ -22,3 +22,5 @@ Currently ported most of it.
 - Most equipment functionality.
 - Interface gfx.
 - Some of dialogue system working.
+- 
+![Map interface WIP](https://github.com/wariacix/Hack-n-Slash-2/blob/sfml-master/map.png?raw=true)
