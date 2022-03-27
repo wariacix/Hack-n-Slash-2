@@ -26,7 +26,7 @@ int randomHP()
 	return 5 * (rand() % 3);
 }
 
-int fight(int id)
+int fight(sf::RenderWindow &window, int id)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	float enemyHP, enemyMaxHP, enemyBaseDmg, dmgRandomizer1, dmgRandomizer2;
@@ -85,7 +85,7 @@ powrot:
 	else if (fightChoice == 2) goto powrot;
 	else if (fightChoice == 3)
 	{
-		equipment();
+		equipmentSFML(window);
 		gameGui(0, enemyHP, enemyMaxHP, dmgRandomizer2, dmgRandomizer1, 0);
 		gotoxy(25, 8);
 		wcout << L"/────────────────────────────────────────────────────────────────────\\";

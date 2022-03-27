@@ -76,10 +76,8 @@ void itemInfoString(wstring type, int requiredNumber, int color = 15, int number
 	}
 }
 
-void equipItem(int mode, int ID)
+void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsole, 15);
 	struct items
 	{
 		int id = 0;
@@ -93,10 +91,10 @@ void equipItem(int mode, int ID)
 		int inReq = 0;
 		int lvlReq = 0;
 		int mpReq = 0;
-		int color = 15;
+		sf::Color color = sf::Color::White;
 		wstring itemName = L" ";
 	};
-	selectedItem.addedHp = 0; selectedItem.addedMp = 0; selectedItem.hpRegen = 0; selectedItem.mpRegen = 0; selectedItem.dmg = 0; selectedItem.def = 0; selectedItem.strReq = 0; selectedItem.inReq = 0; selectedItem.lvlReq = 0; selectedItem.mpReq = 0; selectedItem.color = 15; selectedItem.itemName = L" ";
+	selectedItem.addedHp = 0; selectedItem.addedMp = 0; selectedItem.hpRegen = 0; selectedItem.mpRegen = 0; selectedItem.dmg = 0; selectedItem.def = 0; selectedItem.strReq = 0; selectedItem.inReq = 0; selectedItem.lvlReq = 0; selectedItem.mpReq = 0; selectedItem.color = sf::Color::White; selectedItem.itemName = L" ";
 	selectedItem.id = ID;
 	if (ID >= 0 and ID < 1000)
 	{
@@ -104,31 +102,31 @@ void equipItem(int mode, int ID)
 		{
 		case 0:
 			selectedItem.itemName = L"Potion +25HP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		case 1:
 			selectedItem.itemName = L"Potion +50HP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		case 2:
 			selectedItem.itemName = L"Potion +100HP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		case 3:
 			selectedItem.itemName = L"Potion +200HP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		case 4:
 			selectedItem.itemName = L"Potion +50%HP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		case 5:
 			selectedItem.itemName = L"Potion +10MP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		case 6:
 			selectedItem.itemName = L"Potion +20MP";
-			selectedItem.color = 14;
+			selectedItem.color = sf::Color::Yellow;
 			break;
 		}
 	}
@@ -147,8 +145,7 @@ void equipItem(int mode, int ID)
 			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 1;
 			selectedItem.mpReq = 0;
-			selectedItem.color = 8;
-			selectedItem.itemName = L"Branches";
+			selectedItem.itemName = L"Mace";
 			break;
 		case 1001:
 			selectedItem.addedHp = 0;
@@ -161,7 +158,7 @@ void equipItem(int mode, int ID)
 			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 2;
 			selectedItem.mpReq = 0;
-			selectedItem.itemName = L"Mace";
+			selectedItem.itemName = L"Mace With Nails";
 			break;
 		case 1002:
 			selectedItem.addedHp = -2;
@@ -192,7 +189,6 @@ void equipItem(int mode, int ID)
 			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 1;
 			selectedItem.mpReq = 0;
-			selectedItem.color = 8;
 			selectedItem.itemName = L"Worn Out Leather Armor";
 			break;
 		case 2001:
@@ -238,7 +234,6 @@ void equipItem(int mode, int ID)
 			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 1;
 			selectedItem.mpReq = 0;
-			selectedItem.color = 8;
 			selectedItem.itemName = L"Worn Out Wooden Shield";
 			break;
 		case 3001:
@@ -259,62 +254,87 @@ void equipItem(int mode, int ID)
 
 	if (mode == 0) //WYSWIETLANIE
 	{
+		sf::Font font;
+		font.loadFromFile("dpcomic.ttf");
+
+
+		sf::Text text;
+		text.setFont(font);
+		text.setFillColor(sf::Color::White);
+		text.setOutlineColor(sf::Color::Black);
+		text.setOutlineThickness(1.f);
+		text.setCharacterSize(24);
+
 		wstring attribute = L"";
-		int k = 4;
+		int k = 0;
 		if (selectedItem.itemName != L" ")
 		{
-			gotoxy(97, k); k++;
-			itemInfoStringName(selectedItem.itemName, selectedItem.color);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(selectedItem.itemName);
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.addedHp != 0)
 		{
-			gotoxy(97, k); k++;
-			itemInfoString(L"HP",selectedItem.addedHp);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(L"HP: " + to_wstring(selectedItem.addedHp));
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.addedMp > 0)
 		{
-			gotoxy(97, k); k++;
-			itemInfoString(L"MP", selectedItem.addedMp);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(L"MP: " + to_wstring(selectedItem.addedMp));
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.hpRegen > 0)
 		{
-			gotoxy(97, k); k++;
-			itemInfoString(L"HP Regen", selectedItem.hpRegen);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(L"HP Regen: " + to_wstring(selectedItem.hpRegen));
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.mpRegen > 0)
 		{
-			gotoxy(97, k); k++;
-			itemInfoString(L"MP Regen", selectedItem.hpRegen);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(L"MP Regen: " + to_wstring(selectedItem.mpRegen));
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.dmg > 0)
 		{
-			gotoxy(97, k); k++;
-			itemInfoString(L"DMG", selectedItem.dmg);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(L"DMG: " + to_wstring(selectedItem.dmg));
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.def > 0)
 		{
-			gotoxy(97, k); k++;
-			itemInfoString(L"DEF", selectedItem.def);
+			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+			text.setString(L"DEF: " + to_wstring(selectedItem.def));
+			window.draw(text);
+			k++;
 		}
 		if (selectedItem.strReq > 0)
 		{
-			gotoxy(97, k); k++;
 			itemInfoString(L"Min STR", selectedItem.strReq, 15, mainPlayer.str);
+			k++;
 		}
 		if (selectedItem.inReq > 0)
 		{
-			gotoxy(97, k); k++;
 			itemInfoString(L"Min INT", selectedItem.inReq, 15, mainPlayer.in);
+			k++;
 		}
 		if (selectedItem.lvlReq > 0)
 		{
-			gotoxy(97, k); k++;
 			itemInfoString(L"Min LVL", selectedItem.lvlReq, 15, mainPlayer.lvl);
+			k++;
 		}
 		if (selectedItem.mpReq > 0)
 		{
-			gotoxy(97, k); k++;
 			itemInfoString(L"Min MP", selectedItem.mpReq, 15, mainPlayer.maxmp);
+			k++;
 		}
 		for (int i = 0; i < 30 - k; i++)
 		{

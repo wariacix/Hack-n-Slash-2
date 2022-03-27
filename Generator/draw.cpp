@@ -1,4 +1,7 @@
-﻿#include <iostream>
+﻿#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 #include <cstdlib>
 #include <windows.h>
 #include <conio.h>

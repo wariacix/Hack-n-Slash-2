@@ -41,7 +41,7 @@ struct items armor, weapon, shield, selectedItem;
 using namespace std;
 
 
-void setBaseValues()
+void setBaseValues(sf::RenderWindow &window)
 {
 	mtnChance = 13;
 	los = false;
@@ -53,9 +53,9 @@ void setBaseValues()
 	armory[1] = 0;
 	armory[2] = 0;
 
-	equipItem(2, 1000);
-	equipItem(2, 2000);
-	equipItem(2, 3000);
+	equipItemSFML(window,2, 1000, 0, 0);
+	equipItemSFML(window, 2, 2000, 0, 0);
+	equipItemSFML(window, 2, 3000, 0, 0);
 
 	item[0] = 200;
 	item[1] = 20;
@@ -83,11 +83,11 @@ int main()
 	srand(time(NULL));
 	sf::Font font;
 	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
-	font.loadFromFile("Chomsky.otf");
+	font.loadFromFile("dpcomic.ttf");
 	sf::Text text;
 	text.setFont(font);
 	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(24);
+	text.setCharacterSize(22);
 	text.setPosition(3.f, 3.f);
 	intMap map1;
 	window.setVerticalSyncEnabled(true);
@@ -96,7 +96,7 @@ int main()
 	{
 		system("color 0f");
 		system("mode con: cols=126 lines=50");
-		setBaseValues();
+		setBaseValues(window);
 		gameGui();
 		menu();
 		mainMap.generateMap();
@@ -112,13 +112,12 @@ int main()
 
 			updateHpMp();
 			mainMap.clearFog(mainPlayer);
-			mainMap.viewMap();
 			gameGui();
-			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(3, 0);
-			if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
+			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(window, 3, 0);
+			if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(window, 1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
 			window.clear();
 			mainMap.viewMapSFML(window, mainPlayer);
-			if (rand() % 10 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
+			if (rand() % 20000 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
 			text.setString(to_string(mainPlayer.hp));
 			window.draw(text);
 			window.display();
