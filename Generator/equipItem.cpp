@@ -76,6 +76,17 @@ void itemInfoString(wstring type, int requiredNumber, int color = 15, int number
 	}
 }
 
+void drawItemInfo(sf::RenderWindow& window, sf::Text text, wstring statStr, int &k, int value, int x, int y)
+{
+	if (value >= 0) text.setFillColor(sf::Color{ 52,150,14,255 });
+	else text.setFillColor(sf::Color{ 198,0,0,255 });
+
+	text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+	text.setString(statStr + to_wstring(value));
+	window.draw(text);
+	k++;
+}
+
 void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 {
 	struct items
@@ -260,7 +271,7 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 
 		sf::Text text;
 		text.setFont(font);
-		text.setFillColor(sf::Color::White);
+		text.setFillColor(selectedItem.color);
 		text.setOutlineColor(sf::Color::Black);
 		text.setOutlineThickness(1.f);
 		text.setCharacterSize(24);
@@ -274,48 +285,12 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 			window.draw(text);
 			k++;
 		}
-		if (selectedItem.addedHp != 0)
-		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(L"HP: " + to_wstring(selectedItem.addedHp));
-			window.draw(text);
-			k++;
-		}
-		if (selectedItem.addedMp > 0)
-		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(L"MP: " + to_wstring(selectedItem.addedMp));
-			window.draw(text);
-			k++;
-		}
-		if (selectedItem.hpRegen > 0)
-		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(L"HP Regen: " + to_wstring(selectedItem.hpRegen));
-			window.draw(text);
-			k++;
-		}
-		if (selectedItem.mpRegen > 0)
-		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(L"MP Regen: " + to_wstring(selectedItem.mpRegen));
-			window.draw(text);
-			k++;
-		}
-		if (selectedItem.dmg > 0)
-		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(L"DMG: " + to_wstring(selectedItem.dmg));
-			window.draw(text);
-			k++;
-		}
-		if (selectedItem.def > 0)
-		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(L"DEF: " + to_wstring(selectedItem.def));
-			window.draw(text);
-			k++;
-		}
+		if (selectedItem.addedHp != 0)drawItemInfo(window, text, L"HP: ", k, selectedItem.addedHp, x, y);
+		if (selectedItem.addedMp != 0) drawItemInfo(window, text, L"MP: ", k, selectedItem.addedMp, x, y);
+		if (selectedItem.hpRegen != 0) drawItemInfo(window, text, L"HP Regen: ", k, selectedItem.hpRegen, x, y);
+		if (selectedItem.mpRegen != 0) drawItemInfo(window, text, L"MP Regen: ", k, selectedItem.mpRegen, x, y);
+		if (selectedItem.dmg != 0) drawItemInfo(window, text, L"DMG: ", k, selectedItem.dmg, x, y);
+		if (selectedItem.def != 0) drawItemInfo(window, text, L"DEF: ", k, selectedItem.def, x, y);
 		if (selectedItem.strReq > 0)
 		{
 			itemInfoString(L"Min STR", selectedItem.strReq, 15, mainPlayer.str);
