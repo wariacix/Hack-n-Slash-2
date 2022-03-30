@@ -18,12 +18,6 @@ using namespace std;
 
 void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	bool a = true;
-	while (a == true)
-	{
-		SetConsoleTextAttribute(hConsole, 15);
-		a = false;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			if (x > 0)
@@ -31,6 +25,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 				map1.hero[x][y] = 0;
 				map1.hero[x - 1][y] = 1;
 				x--;
+				Sleep(30);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -40,6 +35,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 				map1.hero[x][y] = 0;
 				map1.hero[x + 1][y] = 1;
 				x++;
+				Sleep(30);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) or sf::Keyboard::isKeyPressed(sf::Keyboard::I))
@@ -53,6 +49,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 				map1.hero[x][y] = 0;
 				map1.hero[x][y - 1] = 1;
 				y--;
+				Sleep(30);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -62,6 +59,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 				map1.hero[x][y] = 0;
 				map1.hero[x][y + 1] = 1;
 				y++;
+				Sleep(30);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -78,6 +76,4 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 				}
 			}
 		}
-		else a = true;
-	}
 }

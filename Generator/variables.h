@@ -14,22 +14,24 @@ extern int armory[3];
 extern bool los;
 extern int debugMode;
 extern std::wstring enemyName;
+
 struct items
 {
-	int id;
-	int addedHp;
-	int addedMp;
-	int hpRegen;
-	int mpRegen;
-	int dmg;
-	int def;
-	int strReq;
-	int inReq;
-	int lvlReq;
-	int mpReq;
-	sf::Color color;
-	std::wstring itemName;
+	int id = 0;
+	int addedHp = 0;
+	int addedMp = 0;
+	int hpRegen = 0;
+	int mpRegen = 0;
+	int dmg = 0;
+	int def = 0;
+	int strReq = 0;
+	int inReq = 0;
+	int lvlReq = 0;
+	int mpReq = 0;
+	sf::Color color = sf::Color::White;
+	std::wstring itemName = L" ";
 };
+
 extern items weapon;
 extern items armor;
 extern items shield;
