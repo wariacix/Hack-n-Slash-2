@@ -23,6 +23,17 @@
 
 using namespace std;
 
+void drawItemSprite(sf::RenderWindow &window, int x, int y, int id)
+{
+	sf::Texture tItem;
+	sf::Sprite sItem;
+	tItem.loadFromFile("Textures\\Items\\" + to_string(id) + ".png", sf::IntRect(0, 0, 12, 12));
+	sItem.setTexture(tItem);
+	sItem.setScale(5.f, 5.f);
+	sItem.setPosition(x, y);
+	window.draw(sItem);
+}
+
 void equipmentSFML(sf::RenderWindow &window)
 {
 	int equipmentWidth = 10;
@@ -113,19 +124,13 @@ afterItemUse:
 							window.draw(eqSlot);
 							eqSlot.setColor(sf::Color::White);
 
-							sf::Texture tItem;
-							sf::Sprite sItem;
-							tItem.loadFromFile("Textures\\Items\\" + to_string(equipmentItem[eqx][eqy + yDifference][2]) + ".png", sf::IntRect(0, 0, 12, 12));
-							sItem.setTexture(tItem);
-							sItem.setScale(5.f, 5.f);
-							sItem.setPosition(185.f + ((eqx) * 75.f), 145.f + ((eqy + yDifference) * 75.f));
-							window.draw(sItem);
+							drawItemSprite(window, 185.f + ((eqx) * 75.f), 145.f + ((eqy + yDifference) * 75.f), equipmentItem[eqx][eqy + yDifference][2]);
 
 							sf::Text text;
 							text.setFont(font);
 							text.setFillColor(sf::Color::White);
 							text.setOutlineColor(sf::Color::Black);
-							text.setOutlineThickness(1.f);
+							text.setOutlineThickness(2.f);
 							text.setCharacterSize(24);
 							text.setPosition(243.f + ((eqx) * 75.f) - 10 * stringLength(equipmentItem[eqx][eqy + yDifference][0]), 180.f + ((eqy + yDifference) * 75.f));
 							text.setString(to_string(equipmentItem[eqx][eqy + yDifference][0]));
@@ -138,19 +143,13 @@ afterItemUse:
 							eqSlot.setScale(5.f, 5.f);
 							window.draw(eqSlot);
 
-							sf::Texture tItem;
-							sf::Sprite sItem;
-							tItem.loadFromFile("Textures\\Items\\" + to_string(equipmentItem[eqx][eqy + yDifference][2]) + ".png", sf::IntRect(0, 0, 12, 12));
-							sItem.setTexture(tItem);
-							sItem.setScale(5.f, 5.f);
-							sItem.setPosition(185.f + ((eqx) * 75.f), 145.f + ((eqy + yDifference) * 75.f));
-							window.draw(sItem);
+							drawItemSprite(window, 185.f + ((eqx) * 75.f), 145.f + ((eqy + yDifference) * 75.f), equipmentItem[eqx][eqy + yDifference][2]);
 
 							sf::Text text;
 							text.setFont(font);
 							text.setFillColor(sf::Color::White);
 							text.setOutlineColor(sf::Color::Black);
-							text.setOutlineThickness(1.f);
+							text.setOutlineThickness(2.f);
 							text.setCharacterSize(24);
 							text.setPosition(243.f + ((eqx) * 75.f) - 10 * stringLength(equipmentItem[eqx][eqy + yDifference][0]), 180.f + ((eqy + yDifference) * 75.f));
 							text.setString(to_string(equipmentItem[eqx][eqy + yDifference][0]));
@@ -192,6 +191,16 @@ afterItemUse:
 		eqInterfaceSprite.setPosition(0, 0);
 		window.draw(eqInterfaceSprite);
 
+		//Drawing equipped items
+			//WEAPON
+		drawItemSprite(window, 1210, 630, armory[0] + 1000);
+
+			//ARMOR
+		drawItemSprite(window, 1210, 265, armory[1] + 2000);
+
+			//SHIELD
+		drawItemSprite(window, 1435, 170, armory[2] + 3000);
+
 		//Check for mouse position and change item choice accordingly
 		for (int eqy = 0; eqy < 500; eqy++)
 		{
@@ -222,7 +231,21 @@ afterItemUse:
 				{
 					if (equipmentItem[eqx][eqy][2] >= 0)
 					{
-						equipItemSFML(window, 0, equipmentItem[eqx][eqy][2], eqx, eqy + yDifference);
+						int offsetX = 180, offsetY = 140;
+						sf::Vector2i mouse = sf::Mouse::getPosition(window);
+						if (mouse.x >= 1210.f && mouse.y >= 630.f && mouse.x <= 1285.f && mouse.y <= 705.f)
+						{
+							equipItemSFML(window, 0, armory[0] + 1000, 1210 - offsetX, 630 - offsetY);
+						}
+						if (mouse.x >= 1210.f && mouse.y >= 265.f && mouse.x <= 1285.f && mouse.y <= 340.f)
+						{
+							equipItemSFML(window, 0, armory[1] + 2000, 1210 - offsetX, 265 - offsetY);
+						}
+						if (mouse.x >= 1435.f && mouse.y >= 170.f && mouse.x <= 1510.f && mouse.y <= 245.f)
+						{
+							equipItemSFML(window, 0, armory[2] + 3000, 1435 - offsetX, 170 - offsetY);
+						}
+						equipItemSFML(window, 0, equipmentItem[eqx][eqy][2], eqx * 75, (eqy + yDifference) * 75);
 						window.display();
 					}
 					//gameGui

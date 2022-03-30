@@ -27,6 +27,7 @@
 
 Map mainMap;
 Player mainPlayer;
+items weapon, armor, shield, selectedItem;
 
 int debugMode = 0;
 int cityID[48][46], cityGuardian[48][46], item[9999], armory[3], x, y, p, mtnChance;
@@ -36,13 +37,13 @@ int fightMode = 0; //0bez walki,1walka,2ekwipunek w trakcie walki
 bool los = false;
 std::wstring enemyName;
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-struct items armor, weapon, shield, selectedItem;
 
 using namespace std;
 
 
 void setBaseValues(sf::RenderWindow &window)
 {
+	mainPlayer.lvl = 4;
 	mtnChance = 13;
 	los = false;
 
@@ -53,7 +54,7 @@ void setBaseValues(sf::RenderWindow &window)
 	armory[1] = 0;
 	armory[2] = 0;
 
-	equipItemSFML(window,2, 1000, 0, 0);
+	equipItemSFML(window, 2, 1000, 0, 0);
 	equipItemSFML(window, 2, 2000, 0, 0);
 	equipItemSFML(window, 2, 3000, 0, 0);
 
@@ -66,8 +67,14 @@ void setBaseValues(sf::RenderWindow &window)
 	item[6] = 5;
 	item[1001] = 1;
 	item[1002] = 1;
+	item[1003] = 1;
+	item[1004] = 1;
+	item[1005] = 1;
+	item[1006] = 1;
+	item[1007] = 1;
 	item[2001] = 1;
 	item[2002] = 1;
+	item[2003] = 1;
 	item[3001] = 1;
 };
 
@@ -92,12 +99,12 @@ int main()
 	intMap map1;
 	window.setVerticalSyncEnabled(true);
 
+	int choice = 0;
 	while (true)
 	{
 		system("color 0f");
 		system("mode con: cols=126 lines=50");
 		setBaseValues(window);
-		gameGui();
 		menu();
 		mainMap.generateMap();
 		map1.loadMap(L"map1");
@@ -110,16 +117,33 @@ int main()
 					window.close();
 			}
 
-			updateHpMp();
-			mainMap.clearFog(mainPlayer);
-			gameGui();
-			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(window, 3, 0);
-			if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(window, 1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
 			window.clear();
+			mainMap.clearFog(mainPlayer);
+			//if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(window, 1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
 			mainMap.viewMapSFML(window, mainPlayer);
-			if (rand() % 20000 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
+			//if (rand() % 15 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
 			text.setString(to_string(mainPlayer.hp));
 			window.draw(text);
+			switch (choiceSFML(window, new (std::wstring[]){ L"Standard Attack",L"Magical Attack",L"Equipment",L"Try Running Away",L"Info",L"" }, choice))
+			{
+			case 0:
+				wcout << L"UDALO SIE!1";
+				break;
+			case 1:
+				break;
+			case 2:
+				wcout << L"UDALO SIE!2";
+				break;
+			case 3:
+				break;
+			case 4:
+				wcout << L"UDALO SIE!3";
+				break;
+			case 5:
+				break;
+			case 999:
+				break;
+			}
 			window.display();
 			mainPlayer.movePlayer(mainMap, window);
 		}

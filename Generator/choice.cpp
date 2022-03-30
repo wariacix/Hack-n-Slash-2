@@ -22,6 +22,73 @@
 
 using namespace std;
 
+int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
+{
+	int numberOfButtons = 0;
+	for (int i = 0; i < 6; i++)
+	{
+		numberOfButtons++;
+		if (choiceString[i] == L"")
+		{
+			numberOfButtons--;
+		}
+	}
+
+	//Gfx
+	for (int i = 0; i < numberOfButtons; i++)
+	{
+		sf::Texture buttonT;
+		buttonT.loadFromFile("Textures\\button.png", sf::IntRect(0, 0, 51, 11));
+		sf::Sprite buttonS;
+		buttonS.setTexture(buttonT);
+		if (choice == i) buttonS.setColor(sf::Color{120,120,120,255});
+		else buttonS.setColor(sf::Color::White);
+		buttonS.setScale(5.f, 5.f);
+		if (i < 3) buttonS.setPosition(165.f + (i * 260), 780.f);
+		else buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+		window.draw(buttonS);
+
+		sf::Font font;
+		font.loadFromFile("dpcomic.ttf");
+
+		sf::Text text;
+		text.setFont(font);
+		text.setFillColor(sf::Color{233,211,199,255});
+		text.setOutlineColor(sf::Color{ 23,8,0,255 });
+		text.setOutlineThickness(2.f);
+		text.setCharacterSize(24);
+		text.setString(choiceString[i]);
+
+		if (i < 3) text.setPosition(180.f + (i * 260), 790.f);
+		else text.setPosition(180.f + ((i - 3) * 260), 850.f);
+		window.draw(text);
+	}
+
+	//Choice manipulation
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+	{
+		choice--;
+		Sleep(30);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+	{
+		choice++;
+		Sleep(30);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 3 >= 0)
+	{
+		choice = choice - 3;
+		Sleep(30);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 3 < numberOfButtons)
+	{
+		choice = choice + 3;
+		Sleep(30);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) return choice;
+	return 999;
+}
+
 int choice(wstring wstring1, wstring wstring2, wstring wstring3, wstring wstring4, wstring wstring5, wstring wstring6, int numberOfOptions) {
 	int optionChoice = 1;
 	int choice1, choice2, choice3, choice4, choice5;

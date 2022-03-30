@@ -24,65 +24,38 @@
 
 using namespace std;
 
-void itemInfoStringName(wstring main, int color)
+
+void drawItemInfo(sf::RenderWindow& window, sf::Text text, wstring name, int& k, int x, int y, sf::Color color)
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	wstring blankSpace;
-	blankSpace = main;
-	for (int a = 0; a < 23 - main.length(); a++)
-	{
-		blankSpace = blankSpace + L" ";
-	}
-	SetConsoleTextAttribute(hConsole, color);
-	std::wcout << blankSpace;
+	text.setFillColor(color);
+
+	text.setCharacterSize(24);
+	text.setPosition(259.f + x, 138.f + y + (k * 25));
+	text.setString(name);
+	window.draw(text);
+	k++;
 }
 
-void itemInfoString(wstring type, int requiredNumber, int color = 15, int number = -1)
+void drawItemInfo(sf::RenderWindow& window, sf::Text text, wstring statStr, int& k, int value, int x, int y, sf::Color green, sf::Color red)
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	wstring blankSpace, main;
-	main = type + L": +" + to_wstring(requiredNumber);
-	for (int a = 0; a < 23 - main.length(); a++)
-	{
-		blankSpace = blankSpace + L" ";
-	}
-	SetConsoleTextAttribute(hConsole, color);
-	std::wcout << type + L": ";
-	if (number == -1)
-	{
-		if (requiredNumber >= 0)
-		{
-			SetConsoleTextAttribute(hConsole, 10);
-			std::wcout << L"+" << requiredNumber << blankSpace;
-		}
-		else
-		{
-			SetConsoleTextAttribute(hConsole, 12);
-			std::wcout << requiredNumber << blankSpace;
-		}
-	}
-	else if (number >= 0)
-	{
-		if (requiredNumber <= number)
-		{
-			SetConsoleTextAttribute(hConsole, 2);
-			std::wcout << requiredNumber << L" " << blankSpace;
-		}
-		else if (requiredNumber > number)
-		{
-			SetConsoleTextAttribute(hConsole, 4);
-			std::wcout << requiredNumber << L" " << blankSpace;
-		}
-	}
-}
+	if (value >= 0) text.setFillColor(green);
+	else text.setFillColor(red);
 
-void drawItemInfo(sf::RenderWindow& window, sf::Text text, wstring statStr, int &k, int value, int x, int y)
-{
-	if (value >= 0) text.setFillColor(sf::Color{ 52,150,14,255 });
-	else text.setFillColor(sf::Color{ 198,0,0,255 });
-
-	text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
+	text.setCharacterSize(18);
+	text.setPosition(260.f + x, 148.f + y + (k * 18));
 	text.setString(statStr + to_wstring(value));
+	window.draw(text);
+	k++;
+}
+
+void drawItemInfo(sf::RenderWindow& window, sf::Text text, wstring statStr, int& k, int requiredVal, int x, int y, int value, sf::Color green, sf::Color red)
+{
+	if (value >= requiredVal) text.setFillColor(green);
+	else text.setFillColor(red);
+
+	text.setCharacterSize(18);
+	text.setPosition(260.f + x, 148.f + y + (k * 18));
+	text.setString(statStr + to_wstring(requiredVal));
 	window.draw(text);
 	k++;
 }
@@ -146,43 +119,53 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 		switch (ID)
 		{
 		case 1000:
-			selectedItem.addedHp = 0;
-			selectedItem.addedMp = 0;
-			selectedItem.hpRegen = 0;
-			selectedItem.mpRegen = 0;
 			selectedItem.dmg = 10;
-			selectedItem.def = 0;
 			selectedItem.strReq = 0;
-			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 1;
-			selectedItem.mpReq = 0;
 			selectedItem.itemName = L"Mace";
 			break;
 		case 1001:
-			selectedItem.addedHp = 0;
-			selectedItem.addedMp = 0;
-			selectedItem.hpRegen = 0;
-			selectedItem.mpRegen = 0;
 			selectedItem.dmg = 13;
-			selectedItem.def = 0;
 			selectedItem.strReq = 0;
-			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 2;
-			selectedItem.mpReq = 0;
 			selectedItem.itemName = L"Mace With Nails";
 			break;
 		case 1002:
-			selectedItem.addedHp = -2;
-			selectedItem.addedMp = 0;
-			selectedItem.hpRegen = 0;
-			selectedItem.mpRegen = 0;
 			selectedItem.dmg = 15;
-			selectedItem.def = 0;
 			selectedItem.strReq = 0;
-			selectedItem.inReq = 0;
 			selectedItem.lvlReq = 3;
-			selectedItem.mpReq = 0;
-			selectedItem.itemName = L"Rusty Knife";
+			selectedItem.itemName = L"Copper Knife";
+			break;
+		case 1003:
+			selectedItem.dmg = 17;
+			selectedItem.strReq = 0;
+			selectedItem.lvlReq = 4;
+			selectedItem.itemName = L"Copper Sword";
+			break;
+		case 1004:
+			selectedItem.dmg = 20;
+			selectedItem.strReq = 0;
+			selectedItem.lvlReq = 5;
+			selectedItem.itemName = L"Copper Longsword";
+			break;
+		case 1005:
+			selectedItem.dmg = 17;
+			selectedItem.strReq = 0;
+			selectedItem.lvlReq = 4;
+			selectedItem.itemName = L"Iron Knife";
+			break;
+		case 1006:
+			selectedItem.dmg = 20;
+			selectedItem.strReq = 0;
+			selectedItem.lvlReq = 5;
+			selectedItem.itemName = L"Iron Sword";
+			break;
+		case 1007:
+			selectedItem.dmg = 23;
+			selectedItem.strReq = 0;
+			selectedItem.lvlReq = 6;
+			selectedItem.itemName = L"Iron Longsword";
+			break;
 		}
 	}
 	else if (ID >= 2000 and ID < 3000)
@@ -227,6 +210,19 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 			selectedItem.lvlReq = 3;
 			selectedItem.mpReq = 0;
 			selectedItem.itemName = L"Copper Breastplate";
+			break;
+		case 2003:
+			selectedItem.addedHp = 0;
+			selectedItem.addedMp = 0;
+			selectedItem.hpRegen = 1;
+			selectedItem.mpRegen = 0;
+			selectedItem.dmg = 0;
+			selectedItem.def = 12;
+			selectedItem.strReq = 0;
+			selectedItem.inReq = 0;
+			selectedItem.lvlReq = 4;
+			selectedItem.mpReq = 0;
+			selectedItem.itemName = L"Copper Chestplate";
 			break;
 		}
 	}
@@ -276,45 +272,50 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 		text.setOutlineThickness(1.f);
 		text.setCharacterSize(24);
 
-		wstring attribute = L"";
-		int k = 0;
+		int textHeight = 0;
+		int textWidth = 0;
+
 		if (selectedItem.itemName != L" ")
 		{
-			text.setPosition(260.f + (x * 75), 140.f + (y * 75) + (k * 25));
-			text.setString(selectedItem.itemName);
-			window.draw(text);
-			k++;
+			wstring str = selectedItem.itemName;
+			wchar_t* ptr = _wcsdup(selectedItem.itemName.c_str());
+			textWidth = std::wcslen(ptr);
 		}
-		if (selectedItem.addedHp != 0)drawItemInfo(window, text, L"HP: ", k, selectedItem.addedHp, x, y);
-		if (selectedItem.addedMp != 0) drawItemInfo(window, text, L"MP: ", k, selectedItem.addedMp, x, y);
-		if (selectedItem.hpRegen != 0) drawItemInfo(window, text, L"HP Regen: ", k, selectedItem.hpRegen, x, y);
-		if (selectedItem.mpRegen != 0) drawItemInfo(window, text, L"MP Regen: ", k, selectedItem.mpRegen, x, y);
-		if (selectedItem.dmg != 0) drawItemInfo(window, text, L"DMG: ", k, selectedItem.dmg, x, y);
-		if (selectedItem.def != 0) drawItemInfo(window, text, L"DEF: ", k, selectedItem.def, x, y);
-		if (selectedItem.strReq > 0)
-		{
-			itemInfoString(L"Min STR", selectedItem.strReq, 15, mainPlayer.str);
-			k++;
-		}
-		if (selectedItem.inReq > 0)
-		{
-			itemInfoString(L"Min INT", selectedItem.inReq, 15, mainPlayer.in);
-			k++;
-		}
-		if (selectedItem.lvlReq > 0)
-		{
-			itemInfoString(L"Min LVL", selectedItem.lvlReq, 15, mainPlayer.lvl);
-			k++;
-		}
-		if (selectedItem.mpReq > 0)
-		{
-			itemInfoString(L"Min MP", selectedItem.mpReq, 15, mainPlayer.maxmp);
-			k++;
-		}
-		for (int i = 0; i < 30 - k; i++)
-		{
-			gotoxy(97, k); k++; std::wcout << "                       ";
-		}
+		if (selectedItem.addedHp != 0) textHeight++;
+		if (selectedItem.addedMp != 0) textHeight++;
+		if (selectedItem.hpRegen != 0) textHeight++;
+		if (selectedItem.mpRegen != 0) textHeight++;
+		if (selectedItem.dmg != 0) textHeight++;
+		if (selectedItem.def != 0) textHeight++;
+		if (selectedItem.strReq != 0) textHeight++;
+		if (selectedItem.inReq != 0) textHeight++;
+		if (selectedItem.lvlReq != 0) textHeight++;
+		if (selectedItem.mpReq != 0) textHeight++;
+
+
+		//Item stats black backside
+		sf::RectangleShape backside;
+		backside.setScale(1.f,1.f);
+		backside.setSize(sf::Vector2f((textWidth * 9) + 44, 36 + (textHeight * 18)));
+		backside.setFillColor(sf::Color{ 23,8,0,255 });
+		backside.setPosition(255.f + x, 135.f + y);
+		window.draw(backside);
+
+
+
+		int k = 0;
+
+		if (selectedItem.itemName != L" ") drawItemInfo(window, text, selectedItem.itemName, k, x, y, selectedItem.color);
+		if (selectedItem.addedHp != 0) drawItemInfo(window, text, L"HP: ", k, selectedItem.addedHp, x, y, sf::Color{ 52,150,14,255 }, sf::Color{ 198,0,0,255 });
+		if (selectedItem.addedMp != 0) drawItemInfo(window, text, L"MP: ", k, selectedItem.addedMp, x, y, sf::Color{ 52,150,14,255 }, sf::Color{ 198,0,0,255 });
+		if (selectedItem.hpRegen != 0) drawItemInfo(window, text, L"HP Regen: ", k, selectedItem.hpRegen, x, y, sf::Color{ 52,150,14,255 }, sf::Color{ 198,0,0,255 });
+		if (selectedItem.mpRegen != 0) drawItemInfo(window, text, L"MP Regen: ", k, selectedItem.mpRegen, x, y, sf::Color{ 52,150,14,255 }, sf::Color{ 198,0,0,255 });
+		if (selectedItem.dmg != 0) drawItemInfo(window, text, L"DMG: ", k, selectedItem.dmg, x, y, sf::Color{ 52,150,14,255 }, sf::Color{ 198,0,0,255 });
+		if (selectedItem.def != 0) drawItemInfo(window, text, L"DEF: ", k, selectedItem.def, x, y, sf::Color{ 52,150,14,255 }, sf::Color{ 198,0,0,255 });
+		if (selectedItem.strReq != 0) drawItemInfo(window, text, L"Min STR: ", k, selectedItem.strReq, x, y, mainPlayer.str, sf::Color{ 71,255,0,255 }, sf::Color{ 255,0,0,255 });
+		if (selectedItem.inReq != 0) drawItemInfo(window, text, L"Min INT: ", k, selectedItem.inReq, x, y, mainPlayer.in, sf::Color{ 71,255,0,255 }, sf::Color{ 255,0,0,255 });
+		if (selectedItem.lvlReq != 0) drawItemInfo(window, text, L"Min LVL: ", k, selectedItem.lvlReq, x, y, mainPlayer.lvl, sf::Color{ 71,255,0,255 }, sf::Color{ 255,0,0,255 });
+		if (selectedItem.mpReq != 0) drawItemInfo(window, text, L"Min MP: ", k, selectedItem.mpReq, x, y, mainPlayer.maxmp, sf::Color{ 71,255,0,255 }, sf::Color{ 255,0,0,255 });
 	}
 	else if (mode == 1 or mode == 2) //ZAKLADANIE
 	{
