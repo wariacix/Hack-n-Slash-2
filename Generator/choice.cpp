@@ -109,7 +109,7 @@ int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 		buttonT.loadFromFile("Textures\\button.png", sf::IntRect(0, 0, 51, 11));
 		sf::Sprite buttonS;
 		buttonS.setTexture(buttonT);
-		if (choice == i) buttonS.setColor(sf::Color{120,120,120,255});
+		if (choice == i) buttonS.setColor(sf::Color{ 252,255,0,255 });
 		else buttonS.setColor(sf::Color::White);
 		buttonS.setScale(5.f, 5.f);
 		if (i < 3)

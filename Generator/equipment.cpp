@@ -124,7 +124,7 @@ afterItemUse:
 						if (equipmentItem[eqx][eqy + yDifference][1] == 1 and choiceFlag == true)
 						{
 							eqSlot.setTexture(tSlot);
-							eqSlot.setColor(sf::Color::Green);
+							eqSlot.setColor(sf::Color{ 252,255,0,255 });
 							eqSlot.setPosition(180.f + ((eqx) * 75.f), 140.f + ((eqy + yDifference) * 75.f));
 							eqSlot.setScale(5.f, 5.f);
 							window.draw(eqSlot);
