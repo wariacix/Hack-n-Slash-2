@@ -98,12 +98,12 @@ int main()
 	text.setPosition(3.f, 3.f);
 	intMap map1;
 	window.setVerticalSyncEnabled(true);
+	bool recentlyLeft = 0;
 
-	int choice = 0;
 	while (true)
 	{
 		system("color 0f");
-		system("mode con: cols=126 lines=50");
+		system("mode con: cols=106 lines=25");
 		setBaseValues(window);
 		menu();
 		mainMap.generateMap();
@@ -122,30 +122,17 @@ int main()
 			//if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(window, 1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
 			mainMap.viewMapSFML(window, mainPlayer);
 			//if (rand() % 15 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
-			text.setString(to_string(mainPlayer.hp));
-			window.draw(text);
-			switch (choiceSFML(window, new (std::wstring[]){ L"Standard Attack",L"Magical Attack",L"Equipment",L"Try Running Away",L"Info",L"" }, choice))
+			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
 			{
-			case 0:
-				wcout << L"UDALO SIE!1";
-				break;
-			case 1:
-				break;
-			case 2:
-				wcout << L"UDALO SIE!2";
-				break;
-			case 3:
-				break;
-			case 4:
-				wcout << L"UDALO SIE!3";
-				break;
-			case 5:
-				break;
-			case 999:
-				break;
+				cityEnter(window, mainMap, mainPlayer);
+				recentlyLeft = 1;
 			}
-			window.display();
+			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
+			text.setString(to_string(mainPlayer.hp));
+			drawInterface(window);
+			window.draw(text);
 			mainPlayer.movePlayer(mainMap, window);
+			window.display();
 		}
 	}
 };
