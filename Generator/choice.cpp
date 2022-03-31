@@ -1,6 +1,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <windows.h>
@@ -21,6 +22,73 @@
 #include "choice.h"
 
 using namespace std;
+
+void drawInterface(sf::RenderWindow& window)
+{
+	sf::Texture tInterface;
+	sf::Sprite sInterface;
+	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 1600, 1000));
+	sInterface.setTexture(tInterface);
+	sInterface.setPosition(0.f, 0.f);
+	window.draw(sInterface);
+}
+
+void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
+{
+	int choice = 0;
+	sf::Texture tCityView;
+	sf::Sprite sCityView;
+
+	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) tCityView.loadFromFile("Textures\\humanCityView.png", sf::IntRect(0, 0, 193, 125));
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) tCityView.loadFromFile("Textures\\orcCityView.png", sf::IntRect(0, 0, 193, 125));
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) tCityView.loadFromFile("Textures\\forestCityView.png", sf::IntRect(0, 0, 193, 125));
+	sCityView.setTexture(tCityView);
+	sCityView.setPosition(70.f, 50.f);
+	sCityView.setScale(5.f, 5.f);
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) buffer.loadFromFile("Sounds\\HORN3.wav");
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) buffer.loadFromFile("Sounds\\FANFARE.wav");
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) buffer.loadFromFile("Sounds\\GARDENS3.wav");
+	sound.setBuffer(buffer);
+	sound.play();
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		bool exit = false;
+		window.clear();
+		window.draw(sCityView);
+		drawInterface(window);
+		switch (choiceSFML(window, new (std::wstring[]){ L"Try To Enter The City",L"Get Back To Main Map",L"",L"",L"",L""}, choice))
+		{
+		case 0:
+			break;
+		case 1:
+			exit = true;
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 999:
+			break;
+		}
+		window.display();
+		if (exit == true) break;
+	}
+}
 
 int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 {
@@ -44,8 +112,24 @@ int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 		if (choice == i) buttonS.setColor(sf::Color{120,120,120,255});
 		else buttonS.setColor(sf::Color::White);
 		buttonS.setScale(5.f, 5.f);
-		if (i < 3) buttonS.setPosition(165.f + (i * 260), 780.f);
-		else buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+		if (i < 3)
+		{
+			buttonS.setPosition(165.f + (i * 260), 780.f);
+		}
+		else
+		{
+			buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+		}
+		if (i < 3)
+		{
+			if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 780.f);
+			else buttonS.setPosition(165.f + (i * 260), 780.f);
+		}
+		else
+		{
+			if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 840.f);
+			else buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+		}
 		window.draw(buttonS);
 
 		sf::Font font;
@@ -59,8 +143,16 @@ int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 		text.setCharacterSize(24);
 		text.setString(choiceString[i]);
 
-		if (i < 3) text.setPosition(180.f + (i * 260), 790.f);
-		else text.setPosition(180.f + ((i - 3) * 260), 850.f);
+		if (i < 3)
+		{
+			if (numberOfButtons == 2 or numberOfButtons == 4) text.setPosition(305.f + (i * 260), 790.f);
+			else text.setPosition(180.f + (i * 260), 790.f);
+		}
+		else
+		{
+			if (numberOfButtons == 2 or numberOfButtons == 4) text.setPosition(305.f + ((i - 3) * 260), 850.f);
+			else text.setPosition(180.f + ((i - 3) * 260), 850.f);
+		}
 		window.draw(text);
 	}
 

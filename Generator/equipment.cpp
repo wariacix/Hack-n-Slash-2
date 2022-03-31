@@ -93,6 +93,12 @@ afterItemUse:
 		font.loadFromFile("dpcomic.ttf");
 		int yDifference = 0; //since you can't display 9999 items in 60 item slots (10x6 eq) you have to have some y changing mechanism
 	equipmentManeuveringLoop:
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
 		window.clear();
 		eqInterfaceSprite.setScale(5.f, 5.f);
 		eqInterfaceSprite.setTexture(tBottom);
@@ -246,7 +252,6 @@ afterItemUse:
 							equipItemSFML(window, 0, armory[2] + 3000, 1435 - offsetX, 170 - offsetY);
 						}
 						equipItemSFML(window, 0, equipmentItem[eqx][eqy][2], eqx * 75, (eqy + yDifference) * 75);
-						window.display();
 					}
 					//gameGui
 					while (true)
@@ -265,7 +270,6 @@ afterItemUse:
 								equipmentItem[equipmentWidth - 1][eqy - 1][1] = 1;
 							}
 							Sleep(40);
-							goto equipmentManeuveringLoop;
 						}
 						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) == true)
 						{
@@ -281,13 +285,12 @@ afterItemUse:
 								equipmentItem[0][eqy + 1][1] = 1;
 							}
 							Sleep(40);
-							goto equipmentManeuveringLoop;
 						}
 						else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true or sf::Keyboard::isKeyPressed(sf::Keyboard::E) == true or sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true)
 						{
 							hasBeenPressed = 3;
 							equipItemSFML(window, 1, equipmentItem[eqx][eqy][2], eqx, eqy); //function in other file for equipping/using items
-							//gameGui
+							window.display();
 							Sleep(40);
 							goto afterItemUse;
 						}
@@ -301,7 +304,6 @@ afterItemUse:
 								if (yDifference > 0 and (eqy - yDifference == 0)) yDifference--;
 							}
 							Sleep(40);
-							goto equipmentManeuveringLoop;
 						}
 						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) == 1)
 						{
@@ -316,14 +318,14 @@ afterItemUse:
 								yDifference++;
 							}
 							Sleep(40);
-							goto equipmentManeuveringLoop;
 						}
 						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) == 1)
 						{
 							hasBeenPressed = 0;
 							goto exit;
 						}
-						else goto equipmentManeuveringLoop;
+						window.display();
+						goto equipmentManeuveringLoop;
 						hasBeenPressed = 0;
 					}
 				}
