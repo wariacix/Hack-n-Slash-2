@@ -23,38 +23,133 @@ namespace dialogueSystem
 	class Dialogue
 	{
 	public:
-		sf::Texture viewTexture;
+		sf::Font font;
+		sf::Texture viewTexture, interfaceTexture;
+		sf::Sprite viewSprite, interfaceSprite;
 		sf::SoundBuffer buffer;
 		sf::Sound enterSound;
 		sf::Text text;
-		std::string interfaceStr;
 
-		Dialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr)
+		Dialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr, std::string fontName)
 		{
+			font.loadFromFile(fontName + ".ttf");
+
 			viewTexture.loadFromFile("Textures\\" + viewTextureName + ".png");
-			this->interfaceStr = interfaceStr;
+			viewSprite.setTexture(viewTexture);
+			viewSprite.setPosition(70.f, 50.f);
+			viewSprite.setScale(5.f, 5.f);
+
+			interfaceTexture.loadFromFile("Textures\\" + interfaceStr + ".png");
+			interfaceSprite.setTexture(interfaceTexture);
+			interfaceSprite.setPosition(0.f, 0.f);
+			interfaceSprite.setScale(5.f, 5.f);
+
+			text.setFont(font);
+			text.setFillColor(sf::Color{ 233,211,199,255 });
+			text.setOutlineColor(sf::Color{ 23,8,0,255 });
+			text.setOutlineThickness(2.f);
+
+			buffer.loadFromFile("Sounds\\" + enterSoundName + ".png");
+			enterSound.setBuffer(buffer);
+
 		};
+		
+		int getDialogueAnswer(sf::RenderWindow& window, wstring choiceString[6])
+		{
+			int numberOfButtons = 0;
+			for (int i = 0; i < 6; i++)
+			{
+				numberOfButtons++;
+				if (choiceString[i] == L"")
+				{
+					numberOfButtons--;
+				}
+			}
+
+			int choice = 0; // Starting at first button
+
+			sf::Texture buttonT;
+			buttonT.loadFromFile("Textures\\button.png", sf::IntRect(0, 0, 51, 11));
+			sf::Sprite buttonS;
+			buttonS.setTexture(buttonT);
+
+			while (window.isOpen())
+			{
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if (event.type == sf::Event::Closed)
+						window.close();
+				}
+
+				window.clear();
+
+				for (int i = 0; i < numberOfButtons; i++)
+				{
+					if (choice == i) buttonS.setColor(sf::Color{ 252,255,0,255 });
+					else buttonS.setColor(sf::Color::White);
+					buttonS.setScale(5.f, 5.f);
+					if (i < 3)
+					{
+						if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 780.f);
+						else buttonS.setPosition(165.f + (i * 260), 780.f);
+					}
+					else
+					{
+						if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 840.f);
+						else buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+					}
+					window.draw(buttonS);
+
+					text.setCharacterSize(24);
+					text.setString(choiceString[i]);
+
+					if (i < 3)
+					{
+						if (numberOfButtons == 2 or numberOfButtons == 4) text.setPosition(305.f + (i * 260), 790.f);
+						else text.setPosition(180.f + (i * 260), 790.f);
+					}
+					else
+					{
+						if (numberOfButtons == 2 or numberOfButtons == 4) text.setPosition(305.f + ((i - 3) * 260), 850.f);
+						else text.setPosition(180.f + ((i - 3) * 260), 850.f);
+					}
+					window.draw(text);
+				}
+				window.display();
+
+
+				//Choice manipulation
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+				{
+					choice--;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+				{
+					choice++;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 3 >= 0)
+				{
+					choice = choice - 3;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 3 < numberOfButtons)
+				{
+					choice = choice + 3;
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) return choice;
+			}
+			return 999;
+		}
+
+		void drawView(sf::RenderWindow& window)
+		{
+			enterSound.play();
+			window.draw(viewSprite);
+		}
 
 		void drawInterface(sf::RenderWindow& window)
 		{
-			sf::Texture tInterface;
-			sf::Sprite sInterface;
-			tInterface.loadFromFile("Textures\\" + interfaceStr + ".png", sf::IntRect(0, 0, 1600, 1000));
-			sInterface.setTexture(tInterface);
-			sInterface.setPosition(0.f, 0.f);
-			window.draw(sInterface);
-		}
-
-		void drawView(sf::RenderWindow& window, string fileName)
-		{
-			sf::Texture tView;
-			sf::Sprite sView;
-			string folder = "Textures\\", extension = ".png";
-			tView.loadFromFile(folder + fileName + extension, sf::IntRect(0, 0, 193, 125));
-			sView.setTexture(tView);
-			sView.setPosition(70.f, 50.f);
-			sView.setScale(5.f, 5.f);
-			window.draw(sView);
+			window.draw(interfaceSprite);
 		}
 
 		static void textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer)
@@ -212,7 +307,7 @@ int choice(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 
 		sf::Text text;
 		text.setFont(font);
-		text.setFillColor(sf::Color{233,211,199,255});
+		text.setFillColor(sf::Color{ 233,211,199,255 });
 		text.setOutlineColor(sf::Color{ 23,8,0,255 });
 		text.setOutlineThickness(2.f);
 		text.setCharacterSize(24);
