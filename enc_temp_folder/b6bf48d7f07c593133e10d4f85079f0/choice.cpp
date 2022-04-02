@@ -158,7 +158,7 @@ namespace dialogueSystem
 
 
 				//Choice manipulation
-				int sleepTime = 80;
+				int sleepTime = 40;
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
 				{
 					choice--; Sleep(sleepTime);
