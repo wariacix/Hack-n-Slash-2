@@ -11,18 +11,13 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
-#include "gotoxy.h"
 #include "menu.h"
-#include "fight.h"
-#include "draw.h"
-#include "gameGui.h"
-#include "textbox.h"
 #include "variables.h"
 #include "choice.h"
 #include "equipment.h"
 #include "equipItem.h"
 #include "Player.h"
-#include "intMap.h"
+
 #include "Map.h"
 
 Map mainMap;
@@ -78,6 +73,16 @@ void setBaseValues(sf::RenderWindow &window)
 	item[3001] = 1;
 };
 
+void xpCount()
+{
+	while (mainPlayer.xp >= mainPlayer.reqexp)
+	{
+		mainPlayer.xp = mainPlayer.xp - mainPlayer.reqexp;
+		mainPlayer.reqexp = mainPlayer.reqexp + 250;
+		mainPlayer.lvl++;
+	}
+}
+
 void updateHpMp()
 {
 	if (mainPlayer.hp < mainPlayer.maxhp) mainPlayer.hp = mainPlayer.hp + mainPlayer.hpRegen; else mainPlayer.hp = mainPlayer.maxhp;
@@ -96,7 +101,6 @@ int main()
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(22);
 	text.setPosition(3.f, 3.f);
-	intMap map1;
 	window.setVerticalSyncEnabled(true);
 	bool recentlyLeft = 0;
 
@@ -107,7 +111,6 @@ int main()
 		setBaseValues(window);
 		menu();
 		mainMap.generateMap();
-		map1.loadMap(L"map1");
 		while (window.isOpen() and los == false)
 		{
 			sf::Event event;
@@ -119,16 +122,17 @@ int main()
 
 			window.clear();
 			mainMap.clearFog(mainPlayer);
-			//if (rand() % 14 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(window, 1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
 			mainMap.viewMapSFML(window, mainPlayer);
-			//if (rand() % 15 == 0) textWritingSFML(L"Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!", text, window, mainMap, mainPlayer);
+
 			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
 			{
 				cityEnter(window, mainMap, mainPlayer);
 				recentlyLeft = 1;
 			}
 			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
-			text.setString(to_string(mainPlayer.hp));
+
+			text.setString(to_string((int)mainPlayer.hp) + " / " + to_string(mainPlayer.maxhp)); //Draw health in the corner
+
 			drawInterface(window);
 			window.draw(text);
 			mainPlayer.movePlayer(mainMap, window);

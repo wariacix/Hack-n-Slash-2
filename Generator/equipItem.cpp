@@ -12,13 +12,8 @@
 #include <fcntl.h>
 #include <io.h>
 #include "equipment.h"
-#include "gotoxy.h"
 #include "menu.h"
-#include "fight.h"
-#include "draw.h"
-#include "gameGui.h"
 #include "Player.h"
-#include "textbox.h"
 #include "variables.h"
 #include "choice.h"
 

@@ -12,7 +12,6 @@
 #include <fcntl.h>
 #include <io.h>
 #include "variables.h"
-#include "gotoxy.h"
 #include "Player.h"
 #include "Map.h"
 
@@ -394,28 +393,11 @@ void Map::generatePaths()
 				int measuredDistance = 0;
 				rep = 0;
 				int xr, yr;
-				if (debugMode == 1)
-				{
-					SetConsoleTextAttribute(hConsole, 30);
-					gotoxy(2 * x1, y1 + 4);
-					wcout << L"C1";
-					gotoxy(2 * x2, y2 + 4);
-					wcout << L"C2";
-					gotoxy(0, 0);
-					wcout << L"Iteration: ";
-					gotoxy(30, 0);
-					wcout << requestedDistance << L"  ";
-				}
 				bool repAdded = false;
 			cancel:
 				while (success == false)
 				{
 					rep++;
-					if (debugMode == 1)
-					{
-						gotoxy(12, 0);
-						wcout << rep;
-					}
 					if (rep > 25000 and repAdded == false)
 					{
 						repAdded = true;
@@ -423,9 +405,6 @@ void Map::generatePaths()
 					}
 					if (rep > 50000)
 					{
-						SetConsoleTextAttribute(hConsole, 15);
-						gotoxy(12, 0);
-						wcout << L"                ";
 						goto back2;
 					}
 					SetConsoleTextAttribute(hConsole, 1);
@@ -495,8 +474,6 @@ void Map::generatePaths()
 										howManyPaths++;
 										if (debugMode == 1)
 										{
-											gotoxy(37, 0);
-											SetConsoleTextAttribute(hConsole, 14);
 											wcout << measuredDistance << L"  ";
 										}
 										goto done;
@@ -509,38 +486,6 @@ void Map::generatePaths()
 				}
 			}
 		done:
-			if (debugMode == 1)
-			{
-				for (x = 0; x < 48; x++)
-				{
-					for (y = 0; y < 46; y++)
-					{
-						SetConsoleTextAttribute(hConsole, 120);
-						gotoxy(2 * x, y + 4);
-						if (biome[x][y] == 1) wcout << L"/\\";
-						else
-						{
-							if (minion[x][y] == 1)
-							{
-								SetConsoleTextAttribute(hConsole, 68);
-								wcout << L"##";
-							}
-							else
-							{
-								if (path[x][y] == 1)
-								{
-									SetConsoleTextAttribute(hConsole, 170);
-									wcout << L"##";
-								}
-							}
-						}
-					}
-				}
-				SetConsoleTextAttribute(hConsole, 15);
-				gotoxy(12, 0);
-				wcout << L"                ";
-				Sleep(550);
-			}
 
 			for (x = 0; x < 48; x++)
 				for (y = 0; y < 46; y++) if (minion[x][y] != 0) path[x][y] = 1;
@@ -562,120 +507,6 @@ void Map::generateMap()
 			}
 			generatePaths();
 		}
-
-void Map::viewMap()
-{
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	for (int u = 0; u < 46; u++)
-	{
-		for (int c = 0; c < 48; c++)
-		{
-			gotoxy(2 * c, u + 4);
-			switch (fog[c][u])
-			{
-			case 0:
-				switch (hero[c][u])
-				{
-				case 0:
-					switch (city[c][u])
-					{
-					case 0:
-						switch (biome[c][u]) //0,68,170
-						{
-						case 0:
-							SetConsoleTextAttribute(hConsole, 162);
-							if (path[c][u] == 0)
-							{
-								srand((c + u) * (c - u) * u + 2);
-								int random = rand() % 8;
-								if (random == 0) wcout << L"vv";
-								else if (random == 1) wcout << L"~v";
-								else if (random == 2) wcout << L"v~";
-								else wcout << L"~~";
-								srand(time(NULL));
-							}
-							else if (path[c][u] == 1)
-							{
-								SetConsoleTextAttribute(hConsole, 166);
-								wcout << L"##";
-							}
-							break;
-						case 1:
-							if (biome[c][u] == 1 and c < 47 and c > 1 and biome[c + 1][u] == 1 or biome[c - 1][u] != 1)
-							{
-								SetConsoleTextAttribute(hConsole, 120);
-							}
-							else SetConsoleTextAttribute(hConsole, 135);
-							if (path[c][u] == 0) wcout << L"/\\";
-							else if (path[c][u] == 1)
-							{
-								SetConsoleTextAttribute(hConsole, 118);
-								wcout << L"##";
-							}
-							break;
-						case 2:
-							SetConsoleTextAttribute(hConsole, 230);
-							if (path[c][u] == 0) wcout << L"~~";
-							else if (path[c][u] == 1)
-							{
-								wcout << L"##";
-							}
-							break;
-						case 3:
-							SetConsoleTextAttribute(hConsole, 251);
-							if (path[c][u] == 0) wcout << L"~~";
-							else if (path[c][u] == 1)
-							{
-								SetConsoleTextAttribute(hConsole, 246);
-								wcout << L"##";
-							}
-							break;
-						case 4:
-							SetConsoleTextAttribute(hConsole, 32);
-							if (path[c][u] == 0) wcout << L"##";
-							else if (path[c][u] == 1)
-							{
-								SetConsoleTextAttribute(hConsole, 38);
-								wcout << L"##";
-							}
-							break;
-						}
-						break;
-					case 1:
-						int id;
-						id = cityID[c][u];
-						if (biome[c][u] == 0) SetConsoleTextAttribute(hConsole, 15);
-						else if (biome[c][u] == 2) SetConsoleTextAttribute(hConsole, 14);
-						else if (biome[c][u] == 4) SetConsoleTextAttribute(hConsole, 10);
-						wcout << L"[]";
-						bool isHidden = false;
-						for (int h = -2; h < 6; h++)
-						{
-							if (c + h >= 0 and u - 2 >= 0 and c + h <= 48 and u - 2 <= 46)
-							{
-								if (hero[c + h][u - 2] == 1) isHidden = true;
-							}
-						}
-						if (isHidden == false) gotoxy(2 * c - 2, u + 2);
-						else if (isHidden == true) gotoxy(2 * c - 2, u + 1);
-						wcout << cityName[id];
-						break;
-					}
-					break;
-				case 1:
-					SetConsoleTextAttribute(hConsole, 240);
-					wcout << L"☺↑";
-					break;
-				}
-				break;
-			case 1:
-				SetConsoleTextAttribute(hConsole, 8);
-				wcout << L"??";
-				break;
-			}
-		}
-	}
-}
 
 void Map::clearFog(Player &player1)
 {
