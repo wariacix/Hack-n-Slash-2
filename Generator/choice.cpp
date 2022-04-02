@@ -267,7 +267,7 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) dialogueSystem::Dialogue cityDialoguePlaceholder("humanCityView", "FANFARE", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) dialogueSystem::Dialogue cityDialoguePlaceholder("orcCityView", "HORN3", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) dialogueSystem::Dialogue cityDialoguePlaceholder("forestCityView", "GARDENS3", "interface", "dpcomic");
-	dialogueSystem::Dialogue cityDialogue = cityDialoguePlaceholder;
+	dialogueSystem::Dialogue cityDialogue(cityDialoguePlaceholder);
 
 	switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try to Enter The City",L"Get Back to Main Map",L"",L"",L"",L""}, 1))
 	{
