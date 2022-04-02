@@ -59,6 +59,4 @@ public:
 	void generatePaths();
 
 	void generateMap();
-
-	void viewMap();
 };

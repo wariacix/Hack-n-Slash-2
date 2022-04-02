@@ -12,16 +12,90 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
-#include "gotoxy.h"
 #include "menu.h"
-#include "fight.h"
-#include "draw.h"
-#include "gameGui.h"
-#include "textbox.h"
 #include "variables.h"
 #include "choice.h"
 
 using namespace std;
+
+namespace dialogueSystem
+{
+	class Dialogue
+	{
+	public:
+		sf::Texture viewTexture;
+		sf::SoundBuffer buffer;
+		sf::Sound enterSound;
+		sf::Text text;
+		std::string interfaceStr;
+
+		Dialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr)
+		{
+			viewTexture.loadFromFile("Textures\\" + viewTextureName + ".png");
+			this->interfaceStr = interfaceStr;
+		};
+
+		void drawInterface(sf::RenderWindow& window)
+		{
+			sf::Texture tInterface;
+			sf::Sprite sInterface;
+			tInterface.loadFromFile("Textures\\" + interfaceStr + ".png", sf::IntRect(0, 0, 1600, 1000));
+			sInterface.setTexture(tInterface);
+			sInterface.setPosition(0.f, 0.f);
+			window.draw(sInterface);
+		}
+
+		void drawView(sf::RenderWindow& window, string fileName)
+		{
+			sf::Texture tView;
+			sf::Sprite sView;
+			string folder = "Textures\\", extension = ".png";
+			tView.loadFromFile(folder + fileName + extension, sf::IntRect(0, 0, 193, 125));
+			sView.setTexture(tView);
+			sView.setPosition(70.f, 50.f);
+			sView.setScale(5.f, 5.f);
+			window.draw(sView);
+		}
+
+		static void textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer)
+		{
+			sf::Clock clock;
+
+			wstring* text = new wstring(input);
+			int a = 0; int lines = 0; int lineLength = 56;
+			const wchar_t* textArray = text->c_str();
+			float sec = 3.f;
+
+			for (int i = 1; i < wcslen(textArray); i++)
+			{
+				sf::Event event;
+				a = 0;
+				lines = 0;
+				int charsLeft = i;
+				window.clear();
+				while (window.pollEvent(event)) if (event.type == sf::Event::KeyPressed) sec = 1.f;
+				mainMap.viewMapSFML(window, mainPlayer);
+				while (charsLeft > 0)
+				{
+					if (a > lineLength)
+					{
+						lines++;
+						a = a - lineLength - 1;
+
+					}
+					while (true) { sf::Time time = clock.getElapsedTime(); if (time.asMilliseconds() > sec) break; };
+					textEnt.setString(textArray[a + (lines * lineLength)]);
+					textEnt.setPosition(160 + 12 * a, 755 + lines * 23);
+					window.draw(textEnt);
+					a++;
+					charsLeft--;
+				}
+				window.display();
+			}
+			delete text;
+		}
+	};
+}
 
 void drawInterface(sf::RenderWindow& window)
 {
@@ -33,26 +107,31 @@ void drawInterface(sf::RenderWindow& window)
 	window.draw(sInterface);
 }
 
+void drawView(sf::RenderWindow& window, string fileName)
+{
+	sf::Texture tView;
+	sf::Sprite sView;
+	string folder = "Textures\\", extension = ".png";
+	tView.loadFromFile(folder + fileName + extension, sf::IntRect(0, 0, 193, 125));
+	sView.setTexture(tView);
+	sView.setPosition(70.f, 50.f);
+	sView.setScale(5.f, 5.f);
+	window.draw(sView);
+}
+
 void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 {
-	int choice = 0;
-	sf::Texture tCityView;
-	sf::Sprite sCityView;
+	int choicea = 0;
 
-	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) tCityView.loadFromFile("Textures\\humanCityView.png", sf::IntRect(0, 0, 193, 125));
-	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) tCityView.loadFromFile("Textures\\orcCityView.png", sf::IntRect(0, 0, 193, 125));
-	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) tCityView.loadFromFile("Textures\\forestCityView.png", sf::IntRect(0, 0, 193, 125));
-	sCityView.setTexture(tCityView);
-	sCityView.setPosition(70.f, 50.f);
-	sCityView.setScale(5.f, 5.f);
-
-	sf::SoundBuffer buffer;
-	sf::Sound sound;
-	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) buffer.loadFromFile("Sounds\\HORN3.wav");
-	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) buffer.loadFromFile("Sounds\\FANFARE.wav");
-	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) buffer.loadFromFile("Sounds\\GARDENS3.wav");
-	sound.setBuffer(buffer);
-	sound.play();
+	sf::SoundBuffer buffer1;
+	sf::Sound sound1;
+	string fileName;
+	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) fileName = "Sounds\\HORN3.wav";
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) fileName = "Sounds\\FANFARE.wav";
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) fileName = "Sounds\\GARDENS3.wav";
+	buffer1.loadFromFile(fileName);
+	sound1.setBuffer(buffer1);
+	sound1.play();
 
 	while (window.isOpen())
 	{
@@ -65,9 +144,13 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 
 		bool exit = false;
 		window.clear();
-		window.draw(sCityView);
+
+		if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) drawView(window, "humanCityView");
+		else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) drawView(window, "orcCityView");
+		else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) drawView(window, "forestCityView");
+
 		drawInterface(window);
-		switch (choiceSFML(window, new (std::wstring[]){ L"Try To Enter The City",L"Get Back To Main Map",L"",L"",L"",L""}, choice))
+		switch (choice(window, new (std::wstring[]){ L"Try To Enter The City",L"Get Back To Main Map",L"",L"",L"",L""}, choicea))
 		{
 		case 0:
 			break;
@@ -90,7 +173,7 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 	}
 }
 
-int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
+int choice(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 {
 	int numberOfButtons = 0;
 	for (int i = 0; i < 6; i++)
@@ -112,14 +195,6 @@ int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 		if (choice == i) buttonS.setColor(sf::Color{ 252,255,0,255 });
 		else buttonS.setColor(sf::Color::White);
 		buttonS.setScale(5.f, 5.f);
-		if (i < 3)
-		{
-			buttonS.setPosition(165.f + (i * 260), 780.f);
-		}
-		else
-		{
-			buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
-		}
 		if (i < 3)
 		{
 			if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 780.f);
@@ -179,831 +254,4 @@ int choiceSFML(sf::RenderWindow &window, wstring choiceString[6], int &choice)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) return choice;
 	return 999;
-}
-
-int choice(wstring wstring1, wstring wstring2, wstring wstring3, wstring wstring4, wstring wstring5, wstring wstring6, int numberOfOptions) {
-	int optionChoice = 1;
-	int choice1, choice2, choice3, choice4, choice5;
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	switch(numberOfOptions)
-	{
-	int options[6];
-	case 2:
-		options[0] = 1;
-		options[1] = 0;
-	loop1:
-		if (options[0] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 39);
-			wcout << "                                                                    ";
-			if ((wstring1.length()/2)*2 == wstring1.length()) gotoxy(26 + 34 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 34 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		else if (options[0] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 39);
-			wcout << "                                                                    ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 34 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 34 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		if (options[1] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 40);
-			wcout << "                                                                    ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 34 - (wstring2.length() / 2), 40);
-			else gotoxy(26 + 34 - (wstring2.length() / 2) - 1, 40);
-			wcout << wstring2;
-		}
-		else if (options[1] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 40);
-			wcout << "                                                                    ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 34 - (wstring2.length() / 2), 40);
-			else gotoxy(26 + 34 - (wstring2.length() / 2) - 1, 40);
-			wcout << wstring2;
-		}
-		choice1 = _getch();
-		switch(choice1)
-		{
-		case 13:
-			if (options[0] == 1 and options[1] == 0)
-			{
-				return optionChoice = 1;
-			}
-			else if (options[0] == 0 and options[1] == 1)
-			{
-				return optionChoice = 2;
-			}
-			break;
-		case 115:
-			if (options[0] == 0) options[0] = 1;
-			else if (options[0] == 1) options[0] = 0;
-			if (options[1] == 0) options[1] = 1;
-			else if (options[1] == 1) options[1] = 0;
-			break;
-		case 119:
-			if (options[0] == 0) options[0] = 1;
-			else if (options[0] == 1) options[0] = 0;
-			if (options[1] == 0) options[1] = 1;
-			else if (options[1] == 1) options[1] = 0;
-			break;
-		}
-		goto loop1;
-		break;
-	case 3:
-		options[0] = 1;
-		options[1] = 0;
-		options[2] = 0;
-	loop2:
-		if (options[0] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 39);
-			wcout << "                                                                    ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 34 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 34 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		else if (options[0] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 39);
-			wcout << "                                                                    ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 34 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 34 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		if (options[1] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 40);
-			wcout << "                                                                    ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 34 - (wstring2.length() / 2), 40);
-			else gotoxy(26 + 34 - (wstring2.length() / 2) - 1, 40);
-			wcout << wstring2;
-		}
-		else if (options[1] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 40);
-			wcout << "                                                                    ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 34 - (wstring2.length() / 2), 40);
-			else gotoxy(26 + 34 - (wstring2.length() / 2) - 1, 40);
-			wcout << wstring2;
-		}
-		if (options[2] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 41);
-			wcout << "                                                                    ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 34 - (wstring3.length() / 2), 41);
-			else gotoxy(26 + 34 - (wstring3.length() / 2) - 1, 41);
-			wcout << wstring3;
-		}
-		else if (options[2] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 41);
-			wcout << "                                                                    ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 34 - (wstring3.length() / 2), 41);
-			else gotoxy(26 + 34 - (wstring3.length() / 2) - 1, 41);
-			wcout << wstring3;
-		}
-		choice2 = _getch();
-		switch (choice2)
-		{
-		case 13:
-			if (options[0] == 1)
-			{
-				return optionChoice = 1;
-			}
-			else if (options[1] == 1)
-			{
-				return optionChoice = 2;
-			}
-			else if (options[2] == 1)
-			{
-				return optionChoice = 3;
-			}
-			break;
-		case 115:
-			if (options[0] == 0 and options[1] == 0 and options[2] == 1)
-			{
-				options[0] = 1;
-				options[2] = 0;
-			}
-			else if (options[0] == 1 and options[1] == 0 and options[2] == 0)
-			{
-				options[0] = 0;
-				options[1] = 1;
-			}
-			else if (options[0] == 0 and options[1] == 1 and options[2] == 0)
-			{
-				options[1] = 0;
-				options[2] = 1;
-			}
-			break;
-		case 119:
-			if (options[0] == 0 and options[1] == 0 and options[2] == 1)
-			{
-				options[1] = 1;
-				options[2] = 0;
-			}
-			else if (options[0] == 1 and options[1] == 0 and options[2] == 0)
-			{
-				options[0] = 0;
-				options[2] = 1;
-			}
-			else if (options[0] == 0 and options[1] == 1 and options[2] == 0)
-			{
-				options[1] = 0;
-				options[0] = 1;
-			}
-			break;
-		}
-		goto loop2;
-		break;
-	case 4:
-		options[0] = 1;
-		options[1] = 0;
-		options[2] = 0;
-		options[3] = 0;
-	loop3:
-		if (options[0] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 39);
-			wcout << "                                  ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 17 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 17 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		else if (options[0] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 39);
-			wcout << "                                  ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 17 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 17 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		if (options[1] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 39);
-			wcout << "                                  ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 52 - (wstring2.length() / 2), 39);
-			else gotoxy(26 + 52 - (wstring2.length() / 2) - 1, 39);
-			wcout << wstring2;
-		}
-		else if (options[1] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 39);
-			wcout << "                                  ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 52 - (wstring2.length() / 2), 39);
-			else gotoxy(26 + 52 - (wstring2.length() / 2) - 1, 39);
-			wcout << wstring2;
-		}
-		if (options[2] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 40);
-			wcout << "                                  ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 17 - (wstring3.length() / 2), 40);
-			else gotoxy(26 + 17 - (wstring3.length() / 2) - 1, 40);
-			wcout << wstring3;
-		}
-		else if (options[2] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 40);
-			wcout << "                                  ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 17 - (wstring3.length() / 2), 40);
-			else gotoxy(26 + 17 - (wstring3.length() / 2) - 1, 40);
-			wcout << wstring3;
-		}
-		if (options[3] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 40);
-			wcout << "                                  ";
-			if ((wstring4.length() / 2) * 2 == wstring4.length()) gotoxy(26 + 52 - (wstring4.length() / 2), 40);
-			else gotoxy(26 + 52 - (wstring4.length() / 2) - 1, 40);
-			wcout << wstring4;
-		}
-		else if (options[3] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 40);
-			wcout << "                                  ";
-			if ((wstring4.length() / 2) * 2 == wstring4.length()) gotoxy(26 + 52 - (wstring4.length() / 2), 40);
-			else gotoxy(26 + 52 - (wstring4.length() / 2) - 1, 40);
-			wcout << wstring4;
-		}
-		choice3 = _getch();
-		switch (choice3)
-		{
-		case 13:
-			if (options[0] == 1)
-			{
-				return optionChoice = 1;
-			}
-			else if (options[1] == 1)
-			{
-				return optionChoice = 2;
-			}
-			else if (options[2] == 1)
-			{
-				return optionChoice = 3;
-			}
-			else if (options[3] == 1)
-			{
-				return optionChoice = 4;
-			}
-			break;
-		case 97:
-			if (options[0] == 1 or options[1] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-			}
-			else if (options[2] == 1 or options[3] == 1)
-			{
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			break;
-		case 100:
-			if (options[0] == 1 or options[1] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-			}
-			else if (options[2] == 1 or options[3] == 1)
-			{
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			break;
-		case 115:
-			if (options[0] == 1 or options[2] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-			}
-			else if (options[1] == 1 or options[3] == 1)
-			{
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			break;
-		case 119:
-			if (options[0] == 1 or options[2] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-			}
-			else if (options[1] == 1 or options[3] == 1)
-			{
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			break;
-		}
-		goto loop3;
-		break;
-	case 5:
-		options[0] = 1;
-		options[1] = 0;
-		options[2] = 0;
-		options[3] = 0;
-		options[4] = 0;
-	loop4:
-		if (options[0] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 39);
-			wcout << "                                  ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 17 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 17 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		else if (options[0] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 39);
-			wcout << "                                  ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 17 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 17 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		if (options[1] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 39);
-			wcout << "                                  ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 52 - (wstring2.length() / 2), 39);
-			else gotoxy(26 + 52 - (wstring2.length() / 2) - 1, 39);
-			wcout << wstring2;
-		}
-		else if (options[1] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 39);
-			wcout << "                                  ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 52 - (wstring2.length() / 2), 39);
-			else gotoxy(26 + 52 - (wstring2.length() / 2) - 1, 39);
-			wcout << wstring2;
-		}
-		if (options[2] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 40);
-			wcout << "                                  ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 17 - (wstring3.length() / 2), 40);
-			else gotoxy(26 + 17 - (wstring3.length() / 2) - 1, 40);
-			wcout << wstring3;
-		}
-		else if (options[2] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 40);
-			wcout << "                                  ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 17 - (wstring3.length() / 2), 40);
-			else gotoxy(26 + 17 - (wstring3.length() / 2) - 1, 40);
-			wcout << wstring3;
-		}
-		if (options[3] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 40);
-			wcout << "                                  ";
-			if ((wstring4.length() / 2) * 2 == wstring4.length()) gotoxy(26 + 52 - (wstring4.length() / 2), 40);
-			else gotoxy(26 + 52 - (wstring4.length() / 2) - 1, 40);
-			wcout << wstring4;
-		}
-		else if (options[3] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 40);
-			wcout << "                                  ";
-			if ((wstring4.length() / 2) * 2 == wstring4.length()) gotoxy(26 + 52 - (wstring4.length() / 2), 40);
-			else gotoxy(26 + 52 - (wstring4.length() / 2) - 1, 40);
-			wcout << wstring4;
-		}
-		if (options[4] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 41);
-			wcout << "                                                                    ";
-			if ((wstring5.length() / 2) * 2 == wstring5.length()) gotoxy(26 + 35 - (wstring5.length() / 2), 41);
-			else gotoxy(26 + 35 - (wstring5.length() / 2) - 1, 41);
-			wcout << wstring5;
-		}
-		else if (options[4] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 41);
-			wcout << "                                                                    ";
-			if ((wstring5.length() / 2) * 2 == wstring5.length()) gotoxy(26 + 35 - (wstring5.length() / 2), 41);
-			else gotoxy(26 + 35 - (wstring5.length() / 2) - 1, 41);
-			wcout << wstring5;
-		}
-		choice3 = _getch();
-		switch (choice3)
-		{
-		case 13:
-			if (options[0] == 1)
-			{
-				return optionChoice = 1;
-			}
-			else if (options[1] == 1)
-			{
-				return optionChoice = 2;
-			}
-			else if (options[2] == 1)
-			{
-				return optionChoice = 3;
-			}
-			else if (options[3] == 1)
-			{
-				return optionChoice = 4;
-			}
-			else if (options[4] == 1)
-			{
-				return optionChoice = 5;
-			}
-			break;
-		case 97:
-			if (options[0] == 1 or options[1] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-			}
-			else if (options[2] == 1 or options[3] == 1)
-			{
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			break;
-		case 100:
-			if (options[0] == 1 or options[1] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-			}
-			else if (options[2] == 1 or options[3] == 1)
-			{
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			break;
-		case 115:
-			if (options[0] == 1)
-			{
-				options[0] = 0;
-				options[2] = 1;
-			}
-			else if (options[1] == 1)
-			{
-				options[1] = 0;
-				options[3] = 1;
-			}
-			else if (options[2] == 1)
-			{
-				options[2] = 0;
-				options[4] = 1;
-			}
-			else if (options[3] == 1)
-			{
-				options[3] = 0;
-				options[4] = 1;
-			}
-			else if (options[4] == 1)
-			{
-				options[4] = 0;
-				options[0] = 1;
-			}
-			break;
-		case 119:
-			if (options[0] == 1)
-			{
-				options[0] = 0;
-				options[4] = 1;
-			}
-			else if (options[1] == 1)
-			{
-				options[1] = 0;
-				options[4] = 1;
-			}
-			else if (options[2] == 1)
-			{
-				options[2] = 0;
-				options[0] = 1;
-			}
-			else if (options[3] == 1)
-			{
-				options[3] = 0;
-				options[1] = 1;
-			}
-			else if (options[4] == 1)
-			{
-				options[4] = 0;
-				options[3] = 1;
-			}
-			break;
-		}
-		goto loop4;
-		break;
-	case 6:
-		options[0] = 1;
-		options[1] = 0;
-		options[2] = 0;
-		options[3] = 0;
-		options[4] = 0;
-		options[5] = 0;
-	loop5:
-		if (options[0] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 39);
-			wcout << "                                  ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 17 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 17 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		else if (options[0] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 39);
-			wcout << "                                  ";
-			if ((wstring1.length() / 2) * 2 == wstring1.length()) gotoxy(26 + 17 - (wstring1.length() / 2), 39);
-			else gotoxy(26 + 17 - (wstring1.length() / 2) - 1, 39);
-			wcout << wstring1;
-		}
-		if (options[1] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 39);
-			wcout << "                                  ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 52 - (wstring2.length() / 2), 39);
-			else gotoxy(26 + 52 - (wstring2.length() / 2) - 1, 39);
-			wcout << wstring2;
-		}
-		else if (options[1] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 39);
-			wcout << "                                  ";
-			if ((wstring2.length() / 2) * 2 == wstring2.length()) gotoxy(26 + 52 - (wstring2.length() / 2), 39);
-			else gotoxy(26 + 52 - (wstring2.length() / 2) - 1, 39);
-			wcout << wstring2;
-		}
-		if (options[2] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 40);
-			wcout << "                                  ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 17 - (wstring3.length() / 2), 40);
-			else gotoxy(26 + 17 - (wstring3.length() / 2) - 1, 40);
-			wcout << wstring3;
-		}
-		else if (options[2] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 40);
-			wcout << "                                  ";
-			if ((wstring3.length() / 2) * 2 == wstring3.length()) gotoxy(26 + 17 - (wstring3.length() / 2), 40);
-			else gotoxy(26 + 17 - (wstring3.length() / 2) - 1, 40);
-			wcout << wstring3;
-		}
-		if (options[3] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 40);
-			wcout << "                                  ";
-			if ((wstring4.length() / 2) * 2 == wstring4.length()) gotoxy(26 + 52 - (wstring4.length() / 2), 40);
-			else gotoxy(26 + 52 - (wstring4.length() / 2) - 1, 40);
-			wcout << wstring4;
-		}
-		else if (options[3] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 40);
-			wcout << "                                  ";
-			if ((wstring4.length() / 2) * 2 == wstring4.length()) gotoxy(26 + 52 - (wstring4.length() / 2), 40);
-			else gotoxy(26 + 52 - (wstring4.length() / 2) - 1, 40);
-			wcout << wstring4;
-		}
-		if (options[4] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(26, 41);
-			wcout << "                                  ";
-			if ((wstring5.length() / 2) * 2 == wstring5.length()) gotoxy(26 + 17 - (wstring5.length() / 2), 41);
-			else gotoxy(26 + 17 - (wstring5.length() / 2) - 1, 41);
-			wcout << wstring5;
-		}
-		else if (options[4] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(26, 41);
-			wcout << "                                  ";
-			if ((wstring5.length() / 2) * 2 == wstring5.length()) gotoxy(26 + 17 - (wstring5.length() / 2), 41);
-			else gotoxy(26 + 17 - (wstring5.length() / 2) - 1, 41);
-			wcout << wstring5;
-		}
-		if (options[5] == 0)
-		{
-			SetConsoleTextAttribute(hConsole, 7);
-			gotoxy(60, 41);
-			wcout << "                                  ";
-			if ((wstring6.length() / 2) * 2 == wstring6.length()) gotoxy(26 + 52 - (wstring6.length() / 2), 41);
-			else gotoxy(26 + 52 - (wstring6.length() / 2) - 1, 41);
-			wcout << wstring6;
-		}
-		else if (options[5] == 1)
-		{
-			SetConsoleTextAttribute(hConsole, 143);
-			gotoxy(60, 41);
-			wcout << "                                  ";
-			if ((wstring6.length() / 2) * 2 == wstring6.length()) gotoxy(26 + 52 - (wstring6.length() / 2), 41);
-			else gotoxy(26 + 52 - (wstring6.length() / 2) - 1, 41);
-			wcout << wstring6;
-		}
-		choice3 = _getch();
-		switch (choice3)
-		{
-		case 13:
-			if (options[0] == 1)
-			{
-				return optionChoice = 1;
-			}
-			else if (options[1] == 1)
-			{
-				return optionChoice = 2;
-			}
-			else if (options[2] == 1)
-			{
-				return optionChoice = 3;
-			}
-			else if (options[3] == 1)
-			{
-				return optionChoice = 4;
-			}
-			else if (options[4] == 1)
-			{
-				return optionChoice = 5;
-			}
-			else if (options[5] == 1)
-			{
-				return optionChoice = 6;
-			}
-			break;
-		case 97:
-			if (options[0] == 1 or options[1] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-			}
-			else if (options[2] == 1 or options[3] == 1)
-			{
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			else if (options[4] == 1 or options[5] == 1)
-			{
-				if (options[4] == 0) options[4] = 1;
-				else if (options[4] == 1) options[4] = 0;
-				if (options[5] == 0) options[5] = 1;
-				else if (options[5] == 1) options[5] = 0;
-			}
-			break;
-		case 100:
-			if (options[0] == 1 or options[1] == 1)
-			{
-				if (options[0] == 0) options[0] = 1;
-				else if (options[0] == 1) options[0] = 0;
-				if (options[1] == 0) options[1] = 1;
-				else if (options[1] == 1) options[1] = 0;
-			}
-			else if (options[2] == 1 or options[3] == 1)
-			{
-				if (options[2] == 0) options[2] = 1;
-				else if (options[2] == 1) options[2] = 0;
-				if (options[3] == 0) options[3] = 1;
-				else if (options[3] == 1) options[3] = 0;
-			}
-			else if (options[4] == 1 or options[5] == 1)
-			{
-				if (options[4] == 0) options[4] = 1;
-				else if (options[4] == 1) options[4] = 0;
-				if (options[5] == 0) options[5] = 1;
-				else if (options[5] == 1) options[5] = 0;
-			}
-			break;
-		case 115:
-			if (options[0] == 1)
-			{
-				options[0] = 0;
-				options[2] = 1;
-			}
-			else if (options[1] == 1)
-			{
-				options[1] = 0;
-				options[3] = 1;
-			}
-			else if (options[2] == 1)
-			{
-				options[2] = 0;
-				options[4] = 1;
-			}
-			else if (options[3] == 1)
-			{
-				options[3] = 0;
-				options[5] = 1;
-			}
-			else if (options[4] == 1)
-			{
-				options[4] = 0;
-				options[0] = 1;
-			}
-			else if (options[5] == 1)
-			{
-				options[5] = 0;
-				options[1] = 1;
-			}
-			break;
-		case 119:
-			if (options[0] == 1)
-			{
-				options[0] = 0;
-				options[4] = 1;
-			}
-			else if (options[1] == 1)
-			{
-				options[1] = 0;
-				options[5] = 1;
-			}
-			else if (options[2] == 1)
-			{
-				options[2] = 0;
-				options[0] = 1;
-			}
-			else if (options[3] == 1)
-			{
-				options[3] = 0;
-				options[1] = 1;
-			}
-			else if (options[4] == 1)
-			{
-				options[4] = 0;
-				options[2] = 1;
-			}
-			else if (options[5] == 1)
-			{
-				options[5] = 0;
-				options[3] = 1;
-			}
-			break;
-		}
-		goto loop5;
-		break;
-	}
-	return optionChoice;
 }

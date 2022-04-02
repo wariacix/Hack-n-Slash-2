@@ -11,12 +11,7 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
-#include "fight.h"
 #include "equipItem.h"
-#include "gotoxy.h"
-#include "draw.h"
-#include "gameGui.h"
-#include "textbox.h"
 #include "variables.h"
 #include "choice.h"
 #include "stringLength.h"
