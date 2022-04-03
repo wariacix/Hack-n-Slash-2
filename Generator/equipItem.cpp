@@ -107,6 +107,10 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 			selectedItem.itemName = L"Potion +20MP";
 			selectedItem.color = sf::Color::Yellow;
 			break;
+		case 100:
+			selectedItem.itemName = L"Gold Coins";
+			selectedItem.color = sf::Color::Yellow;
+			break;
 		}
 	}
 	else if (ID >= 1000 and ID < 2000)
@@ -352,6 +356,8 @@ void equipItemSFML(sf::RenderWindow &window, int mode, int ID, int x, int y)
 				mainPlayer.mp = mainPlayer.mp + 20;
 				if (mainPlayer.mp > mainPlayer.maxmp) mainPlayer.mp = mainPlayer.maxmp;
 				item[ID] = item[ID] - 1;
+				break;
+			case 100:
 				break;
 			}
 		}

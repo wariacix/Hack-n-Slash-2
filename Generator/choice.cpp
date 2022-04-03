@@ -239,28 +239,6 @@ namespace dialogueSystem
 	};
 }
 
-void drawInterface(sf::RenderWindow& window)
-{
-	sf::Texture tInterface;
-	sf::Sprite sInterface;
-	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 1600, 1000));
-	sInterface.setTexture(tInterface);
-	sInterface.setPosition(0.f, 0.f);
-	window.draw(sInterface);
-}
-
-void drawView(sf::RenderWindow& window, string fileName)
-{
-	sf::Texture tView;
-	sf::Sprite sView;
-	string folder = "Textures\\", extension = ".png";
-	tView.loadFromFile(folder + fileName + extension, sf::IntRect(0, 0, 193, 125));
-	sView.setTexture(tView);
-	sView.setPosition(70.f, 50.f);
-	sView.setScale(5.f, 5.f);
-	window.draw(sView);
-}
-
 void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 {
 	dialogueSystem::Dialogue cityDialogue;
@@ -271,33 +249,22 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 	switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try to Enter The City",L"Get Back to Main Map",L"",L"",L"",L""}, 1))
 	{
 	case 0:
-		switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try Entering by The Gate",L"Try Entering by Climbing",L"Go Back",L"",L"",L""}))
+		while (true)
 		{
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 999:
-			break;
+			switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try Entering The Gate",L"Try Climbing",L"Go Back",L"",L"",L"" }))
+			{
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 999:
+				break;
+			}
 		}
 		break;
 	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	case 5:
 		break;
 	case 999:
 		break;

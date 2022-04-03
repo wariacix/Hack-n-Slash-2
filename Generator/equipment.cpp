@@ -37,6 +37,7 @@ void equipmentSFML(sf::RenderWindow &window)
 	string equipmentItemName[10][500];
 	bool wasUsed[9999];
 	int hasBeenPressed = 0;
+	item[100] = mainPlayer.gold;
 	equipmentItem[0][0][1] = 1; //first item in eq is chosen by default
 afterItemUse:
 	for (int g = 0; g < 9999; g++)

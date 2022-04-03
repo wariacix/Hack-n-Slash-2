@@ -89,9 +89,18 @@ void updateHpMp()
 	if (mainPlayer.mp < mainPlayer.maxmp) mainPlayer.mp = mainPlayer.mp + mainPlayer.mpRegen; else mainPlayer.mp = mainPlayer.maxmp;
 }
 
+void drawInterface(sf::RenderWindow& window)
+{
+	sf::Texture tInterface;
+	sf::Sprite sInterface;
+	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 1600, 1000));
+	sInterface.setTexture(tInterface);
+	sInterface.setPosition(0.f, 0.f);
+	window.draw(sInterface);
+}
+
 int main()
 {
-	_setmode(_fileno(stdout), _O_WTEXT);
 	srand(time(NULL));
 	sf::Font font;
 	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
