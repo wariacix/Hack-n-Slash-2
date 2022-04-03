@@ -352,11 +352,10 @@ int Map::checkForCityCount()
 
 void Map::generatePaths()
 		{
-			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 			int minion[48][46];
 			bool hasCityBeenPathed[48][46];
 			int howManyPaths = 0;
-		chuj:
+		back3:
 			bool success = false;
 			int rep = 0;
 			while (success == false)
@@ -407,7 +406,6 @@ void Map::generatePaths()
 					{
 						goto back2;
 					}
-					SetConsoleTextAttribute(hConsole, 1);
 					for (x = 0; x < 48; x++)
 					{
 						for (y = 0; y < 46; y++)
@@ -490,7 +488,7 @@ void Map::generatePaths()
 			for (x = 0; x < 48; x++)
 				for (y = 0; y < 46; y++) if (minion[x][y] != 0) path[x][y] = 1;
 
-			if (howManyPaths < 2) goto chuj;
+			if (howManyPaths < 2) goto back3;
 		}
 
 void Map::generateMap()
