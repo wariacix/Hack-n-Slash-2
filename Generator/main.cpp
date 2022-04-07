@@ -120,6 +120,9 @@ int main()
 	test.addItem(2, 10);
 	test.addItem(3, 50);
 	test.addItem(4, 60);
+	test.addItem(1001, 1);
+	test.addItem(2001, 1);
+	test.addItem(3001, 1);
 	wcout << test.eqItem[0].getItemId() << endl;
 	wcout << test.eqItem[0].getItemCount() << endl;
 	wcout << test.eqItem[1].getItemId() << endl;
