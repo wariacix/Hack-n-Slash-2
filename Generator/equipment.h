@@ -42,9 +42,33 @@ namespace equipmentSystem
 			this->itemName = itemName;
 		};
 
+		int getItemId();
+
+		int getItemAddedHp();
+
+		int getItemAddedMp();
+
+		int getItemHpRegen();
+
+		int getItemMpRegen();
+
+		int getItemDmg();
+
+		int getItemDef();
+
+		int getItemStrReq();
+
+		int getItemInReq();
+
+		int getItemLvlReq();
+
+		int getItemMpReq();
+
 		int getItemCount();
 
-		int getItemId();
+		sf::Color getItemColor();
+
+		std::wstring getItemName();
 
 		void addItemCount(int add);
 	};
@@ -56,19 +80,36 @@ namespace equipmentSystem
 		const int equipmentHeight = 6;
 		int numOfItems;
 		std::wstring loadItemStats();
+		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring name, int& k, int x, int y, sf::Color color);
+
+		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int value, int x, int y, sf::Color green, sf::Color red);
+
+		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int requiredVal, int x, int y, int value, sf::Color green, sf::Color red);
+
 		void drawItemSprite(sf::RenderWindow& window, int x, int y, int id);
 	public:
+		Item equippedItem[3];
 		Item* eqItem;
 		Equipment()
 		{
 			numOfItems = 1;
 			eqItem = new Item[9999];
+			addItem(1000, 1);
+			addItem(2000, 1);
+			addItem(3000, 1);
+			equipItem(eqItem[1]);
+			equipItem(eqItem[1]);
+			equipItem(eqItem[1]);
 		}
 
 		void addItem(int id, int howManyItems);
 		int getNumOfItems();
+		void itemDeletion(int id);
+		void itemSwapping(Item& item, int type);
 		void addNumOfItems(int add);
 		void viewEquipment(sf::RenderWindow& window);
+		void equipItem(Item &item);
+		void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
 		void setItem(Item item);
 	};
 }
