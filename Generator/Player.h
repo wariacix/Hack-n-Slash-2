@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <string>
+#include "equipment.h"
 
 class Map;
 
@@ -47,6 +48,6 @@ public:
 		xp = 0;
 		heroName = L"NO NAME";
 	}
-	void movePlayer(Map &map1, sf::RenderWindow& window);
+	void movePlayer(Map &map1, sf::RenderWindow& window, equipmentSystem::Equipment &eq);
 };
 extern Player mainPlayer;

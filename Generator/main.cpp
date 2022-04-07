@@ -36,7 +36,7 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 using namespace std;
 
 
-void setBaseValues(sf::RenderWindow &window)
+void setBaseValues(sf::RenderWindow &window, equipmentSystem::Equipment &eq)
 {
 	mainPlayer.lvl = 4;
 	mtnChance = 13;
@@ -113,13 +113,31 @@ int main()
 	window.setVerticalSyncEnabled(true);
 	bool recentlyLeft = 0;
 
+	equipmentSystem::Equipment test;
+
+	test.addItem(0, 10);
+	test.addItem(1, 10);
+	test.addItem(2, 10);
+	test.addItem(3, 50);
+	test.addItem(4, 60);
+	wcout << test.eqItem[0].getItemId() << endl;
+	wcout << test.eqItem[0].getItemCount() << endl;
+	wcout << test.eqItem[1].getItemId() << endl;
+	wcout << test.eqItem[1].getItemCount() << endl;
+	wcout << test.eqItem[2].getItemId() << endl;
+	wcout << test.eqItem[2].getItemCount() << endl;
+	wcout << test.eqItem[3].getItemId() << endl;
+	wcout << test.eqItem[3].getItemCount() << endl;
+	_getch();
+
 	while (true)
 	{
 		system("color 0f");
 		system("mode con: cols=106 lines=25");
-		setBaseValues(window);
+		setBaseValues(window, test);
 		menu();
 		mainMap.generateMap();
+		wcout << L"READY.";
 		while (window.isOpen() and los == false)
 		{
 			sf::Event event;
@@ -144,7 +162,7 @@ int main()
 
 			drawInterface(window);
 			window.draw(text);
-			mainPlayer.movePlayer(mainMap, window);
+			mainPlayer.movePlayer(mainMap, window, test);
 			window.display();
 		}
 	}
