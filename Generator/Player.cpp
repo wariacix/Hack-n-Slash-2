@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void Player::movePlayer(Map &map1, sf::RenderWindow &window)
+void Player::movePlayer(Map &map1, sf::RenderWindow &window, equipmentSystem::Equipment &eq)
 {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
@@ -40,7 +40,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window)
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) or sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 		{
-			equipmentSFML(window);
+			eq.viewEquipment(window);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{

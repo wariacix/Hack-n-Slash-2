@@ -29,9 +29,11 @@ namespace dialogueSystem
 		sf::SoundBuffer buffer;
 		sf::Sound enterSound;
 		sf::Text text;
+		bool hasSoundBeenPlayed;
 	public:
 		Dialogue()
 		{
+			hasSoundBeenPlayed = false;
 			font.loadFromFile("dpcomic.ttf");
 
 			viewTexture.loadFromFile("Textures\\humanCityView.png");
@@ -54,6 +56,7 @@ namespace dialogueSystem
 
 		Dialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr, std::string fontName)
 		{
+			hasSoundBeenPlayed = false;
 			font.loadFromFile(fontName + ".ttf");
 
 			viewTexture.loadFromFile("Textures\\" + viewTextureName + ".png");
@@ -77,6 +80,7 @@ namespace dialogueSystem
 
 		Dialogue(const dialogueSystem::Dialogue& copiedDialogue)
 		{
+			hasSoundBeenPlayed = false;
 			font = copiedDialogue.font;
 			viewTexture = copiedDialogue.viewTexture;
 			viewSprite = copiedDialogue.viewSprite;
@@ -158,7 +162,7 @@ namespace dialogueSystem
 
 
 				//Choice manipulation
-				int sleepTime = 80;
+				int sleepTime = 100;
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
 				{
 					choice--; Sleep(sleepTime);
@@ -177,16 +181,21 @@ namespace dialogueSystem
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
-					Sleep(60);
+					Sleep(150);
 					return choice;
 				}
 			}
+			los = true;
 			return 999;
 		}
 
 		void playViewSound()
 		{
-			enterSound.play();
+			if (hasSoundBeenPlayed == false)
+			{
+				hasSoundBeenPlayed = true;
+				enterSound.play();
+			}
 		}
 
 		void drawView(sf::RenderWindow& window)
@@ -246,11 +255,12 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) cityDialogue.Dialogue::Dialogue("orcCityView", "HORN3", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) cityDialogue.Dialogue::Dialogue("forestCityView", "GARDENS3", "interface", "dpcomic");
 
-	switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try to Enter The City",L"Get Back to Main Map",L"",L"",L"",L""}, 1))
+	int exit = false;
+	while (exit == false)
 	{
-	case 0:
-		while (true)
+		switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try to Enter The City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
 		{
+		case 0:
 			switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try Entering The Gate",L"Try Climbing",L"Go Back",L"",L"",L"" }))
 			{
 			case 0:
@@ -262,11 +272,12 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
 			case 999:
 				break;
 			}
+			break;
+		case 1:
+			exit = true;
+			break;
+		case 999:
+			break;
 		}
-		break;
-	case 1:
-		break;
-	case 999:
-		break;
 	}
 }
