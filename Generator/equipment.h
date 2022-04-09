@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "Player.h"
+
+class Player;
 
 namespace equipmentSystem
 {
@@ -70,6 +73,8 @@ namespace equipmentSystem
 
 		std::wstring getItemName();
 
+		void setItemCount(int set);
+
 		void addItemCount(int add);
 	};
 
@@ -79,7 +84,9 @@ namespace equipmentSystem
 		const int equipmentWidth = 10;
 		const int equipmentHeight = 6;
 		int numOfItems;
+
 		std::wstring loadItemStats();
+
 		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring name, int& k, int x, int y, sf::Color color);
 
 		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int value, int x, int y, sf::Color green, sf::Color red);
@@ -87,30 +94,30 @@ namespace equipmentSystem
 		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int requiredVal, int x, int y, int value, sf::Color green, sf::Color red);
 
 		void drawItemSprite(sf::RenderWindow& window, int x, int y, int id);
+
+		void setItem(Item item);
+
 	public:
-		Item equippedItem[3];
+		Item* equippedItem;
 		Item* eqItem;
 		Equipment()
 		{
 			numOfItems = 1;
 			eqItem = new Item[9999];
+			equippedItem = new Item[3];
 			addItem(1000, 1);
 			addItem(2000, 1);
 			addItem(3000, 1);
-			equipItem(eqItem[1]);
-			equipItem(eqItem[1]);
-			equipItem(eqItem[1]);
 		}
 
 		void addItem(int id, int howManyItems);
+		void updateStats(Player& player);
+		void viewEquipment(sf::RenderWindow& window, Player& player);
 		int getNumOfItems();
 		void itemDeletion(int id);
 		void itemSwapping(Item& item, int type);
 		void addNumOfItems(int add);
-		void viewEquipment(sf::RenderWindow& window);
-		void equipItem(Item &item);
+		void equipItem(Item& item, Player& player);
 		void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
-		void setItem(Item item);
 	};
 }
-void equipmentSFML(sf::RenderWindow& window);

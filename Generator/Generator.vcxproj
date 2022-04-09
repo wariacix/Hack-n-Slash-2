@@ -164,7 +164,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="choice.cpp" />
-    <ClCompile Include="equipItem.cpp" />
     <ClCompile Include="equipment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
@@ -175,7 +174,6 @@
   <ItemGroup>
     <ClInclude Include="choice.h" />
     <ClInclude Include="City.h" />
-    <ClInclude Include="equipItem.h" />
     <ClInclude Include="equipment.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="Map.h" />

@@ -5,12 +5,17 @@
 #include <string>
 #include "equipment.h"
 
+namespace equipmentSystem
+{
+	class Equipment;
+}
 class Map;
 
 class Player
 {
 public:
-	int x, y;
+	int x;
+	int y;
 	int gold;
 	int hpRegen;
 	int mpRegen;
@@ -48,6 +53,6 @@ public:
 		xp = 0;
 		heroName = L"NO NAME";
 	}
-	void movePlayer(Map &map1, sf::RenderWindow& window, equipmentSystem::Equipment &eq);
+	void movePlayer(Map &map1, sf::RenderWindow& window, equipmentSystem::Equipment &eq, Player& player);
 };
 extern Player mainPlayer;

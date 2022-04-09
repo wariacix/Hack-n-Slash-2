@@ -15,20 +15,16 @@
 #include "variables.h"
 #include "choice.h"
 #include "equipment.h"
-#include "equipItem.h"
 #include "Player.h"
 
 #include "Map.h"
 
 Map mainMap;
 Player mainPlayer;
-items weapon, armor, shield, selectedItem;
 
 int debugMode = 0;
-int cityID[48][46], cityGuardian[48][46], item[9999], armory[3], x, y, p, mtnChance;
+int mtnChance;
 std::wstring cityName[30];
-int text[50];
-int fightMode = 0; //0bez walki,1walka,2ekwipunek w trakcie walki
 bool los = false;
 std::wstring enemyName;
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -38,39 +34,6 @@ using namespace std;
 
 void setBaseValues(sf::RenderWindow &window, equipmentSystem::Equipment &eq)
 {
-	mainPlayer.lvl = 4;
-	mtnChance = 13;
-	los = false;
-
-	for (p = 0; p < 9999; p++) item[p] = 0;
-	for (p = 0; p < 50; p++) text[p] = -1000;
-
-	armory[0] = 0;
-	armory[1] = 0;
-	armory[2] = 0;
-
-	equipItemSFML(window, 2, 1000, 0, 0);
-	equipItemSFML(window, 2, 2000, 0, 0);
-	equipItemSFML(window, 2, 3000, 0, 0);
-
-	item[0] = 200;
-	item[1] = 20;
-	item[2] = 10;
-	item[3] = 5;
-	item[4] = 5;
-	item[5] = 5;
-	item[6] = 5;
-	item[1001] = 1;
-	item[1002] = 1;
-	item[1003] = 1;
-	item[1004] = 1;
-	item[1005] = 1;
-	item[1006] = 1;
-	item[1007] = 1;
-	item[2001] = 1;
-	item[2002] = 1;
-	item[2003] = 1;
-	item[3001] = 1;
 };
 
 void xpCount()
@@ -109,35 +72,49 @@ int main()
 	text.setFont(font);
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(22);
-	text.setPosition(3.f, 3.f);
+	text.setPosition(4.f, 4.f);
+	text.setOutlineThickness(2.f);
 	window.setVerticalSyncEnabled(true);
 	bool recentlyLeft = 0;
+	mainPlayer.lvl = 5;
+	mtnChance = 14;
+	los = false;
 
-	equipmentSystem::Equipment test;
+	equipmentSystem::Equipment mainEquipment;
 
-	test.addItem(0, 10);
-	test.addItem(1, 10);
-	test.addItem(2, 10);
-	test.addItem(3, 50);
-	test.addItem(4, 60);
-	test.addItem(1001, 1);
-	test.addItem(2001, 1);
-	test.addItem(3001, 1);
-	wcout << test.eqItem[0].getItemId() << endl;
-	wcout << test.eqItem[0].getItemCount() << endl;
-	wcout << test.eqItem[1].getItemId() << endl;
-	wcout << test.eqItem[1].getItemCount() << endl;
-	wcout << test.eqItem[2].getItemId() << endl;
-	wcout << test.eqItem[2].getItemCount() << endl;
-	wcout << test.eqItem[3].getItemId() << endl;
-	wcout << test.eqItem[3].getItemCount() << endl;
-	_getch();
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.addItem(0, 10);
+	mainEquipment.addItem(1, 10);
+	mainEquipment.addItem(2, 10);
+	mainEquipment.addItem(3, 50);
+	mainEquipment.addItem(4, 60);
+	mainEquipment.addItem(5, 999);
+	mainEquipment.addItem(6, 999);
+	mainEquipment.addItem(100, mainPlayer.gold);
+	mainEquipment.addItem(101, 20);
+	mainEquipment.addItem(102, 20);
+	mainEquipment.addItem(103, 20);
+	mainEquipment.addItem(1001, 1);
+	mainEquipment.addItem(1002, 1);
+	mainEquipment.addItem(1003, 1);
+	mainEquipment.addItem(1004, 1);
+	mainEquipment.addItem(1005, 1);
+	mainEquipment.addItem(1006, 1);
+	mainEquipment.addItem(1007, 1);
+	mainEquipment.addItem(1008, 1);
+	mainEquipment.addItem(2001, 1);
+	mainEquipment.addItem(2002, 1);
+	mainEquipment.addItem(2003, 1);
+	mainEquipment.addItem(3001, 1);
+	mainEquipment.addItem(3002, 1);
 
 	while (true)
 	{
 		system("color 0f");
 		system("mode con: cols=106 lines=25");
-		setBaseValues(window, test);
+		setBaseValues(window, mainEquipment);
 		menu();
 		mainMap.generateMap();
 		wcout << L"READY.";
@@ -147,7 +124,10 @@ int main()
 			while (window.pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
+				{
 					window.close();
+					exit(1);
+				}
 			}
 
 			window.clear();
@@ -165,7 +145,7 @@ int main()
 
 			drawInterface(window);
 			window.draw(text);
-			mainPlayer.movePlayer(mainMap, window, test);
+			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}
 	}

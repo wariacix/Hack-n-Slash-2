@@ -12,8 +12,8 @@
 #include <fcntl.h>
 #include <io.h>
 #include <fstream>
+#include "player.h"
 #include "equipment.h"
-#include "equipItem.h"
 #include "variables.h"
 #include "choice.h"
 #include "stringLength.h"
@@ -31,6 +31,10 @@ int equipmentSystem::Item::getItemId()
 void equipmentSystem::Item::addItemCount(int add)
 {
 	numOfItems += add;
+}
+void equipmentSystem::Item::setItemCount(int set)
+{
+	numOfItems = set;
 }
 int equipmentSystem::Item::getItemAddedHp()
 {
@@ -93,7 +97,6 @@ void equipmentSystem::Equipment::addNumOfItems(int add)
 
 void equipmentSystem::Equipment::setItem(Item item)
 {
-	std::wcout << L"Set item. ";
 	eqItem[getNumOfItems()] = item;
 }
 
@@ -214,8 +217,25 @@ void equipmentSystem::Equipment::addItem(int idVar = 0, int howManyItems = 1)
 	}
 }
 
-void equipmentSystem::Equipment::viewEquipment(sf::RenderWindow &window)
+void equipmentSystem::Equipment::updateStats(Player &player)
 {
+	player.maxhp = 100 + equippedItem[0].getItemAddedHp() + equippedItem[1].getItemAddedHp() + equippedItem[2].getItemAddedHp();
+	player.maxmp = 20 + equippedItem[0].getItemAddedMp() + equippedItem[1].getItemAddedMp() + equippedItem[2].getItemAddedMp();
+	player.hpRegen = 1 + equippedItem[0].getItemHpRegen() + equippedItem[1].getItemHpRegen() + equippedItem[2].getItemHpRegen();
+	player.mpRegen = 1 + equippedItem[0].getItemMpRegen() + equippedItem[1].getItemMpRegen() + equippedItem[2].getItemMpRegen();
+	player.dmg = equippedItem[0].getItemDmg() + equippedItem[1].getItemDmg() + equippedItem[2].getItemDmg();
+	player.def = equippedItem[0].getItemDef() + equippedItem[1].getItemDef() + equippedItem[2].getItemDef();
+}
+
+void equipmentSystem::Equipment::viewEquipment(sf::RenderWindow &window, Player &player)
+{
+	for (int i = 0; i < numOfItems; i++)
+	{
+		if (eqItem[i].getItemId() == 100)
+		{
+			eqItem[i].setItemCount(player.gold);
+		}
+	}
 	int equipmentItem[10][200][3];
 	std::string equipmentItemName[10][200];
 	bool wasUsed[9999];
@@ -275,7 +295,10 @@ afterItemUse:
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
+			{
 				window.close();
+				exit(1);
+			}
 		}
 		window.clear();
 		eqInterfaceSprite.setScale(5.f, 5.f);
@@ -429,15 +452,13 @@ afterItemUse:
 						{
 							viewItemStats(window, equippedItem[2], 1435 - offsetX, 170 - offsetY);
 						}
-						else
+
+						int whichItem = 0;
+						for (int i = 0; i < 9999; i++)
 						{
-							int whichItem = 0;
-							for (int i = 0; i < 9999; i++)
-							{
-								if (equipmentItem[eqx][eqy][2] == eqItem[i].getItemId()) whichItem = i;
-							}
-							viewItemStats(window, eqItem[whichItem], eqx * 75, (eqy + yDifference) * 75);
+							if (equipmentItem[eqx][eqy][2] == eqItem[i].getItemId()) whichItem = i;
 						}
+						viewItemStats(window, eqItem[whichItem], eqx * 75, (eqy + yDifference) * 75);
 					}
 					//gameGui
 					while (true)
@@ -480,7 +501,8 @@ afterItemUse:
 							{
 								if (equipmentItem[eqx][eqy][2] == eqItem[i].getItemId()) whichItem = i;
 							}
-							equipItem(eqItem[whichItem]); //function in other file for equipping/using items
+							equipItem(eqItem[whichItem], player); //function in other file for equipping/using items
+							updateStats(player);
 							window.display();
 							Sleep(40);
 							goto afterItemUse;
@@ -565,7 +587,7 @@ void equipmentSystem::Equipment::itemDeletion(int id)
 
 using namespace std;
 
-void equipmentSystem::Equipment::equipItem(Item &item)
+void equipmentSystem::Equipment::equipItem(Item &item, Player &player)
 {
 	if (item.getItemId() >= 0 and item.getItemId() < 1000)
 	{
@@ -615,15 +637,15 @@ void equipmentSystem::Equipment::equipItem(Item &item)
 			break;
 		}
 	}
-	else if (item.getItemId() >= 1000 and item.getItemId() < 2000)
+	else if (item.getItemId() >= 1000 and item.getItemId() < 2000 and item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp)
 	{
 		itemSwapping(item, 0);
 	}
-	else if (item.getItemId() >= 2000 and item.getItemId() < 3000)
+	else if (item.getItemId() >= 2000 and item.getItemId() < 3000 and item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp)
 	{
 		itemSwapping(item, 1);
 	}
-	else if (item.getItemId() >= 3000 and item.getItemId() < 4000)
+	else if (item.getItemId() >= 3000 and item.getItemId() < 4000 and item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp)
 	{
 		itemSwapping(item, 2);
 	}
