@@ -53,9 +53,9 @@ std::wstring Map::genCityName()
 
 void Map::setBaseValues()
 		{
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					biome[x][y] = 0;
 					city[x][y] = 0;
@@ -82,9 +82,9 @@ void Map::setBaseValues()
 
 void Map::enlargeMountains()
 		{
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					if (x > 0 and x < 48 and y > 0 and y < 46 and biome[x][y] == 1 and biome[x + 1][y] == 0 and biome[x - 1][y] == 0 and biome[x][y - 1] == 0 and biome[x][y + 1] == 0) biome[x][y] = 0;
 					if (x > 0 and x < 48 and y > 0 and y < 46 and biome[x][y] == 0 and biome[x + 1][y] == 1 and biome[x - 1][y] == 1 and biome[x][y - 1] == 1 and biome[x][y + 1] == 1) biome[x][y] = 1;
@@ -94,10 +94,10 @@ void Map::enlargeMountains()
 
 void Map::createDeserts()
 		{
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
 				if (rand() % 2 == 0) biome[x][36] = 2;
-				for (y = 37; y < 46; y++)
+				for (int y = 37; y < 46; y++)
 				{
 					biome[x][y] = 2;
 				}
@@ -106,10 +106,10 @@ void Map::createDeserts()
 
 void Map::createArctic()
 		{
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
 				if (rand() % 2 == 0) biome[x][5] = 3;
-				for (y = 0; y < 5; y++) biome[x][y] = 3;
+				for (int y = 0; y < 5; y++) biome[x][y] = 3;
 			}
 		};
 
@@ -125,9 +125,9 @@ void Map::createBaseBiomes()
 void Map::createCities()
 		{
 			int x1, y1;
-			for (x = 6; x < 43; x++)
+			for (int x = 6; x < 43; x++)
 			{
-				for (y = 6; y < 41; y++)
+				for (int y = 6; y < 41; y++)
 				{
 					int cityChance = 1;
 					for (x1 = 0; x1 < 5; x1++)
@@ -145,8 +145,8 @@ void Map::createCities()
 			}
 			for (int i = 0; i < 50000; i++)
 			{
-				x = rand() % 43;
-				y = rand() % 41;
+				int x = rand() % 43;
+				int y = rand() % 41;
 				int cityChance = 0;
 				for (x1 = 0; x1 < 15; x1++)
 				{
@@ -157,13 +157,13 @@ void Map::createCities()
 				}
 				if (cityChance > 1) city[x][y] = 0;
 			}
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
 				city[x][44] = 0;
 				city[x][45] = 0;
 				city[x][46] = 0;
 			}
-			for (y = 0; y < 46; y++)
+			for (int y = 0; y < 46; y++)
 			{
 				city[0][y] = 0;
 				city[1][y] = 0;
@@ -171,9 +171,9 @@ void Map::createCities()
 				city[3][y] = 0;
 				city[4][y] = 0;
 			}
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					int a = 1;
 					if (city[x][y] == 1)
@@ -188,9 +188,9 @@ void Map::createCities()
 void Map::createForests()
 		{
 			int x1, y1;
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					int forestChance = 1;
 					for (x1 = 0; x1 < 3; x1++)
@@ -220,9 +220,9 @@ void Map::createForests()
 				}
 			}
 
-			for (x = 1; x < 47; x++)
+			for (int x = 1; x < 47; x++)
 			{
-				for (y = 1; y < 45; y++)
+				for (int y = 1; y < 45; y++)
 				{
 					if (biome[x][y] == 4 and (biome[x + 1][y] == 0 or biome[x - 1][y] == 0 or biome[x][y + 1] == 0 or biome[x][y - 1] == 0))
 					{
@@ -258,9 +258,9 @@ void Map::createForests()
 				}
 			}
 
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					if (biome[x][y] == 100)
 					{
@@ -273,9 +273,9 @@ void Map::createForests()
 void Map::createForestCities()
 		{
 			int x1, y1;
-			for (x = 6; x < 43; x++)
+			for (int x = 6; x < 43; x++)
 			{
-				for (y = 6; y < 41; y++)
+				for (int y = 6; y < 41; y++)
 				{
 					int cityChance = 1;
 					for (x1 = 0; x1 < 3; x1++)
@@ -303,9 +303,9 @@ void Map::createForestCities()
 void Map::furtherCityGen()
 		{
 			int cityCount = 0;
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					if (city[x][y] == 1)
 					{
@@ -315,9 +315,9 @@ void Map::furtherCityGen()
 					cityGuardian[x][y] = 1;
 				}
 			}
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					for (int i = 0; i < 20; i++)
 					{
@@ -333,9 +333,9 @@ void Map::furtherCityGen()
 int Map::checkForCityCount()
 		{
 			int human = 0, orc = 0, elve = 0;
-			for (x = 0; x < 48; x++)
+			for (int x = 0; x < 48; x++)
 			{
-				for (y = 0; y < 46; y++)
+				for (int y = 0; y < 46; y++)
 				{
 					if (city[x][y] == 1)
 					{

@@ -11,6 +11,8 @@ class Map
 public:
 	int biome[48][46];
 	int city[48][46];
+	int cityID[48][46];
+	int cityGuardian[48][46];
 	int hero[48][46];
 	int fog[48][46];
 	int path[48][46];
