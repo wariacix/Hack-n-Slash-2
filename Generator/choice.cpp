@@ -15,6 +15,9 @@
 #include "menu.h"
 #include "variables.h"
 #include "choice.h"
+#include "Interface.h"
+
+class hns::Interface;
 
 using namespace std;
 
@@ -91,7 +94,7 @@ namespace dialogueSystem
 			enterSound = copiedDialogue.enterSound;
 		};
 		
-		int getDialogueAnswer(sf::RenderWindow& window, wstring choiceString[6], bool playSound = false)
+		int getDialogueAnswer(sf::RenderWindow& window, Player player, hns::Interface ui, wstring choiceString[6], bool playSound = false)
 		{
 			int numberOfButtons = 0;
 			for (int i = 0; i < 6; i++)
@@ -127,7 +130,7 @@ namespace dialogueSystem
 				window.clear();
 
 				drawView(window);
-				drawInterface(window);
+				drawInterface(window, player, ui);
 
 				for (int i = 0; i < numberOfButtons; i++)
 				{
@@ -206,9 +209,9 @@ namespace dialogueSystem
 			window.draw(viewSprite);
 		}
 
-		void drawInterface(sf::RenderWindow& window)
+		void drawInterface(sf::RenderWindow& window, Player player, hns::Interface ui)
 		{
-			window.draw(interfaceSprite);
+			ui.hns::Interface::draw(window, player);
 		}
 
 		static void textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer)
@@ -251,22 +254,25 @@ namespace dialogueSystem
 	};
 }
 
-void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer)
+void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, equipmentSystem::Equipment &mainEquipment, hns::Interface &mainInterface)
 {
 	dialogueSystem::Dialogue cityDialogue;
 	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) cityDialogue.Dialogue::Dialogue("humanCityView", "FANFARE", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) cityDialogue.Dialogue::Dialogue("orcCityView", "HORN3", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) cityDialogue.Dialogue::Dialogue("forestCityView", "GARDENS3", "interface", "dpcomic");
 
+	equipmentSystem::Shop testShop(3, 4, "alchemy");
+
 	int exit = false;
 	while (exit == false)
 	{
-		switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try to Enter The City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
+		switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface,new (std::wstring[]){ L"Enter the City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
 		{
 		case 0:
-			switch (cityDialogue.getDialogueAnswer(window, new (std::wstring[]){ L"Try Entering The Gate",L"Try Climbing",L"Go Back",L"",L"",L"" }))
+			switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the Alchemist",L"Exit the City",L"",L"",L"",L"" }))
 			{
 			case 0:
+				testShop.viewEquipment(window, mainPlayer, mainEquipment);
 				break;
 			case 1:
 				break;
