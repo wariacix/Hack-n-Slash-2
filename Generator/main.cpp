@@ -16,8 +16,7 @@
 #include "choice.h"
 #include "equipment.h"
 #include "Player.h"
-#include "GameObject.h"
-#include "Interface.h"
+
 #include "Map.h"
 
 Map mainMap;
@@ -32,6 +31,10 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 using namespace std;
 
+
+void setBaseValues(sf::RenderWindow &window, equipmentSystem::Equipment &eq)
+{
+};
 
 void xpCount()
 {
@@ -53,8 +56,7 @@ void drawInterface(sf::RenderWindow& window)
 {
 	sf::Texture tInterface;
 	sf::Sprite sInterface;
-	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 320, 200));
-	sInterface.setScale(5.f,5.f);
+	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 1600, 1000));
 	sInterface.setTexture(tInterface);
 	sInterface.setPosition(0.f, 0.f);
 	window.draw(sInterface);
@@ -65,6 +67,13 @@ int main()
 	srand(time(NULL));
 	sf::Font font;
 	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
+	font.loadFromFile("dpcomic.ttf");
+	sf::Text text;
+	text.setFont(font);
+	text.setFillColor(sf::Color::White);
+	text.setCharacterSize(22);
+	text.setPosition(4.f, 4.f);
+	text.setOutlineThickness(2.f);
 	window.setVerticalSyncEnabled(true);
 	bool recentlyLeft = 0;
 	mainPlayer.lvl = 5;
@@ -73,9 +82,6 @@ int main()
 
 	equipmentSystem::Equipment mainEquipment;
 
-	mainEquipment.addItem(1000, 1);
-	mainEquipment.addItem(2000, 1);
-	mainEquipment.addItem(3000, 1);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
@@ -108,6 +114,7 @@ int main()
 	{
 		system("color 0f");
 		system("mode con: cols=106 lines=25");
+		setBaseValues(window, mainEquipment);
 		menu();
 		mainMap.generateMap();
 		wcout << L"READY.";
@@ -126,16 +133,18 @@ int main()
 			window.clear();
 			mainMap.clearFog(mainPlayer);
 			mainMap.viewMapSFML(window, mainPlayer);
-			hns::Interface mainUI(mainPlayer);
 
 			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
 			{
-				cityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
+				cityEnter(window, mainMap, mainPlayer);
 				recentlyLeft = 1;
 			}
 			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
 
-			mainUI.hns::Interface::draw(window, mainPlayer);
+			text.setString(to_string((int)mainPlayer.hp) + " / " + to_string(mainPlayer.maxhp)); //Draw health in the corner
+
+			drawInterface(window);
+			window.draw(text);
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}
