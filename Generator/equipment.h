@@ -23,11 +23,12 @@ namespace equipmentSystem
 		int inReq;
 		int lvlReq;
 		int mpReq;
+		int value;
 		int numOfItems;
 		sf::Color color;
 		std::wstring itemName;
 	public:
-		Item(int id = -1, int addedHp = 0, int addedMp = 0, int hpRegen = 0, int mpRegen = 0, int dmg = 0, int def = 0, int strReq = 0, int inReq = 0, int lvlReq = 0, int mpReq = 0, int numOfItems = -1, int rColor = 255, int gColor = 255, int bColor = 0, std::wstring itemName = L"error")
+		Item(int id = -1, int addedHp = 0, int addedMp = 0, int hpRegen = 0, int mpRegen = 0, int dmg = 0, int def = 0, int strReq = 0, int inReq = 0, int lvlReq = 0, int mpReq = 0, int value = 0, int numOfItems = -1, int rColor = 255, int gColor = 255, int bColor = 0, std::wstring itemName = L"error")
 		{
 			this->id = id;
 			this->addedHp = addedHp;
@@ -40,6 +41,7 @@ namespace equipmentSystem
 			this->inReq = inReq;
 			this->lvlReq = lvlReq;
 			this->mpReq = mpReq;
+			this->value = value;
 			this->numOfItems = numOfItems;
 			this->color = sf::Color(rColor, gColor, bColor, 255);
 			this->itemName = itemName;
@@ -67,6 +69,8 @@ namespace equipmentSystem
 
 		int getItemMpReq();
 
+		int getItemValue();
+
 		int getItemCount();
 
 		sf::Color getItemColor();
@@ -81,11 +85,16 @@ namespace equipmentSystem
 	class Equipment
 	{
 	private:
-		const int equipmentWidth = 10;
-		const int equipmentHeight = 6;
+		void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
+
+	protected:
+		int equipmentWidth = 10;
+		int equipmentHeight = 6;
 		int numOfItems;
 
-		std::wstring loadItemStats();
+		std::string eqName, bottomTxt, topTxt;
+
+		std::wstring loadItemStats(std::string name);
 
 		void drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring name, int& k, int x, int y, sf::Color color);
 
@@ -102,14 +111,15 @@ namespace equipmentSystem
 		Item* eqItem;
 		Equipment()
 		{
+			bottomTxt = "eqInterfaceBottom";
+			topTxt = "eqInterfaceTop";
+			eqName = "itemStats";
 			numOfItems = 1;
 			eqItem = new Item[9999];
 			equippedItem = new Item[3];
-			addItem(1000, 1);
-			addItem(2000, 1);
-			addItem(3000, 1);
 		}
 
+		std::string getEqName();
 		void addItem(int id, int howManyItems);
 		void updateStats(Player& player);
 		void viewEquipment(sf::RenderWindow& window, Player& player);
@@ -118,6 +128,40 @@ namespace equipmentSystem
 		void itemSwapping(Item& item, int type);
 		void addNumOfItems(int add);
 		void equipItem(Item& item, Player& player);
+	};
+
+	class Shop : public Equipment
+	{
+	private:
+		float priceMultiplier;
+		std::string shopName;
 		void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
+	public:
+		Shop(int equipmentWidth, int equipmentHeight, std::string fileName, float priceMultiplier = 1.20f, std::string shopName = "alchemyUI") : Equipment::Equipment()
+		{
+			this->equipmentWidth = equipmentWidth;
+			this->equipmentHeight = equipmentHeight;
+			this->priceMultiplier = priceMultiplier;
+			this->shopName = shopName;
+			bottomTxt = shopName + "bot";
+			topTxt = shopName + "top";
+			std::wstring shopStats = loadItemStats(fileName);
+			std::wstring currentId = L"";
+
+			for (int i = 0; i < shopStats.size(); i++)
+			{
+				if (shopStats[i] == *L";")
+				{
+					addItem(stoi(currentId), 9999);
+					currentId = L"";
+				}
+				else currentId = currentId + shopStats[i];
+			}
+		}
+
+		void viewEquipment(sf::RenderWindow& window, Player& player, Equipment& playerEq);
+		void buyItem(Player& player, Item& item, Equipment& playerEq);
+
+		std::wstring getShopName();
 	};
 }
