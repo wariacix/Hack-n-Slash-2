@@ -34,7 +34,7 @@ public:
 	std::wstring heroName;
 	Player()
 	{
-		gold = 1000;
+		gold = 100;
 		x = 24;
 		y = 23;
 		hpRegen = 1;
