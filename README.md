@@ -20,7 +20,7 @@ Currently ported most of it.
 - Displaying fully random procedurally generated 2D world with different biomes & cities that you can move on.
 - Camera centered on player.
 - Functional equipment.
-- Interface gfx.
+- Interface gfx + health and mana bars.
 - Displaying city view & sound when entered.
 - Working shop system.
 - Some of dialogue & choice system working.
