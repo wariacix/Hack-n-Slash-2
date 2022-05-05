@@ -12,10 +12,12 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
+#include "General.h"
 #include "menu.h"
 #include "variables.h"
 #include "choice.h"
 #include "Interface.h"
+#include "equipment.h"
 
 class hns::Interface;
 
@@ -254,14 +256,14 @@ namespace dialogueSystem
 	};
 }
 
-void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, equipmentSystem::Equipment &mainEquipment, hns::Interface &mainInterface)
+void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, hns::Equipment &mainEquipment, hns::Interface &mainInterface)
 {
 	dialogueSystem::Dialogue cityDialogue;
 	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) cityDialogue.Dialogue::Dialogue("humanCityView", "FANFARE", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) cityDialogue.Dialogue::Dialogue("orcCityView", "HORN3", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) cityDialogue.Dialogue::Dialogue("forestCityView", "GARDENS3", "interface", "dpcomic");
 
-	equipmentSystem::Shop testShop(3, 4, "alchemy");
+	hns::Shop testShop(3, 4, "alchemy");
 
 	int exit = false;
 	while (exit == false)

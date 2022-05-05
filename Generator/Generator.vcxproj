@@ -165,7 +165,9 @@
   <ItemGroup>
     <ClCompile Include="choice.cpp" />
     <ClCompile Include="equipment.cpp" />
+    <ClCompile Include="Fight.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="General.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
@@ -177,7 +179,9 @@
     <ClInclude Include="choice.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="equipment.h" />
+    <ClInclude Include="Fight.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="General.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="Map.h" />

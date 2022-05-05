@@ -12,129 +12,100 @@
 #include <fcntl.h>
 #include <io.h>
 #include <fstream>
-#include "player.h"
+#include "Player.h"
 #include "equipment.h"
 #include "variables.h"
 #include "choice.h"
+#include "General.h"
 #include "stringLength.h"
 
-using namespace equipmentSystem;
+using namespace hns;
 
-int equipmentSystem::Item::getItemCount()
+int hns::Item::getItemCount()
 {
 	return numOfItems;
 }
-int equipmentSystem::Item::getItemId()
+int hns::Item::getItemId()
 {
 	return id;
 }
-void equipmentSystem::Item::addItemCount(int add)
+void hns::Item::addItemCount(int add)
 {
 	numOfItems += add;
 }
-void equipmentSystem::Item::setItemCount(int set)
+void hns::Item::setItemCount(int set)
 {
 	numOfItems = set;
 }
-int equipmentSystem::Item::getItemAddedHp()
+int hns::Item::getItemAddedHp()
 {
 	return addedHp;
 }
-int equipmentSystem::Item::getItemAddedMp()
+int hns::Item::getItemAddedMp()
 {
 	return addedMp;
 }
-int equipmentSystem::Item::getItemHpRegen()
+int hns::Item::getItemHpRegen()
 {
 	return hpRegen;
 }
-int equipmentSystem::Item::getItemMpRegen()
+int hns::Item::getItemMpRegen()
 {
 	return mpRegen;
 }
-int equipmentSystem::Item::getItemDmg()
+int hns::Item::getItemDmg()
 {
 	return dmg;
 }
-int equipmentSystem::Item::getItemDef()
+int hns::Item::getItemDef()
 {
 	return def;
 }
-int equipmentSystem::Item::getItemStrReq()
+int hns::Item::getItemStrReq()
 {
 	return strReq;
 }
-int equipmentSystem::Item::getItemInReq()
+int hns::Item::getItemInReq()
 {
 	return inReq;
 }
-int equipmentSystem::Item::getItemLvlReq()
+int hns::Item::getItemLvlReq()
 {
 	return lvlReq;
 }
-int equipmentSystem::Item::getItemMpReq()
+int hns::Item::getItemMpReq()
 {
 	return mpReq;
 }
-int equipmentSystem::Item::getItemValue()
+int hns::Item::getItemValue()
 {
 	return value;
 }
-sf::Color equipmentSystem::Item::getItemColor()
+sf::Color hns::Item::getItemColor()
 {
 	return color;
 }
-std::wstring equipmentSystem::Item::getItemName()
+std::wstring hns::Item::getItemName()
 {
 	return itemName;
 }
 
-int equipmentSystem::Equipment::getNumOfItems()
+int hns::Equipment::getNumOfItems()
 {
 	return numOfItems;
 }
 
-void equipmentSystem::Equipment::addNumOfItems(int add)
+void hns::Equipment::addNumOfItems(int add)
 {
 	numOfItems += add;
 }
 
-void equipmentSystem::Equipment::setItem(Item item)
+void hns::Equipment::setItem(Item item)
 {
 	eqItem[getNumOfItems()] = item;
 }
 
-std::wstring equipmentSystem::Equipment::loadItemStats(std::string name)
-{
-	std::string filename(name + ".txt");
-	std::vector<char> bytes;
-	char byte = 0;
-
-	std::ifstream input_file(filename);
-	if (!input_file.is_open())
-	{
-		std::cerr << "Could not open the file '"
-			<< filename << "'" << std::endl;
-		exit(1);
-	}
-
-	while (input_file.get(byte))
-	{
-		bytes.push_back(byte);
-	}
-
-	std::wstring load = L"";
-
-	for (const wchar_t& i : bytes)
-	{
-		load = load + i;
-	}
-
-	input_file.close();
-	return load;
-}
-
-void equipmentSystem::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring name, int& k, int x, int y, sf::Color color)
+void hns::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring name, int& k, int x, int y, sf::Color color)
 {
 	text.setFillColor(color);
 
@@ -145,7 +116,7 @@ void equipmentSystem::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text
 	k++;
 }
 
-void equipmentSystem::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int value, int x, int y, sf::Color green, sf::Color red)
+void hns::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int value, int x, int y, sf::Color green, sf::Color red)
 {
 	if (value >= 0) text.setFillColor(green);
 	else text.setFillColor(red);
@@ -157,7 +128,7 @@ void equipmentSystem::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text
 	k++;
 }
 
-void equipmentSystem::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int requiredVal, int x, int y, int value, sf::Color green, sf::Color red)
+void hns::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text text, std::wstring statStr, int& k, int requiredVal, int x, int y, int value, sf::Color green, sf::Color red)
 {
 	if (value >= requiredVal) text.setFillColor(green);
 	else text.setFillColor(red);
@@ -169,9 +140,9 @@ void equipmentSystem::Equipment::drawItemInfo(sf::RenderWindow& window, sf::Text
 	k++;
 }
 
-void equipmentSystem::Equipment::addItem(int idVar = 0, int howManyItems = 1)
+void hns::Equipment::addItem(int idVar = 0, int howManyItems = 1)
 {
-	std::wstring load = loadItemStats(eqName);
+	std::wstring load = loadFileString(eqName);
 	std::wstring stats[16];
 
 	int a = 0;
@@ -221,7 +192,7 @@ void equipmentSystem::Equipment::addItem(int idVar = 0, int howManyItems = 1)
 	}
 }
 
-void equipmentSystem::Equipment::updateStats(Player &player)
+void hns::Equipment::updateStats(Player &player)
 {
 	player.maxhp = 100 + equippedItem[0].getItemAddedHp() + equippedItem[1].getItemAddedHp() + equippedItem[2].getItemAddedHp();
 	player.maxmp = 20 + equippedItem[0].getItemAddedMp() + equippedItem[1].getItemAddedMp() + equippedItem[2].getItemAddedMp();
@@ -231,7 +202,7 @@ void equipmentSystem::Equipment::updateStats(Player &player)
 	player.def = equippedItem[0].getItemDef() + equippedItem[1].getItemDef() + equippedItem[2].getItemDef();
 }
 
-void equipmentSystem::Equipment::viewEquipment(sf::RenderWindow &window, Player &player)
+void hns::Equipment::viewEquipment(sf::RenderWindow &window, Player &player)
 {
 	for (int i = 0; i < numOfItems; i++)
 	{
@@ -561,7 +532,7 @@ afterItemUse:
 exit:;
 }
 
-void equipmentSystem::Shop::viewEquipment(sf::RenderWindow& window, Player& player, Equipment& playerEq)
+void hns::Shop::viewEquipment(sf::RenderWindow& window, Player& player, Equipment& playerEq)
 {
 	for (int i = 0; i < numOfItems; i++)
 	{
@@ -856,7 +827,7 @@ afterItemUse:
 exit:;
 }
 
-void equipmentSystem::Equipment::drawItemSprite(sf::RenderWindow &window, int x, int y, int id)
+void hns::Equipment::drawItemSprite(sf::RenderWindow &window, int x, int y, int id)
 {
 	sf::Texture tItem;
 	sf::Sprite sItem;
@@ -867,7 +838,7 @@ void equipmentSystem::Equipment::drawItemSprite(sf::RenderWindow &window, int x,
 	window.draw(sItem);
 }
 
-void equipmentSystem::Equipment::itemSwapping(Item& item, int type)
+void hns::Equipment::itemSwapping(Item& item, int type)
 {
 	if (equippedItem[type].getItemId() != -1) addItem(equippedItem[type].getItemId(), 1);
 	equippedItem[type] = item;
@@ -875,7 +846,7 @@ void equipmentSystem::Equipment::itemSwapping(Item& item, int type)
 	else itemDeletion(item.getItemId());
 }
 
-void equipmentSystem::Equipment::itemDeletion(int id)
+void hns::Equipment::itemDeletion(int id)
 {
 	for (int i = 0; i < getNumOfItems(); i++)
 	{
@@ -895,7 +866,7 @@ void equipmentSystem::Equipment::itemDeletion(int id)
 
 using namespace std;
 
-void equipmentSystem::Equipment::equipItem(Item &item, Player &player)
+void hns::Equipment::equipItem(Item &item, Player &player)
 {
 	if (item.getItemId() >= 0 and item.getItemId() < 1000)
 	{
@@ -959,7 +930,7 @@ void equipmentSystem::Equipment::equipItem(Item &item, Player &player)
 	}
 }
 
-void equipmentSystem::Equipment::viewItemStats(sf::RenderWindow& window, Item &item, int x, int y)
+void hns::Equipment::viewItemStats(sf::RenderWindow& window, Item &item, int x, int y)
 {
 	sf::Font font;
 	font.loadFromFile("dpcomic.ttf");
@@ -1020,7 +991,7 @@ void equipmentSystem::Equipment::viewItemStats(sf::RenderWindow& window, Item &i
 	if (item.getItemValue() != 0) drawItemInfo(window, text, L"Value: ", k, item.getItemValue(), x, y, sf::Color{ 255, 255, 0, 255 }, sf::Color{ 255, 255, 0, 255 });
 }
 
-void equipmentSystem::Shop::viewItemStats(sf::RenderWindow& window, Item& item, int x, int y)
+void hns::Shop::viewItemStats(sf::RenderWindow& window, Item& item, int x, int y)
 {
 	sf::Font font;
 	font.loadFromFile("dpcomic.ttf");
@@ -1081,7 +1052,7 @@ void equipmentSystem::Shop::viewItemStats(sf::RenderWindow& window, Item& item, 
 	if (item.getItemValue() != 0) drawItemInfo(window, text, L"Price: ", k, item.getItemValue() * priceMultiplier, x, y, sf::Color{ 255, 255, 0, 255 }, sf::Color{ 255, 255, 0, 255 });
 }
 
-void equipmentSystem::Shop::buyItem(Player &player, Item &item, Equipment &playerEq)
+void hns::Shop::buyItem(Player &player, Item &item, Equipment &playerEq)
 {
 	if (item.getItemValue() * priceMultiplier <= player.gold) // if player has enough gold
 	{
