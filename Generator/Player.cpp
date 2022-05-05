@@ -9,14 +9,14 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
+#include "Player.h"
 #include "equipment.h"
 #include "variables.h"
 #include "Map.h"
-#include "Player.h"
 
 using namespace std;
 
-void Player::movePlayer(Map &map1, sf::RenderWindow &window, equipmentSystem::Equipment &eq, Player& player)
+void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
 {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{

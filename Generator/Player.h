@@ -4,11 +4,9 @@
 #include <SFML/Window.hpp>
 #include <string>
 #include "equipment.h"
+#include "General.h"
 
-namespace equipmentSystem
-{
-	class Equipment;
-}
+class hns::Equipment;
 class Map;
 
 class Player
@@ -34,7 +32,7 @@ public:
 	std::wstring heroName;
 	Player()
 	{
-		gold = 1000;
+		gold = 99999;
 		x = 24;
 		y = 23;
 		hpRegen = 1;
@@ -53,6 +51,6 @@ public:
 		xp = 0;
 		heroName = L"NO NAME";
 	}
-	void movePlayer(Map &map1, sf::RenderWindow& window, equipmentSystem::Equipment &eq, Player& player);
+	void movePlayer(Map &map1, sf::RenderWindow& window, hns::Equipment &eq, Player& player);
 };
 extern Player mainPlayer;

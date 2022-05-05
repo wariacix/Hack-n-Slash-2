@@ -71,7 +71,7 @@ int main()
 	mtnChance = 14;
 	los = false;
 
-	equipmentSystem::Equipment mainEquipment;
+	hns::Equipment mainEquipment;
 
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
