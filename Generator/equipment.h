@@ -85,7 +85,7 @@ public:
 class hns::Equipment
 {
 private:
-	void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
+	virtual void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
 
 protected:
 	int equipmentWidth = 10;
@@ -120,7 +120,7 @@ public:
 	std::string getEqName();
 	void addItem(int id, int howManyItems);
 	void updateStats(Player& player);
-	void viewEquipment(sf::RenderWindow& window, Player& player);
+	virtual void viewEquipment(sf::RenderWindow& window, Player& player);
 	int getNumOfItems();
 	void itemDeletion(int id);
 	void itemSwapping(Item& item, int type);

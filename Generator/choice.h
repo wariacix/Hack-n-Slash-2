@@ -11,8 +11,32 @@
 
 void drawInterface(sf::RenderWindow& window);
 void cityEnter(sf::RenderWindow& window, Map& mainMap, Player& mainPlayer, hns::Equipment &mainEquipment, hns::Interface& mainInterface);
-#ifndef choice_h
-#define choice_h
-int choice(sf::RenderWindow& window, std::wstring choiceString[6], int& choice);
-#endif
+class hns::Dialogue
+{
+protected:
+	sf::Font font;
+	sf::Texture viewTexture, interfaceTexture;
+	sf::Sprite viewSprite, interfaceSprite;
+	sf::SoundBuffer buffer;
+	sf::Sound enterSound;
+	sf::Text text;
+	bool hasSoundBeenPlayed;
 
+	void getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButtons, int& choice, std::wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui);
+public:
+	Dialogue();
+
+	Dialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr, std::string fontName);
+
+	Dialogue(const hns::Dialogue& copiedDialogue);
+
+	virtual int getDialogueAnswer(sf::RenderWindow& window, Player player, hns::Interface ui, std::wstring choiceString[6], bool playSound = false);
+
+	void playViewSound();
+
+	void drawView(sf::RenderWindow& window);
+
+	void drawInterface(sf::RenderWindow& window, Player player, hns::Interface ui);
+
+	static void textWriting(std::wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer);
+};

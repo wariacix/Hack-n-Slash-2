@@ -16,4 +16,6 @@ namespace hns
 	class Bar;
 	class Fight;
 	class Enemy;
+	class Dialogue;
+	class FightDialogue;
 }
