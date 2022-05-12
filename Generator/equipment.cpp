@@ -1054,7 +1054,7 @@ void hns::Shop::viewItemStats(sf::RenderWindow& window, Item& item, int x, int y
 
 void hns::Shop::buyItem(Player &player, Item &item, Equipment &playerEq)
 {
-	if (item.getItemValue() * priceMultiplier <= player.gold) // if player has enough gold
+	if (item.getItemValue() * priceMultiplier <= player.gold + 1) // if player has enough gold
 	{
 		playerEq.addItem(item.getItemId(), 1);
 		player.gold = player.gold - (item.getItemValue() * priceMultiplier);

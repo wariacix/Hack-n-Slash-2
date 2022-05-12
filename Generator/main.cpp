@@ -14,11 +14,13 @@
 #include "menu.h"
 #include "variables.h"
 #include "choice.h"
+#include "General.h"
 #include "equipment.h"
 #include "Player.h"
 #include "GameObject.h"
 #include "Interface.h"
 #include "Map.h"
+#include "Fight.h"
 
 Map mainMap;
 Player mainPlayer;
@@ -67,11 +69,11 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
 	window.setVerticalSyncEnabled(true);
 	bool recentlyLeft = 0;
-	mainPlayer.lvl = 5;
 	mtnChance = 14;
 	los = false;
 
 	hns::Equipment mainEquipment;
+	hns::Interface mainUI(mainPlayer);
 
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
@@ -79,13 +81,7 @@ int main()
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.addItem(0, 10);
-	mainEquipment.addItem(1, 10);
-	mainEquipment.addItem(2, 10);
-	mainEquipment.addItem(3, 50);
-	mainEquipment.addItem(4, 60);
-	mainEquipment.addItem(5, 999);
-	mainEquipment.addItem(6, 999);
+	mainEquipment.addItem(0, 3);
 	mainEquipment.addItem(100, mainPlayer.gold);
 	mainEquipment.addItem(101, 20);
 	mainEquipment.addItem(102, 20);
@@ -104,6 +100,8 @@ int main()
 	mainEquipment.addItem(3001, 1);
 	mainEquipment.addItem(3002, 1);
 
+	bool hasRolled = false;
+	int rollX = -1, rollY = -1;
 	while (true)
 	{
 		system("color 0f");
@@ -111,7 +109,7 @@ int main()
 		menu();
 		mainMap.generateMap();
 		wcout << L"READY.";
-		while (window.isOpen() and los == false)
+		while (window.isOpen() and mainPlayer.alive == true)
 		{
 			sf::Event event;
 			while (window.pollEvent(event))
@@ -126,7 +124,23 @@ int main()
 			window.clear();
 			mainMap.clearFog(mainPlayer);
 			mainMap.viewMapSFML(window, mainPlayer);
-			hns::Interface mainUI(mainPlayer);
+
+			if (rollX != mainPlayer.x or rollY != mainPlayer.y)
+			{
+				rollX = mainPlayer.x;
+				rollY = mainPlayer.y;
+				hasRolled = false;
+			}
+
+			if (hasRolled == false)
+			{
+				if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 && rand() % 10 == 0)
+				{
+					hns::Fight fight;
+					fight.start(window, mainPlayer, mainUI, mainEquipment);
+				}
+				else hasRolled = true;
+			}
 
 			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
 			{
