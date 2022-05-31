@@ -1,7 +1,5 @@
 # Hack-n-Slash-2
-Hack n' Slash 2 is a C++ SFML roguelike/RPG game.
-Before porting to SFML, the game itself worked in text mode in windows console, that's why there's 2 branches.
-Currently ported most of it.
+Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 
 ![Equipment interface](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/eqimg.png)
 
