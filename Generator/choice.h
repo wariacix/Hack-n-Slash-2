@@ -1,6 +1,42 @@
+#pragma once
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <string>
-#ifndef choice_h
-#define choice_h
-int choice(std::wstring wstring1, std::wstring wstring2, std::wstring wstring3, std::wstring wstring4, std::wstring wstring5, std::wstring wstring6, int numberOfOptions);
-#endif
+#include "General.h"
+#include "Map.h"
+#include "Player.h"
+#include "equipment.h"
+#include "Interface.h"
 
+void drawInterface(sf::RenderWindow& window);
+void cityEnter(sf::RenderWindow& window, Map& mainMap, Player& mainPlayer, hns::Equipment &mainEquipment, hns::Interface& mainInterface);
+class hns::Dialogue
+{
+protected:
+	sf::Font font;
+	sf::Texture viewTexture, interfaceTexture;
+	sf::Sprite viewSprite, interfaceSprite;
+	sf::SoundBuffer buffer;
+	sf::Sound enterSound;
+	sf::Text text;
+	bool hasSoundBeenPlayed;
+
+	void getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButtons, int& choice, std::wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui);
+public:
+	Dialogue();
+
+	Dialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr, std::string fontName);
+
+	Dialogue(const hns::Dialogue& copiedDialogue);
+
+	virtual int getDialogueAnswer(sf::RenderWindow& window, Player player, hns::Interface ui, std::wstring choiceString[6], bool playSound = false);
+
+	void playViewSound();
+
+	void drawView(sf::RenderWindow& window);
+
+	void drawInterface(sf::RenderWindow& window, Player player, hns::Interface ui);
+
+	static void textWriting(std::wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer);
+};

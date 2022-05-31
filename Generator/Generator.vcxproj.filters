@@ -15,28 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gotoxy.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="menu.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="fight.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="draw.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="textbox.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="choice.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="intMap.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="equipment.cpp">
@@ -45,36 +30,27 @@
     <ClCompile Include="stringLength.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="equipItem.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="gameGui.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="General.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Fight.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gotoxy.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="menu.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="fight.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="draw.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="textbox.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="variables.h">
@@ -83,19 +59,10 @@
     <ClInclude Include="choice.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="intMap.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="equipment.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="stringLength.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="equipItem.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="gameGui.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
@@ -107,39 +74,211 @@
     <ClInclude Include="City.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="icon1.ico">
-      <Filter>Pliki zasobów</Filter>
-    </Image>
+    <ClInclude Include="GameObject.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="General.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Fight.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="grafika.txt" />
     <Text Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-audio-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-network-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-system-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-window-2.dll" />
-    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-window-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-network-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-system-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-system-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-network-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="..\..\SFML-2.5.1\bin\sfml-window-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-audio-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="..\..\SFML-2.5.1\bin\sfml-audio-d-2.dll">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-graphics-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-system-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-network-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\SFML-2.5.1\bin\sfml-window-d-2.dll">
+      <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="..\..\SFML-2.5.1\bin\openal32.dll">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-main-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-s-d.pdb">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-system-2.dll">
       <Filter>Pliki źródłowe</Filter>
     </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-system-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-window-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-window-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\openal32.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-audio-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-audio-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-graphics-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-graphics-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-network-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="..\..\..\..\Desktop\SFML-2.5.1\bin\sfml-network-d-2.dll">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-window-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\vorbis.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\vorbisenc.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\vorbisfile.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\flac.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\freetype.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\ogg.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\openal32.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-audio-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-graphics-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-main.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-main-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-s.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-network-s-d.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Desktop\SFML-2.5.1\lib\sfml-system.lib">
+      <Filter>Pliki zasobów</Filter>
+    </Library>
   </ItemGroup>
 </Project>

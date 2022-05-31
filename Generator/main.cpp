@@ -1,6 +1,9 @@
-﻿#include <iostream>
-#include <cstdlib>
+﻿#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <windows.h>
+#include <iostream>
+#include <cstdlib>
 #include <conio.h>
 #include <stdio.h>
 #include <time.h>
@@ -8,66 +11,39 @@
 #include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
-#include "gotoxy.h"
 #include "menu.h"
-#include "fight.h"
-#include "draw.h"
-#include "gameGui.h"
-#include "textbox.h"
 #include "variables.h"
 #include "choice.h"
+#include "General.h"
 #include "equipment.h"
-#include "equipItem.h"
-#include "Map.h"
 #include "Player.h"
-#include "intMap.h"
-
+#include "GameObject.h"
+#include "Interface.h"
+#include "Map.h"
+#include "Fight.h"
 
 Map mainMap;
 Player mainPlayer;
 
 int debugMode = 0;
-int cityID[48][46], cityGuardian[48][46], item[9999], armory[3], x, y, p, mtnChance;
+int mtnChance;
 std::wstring cityName[30];
-int text[50];
-int fightMode = 0; //0bez walki,1walka,2ekwipunek w trakcie walki
 bool los = false;
 std::wstring enemyName;
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-struct items armor, weapon, shield, selectedItem;
 
 using namespace std;
 
 
-void setBaseValues()
+void xpCount()
 {
-	mtnChance = 13;
-	los = false;
-
-	for (p = 0; p < 9999; p++) item[p] = 0;
-	for (p = 0; p < 50; p++) text[p] = -1000;
-
-	armory[0] = 0;
-	armory[1] = 0;
-	armory[2] = 0;
-
-	equipItem(2, 1000);
-	equipItem(2, 2000);
-	equipItem(2, 3000);
-
-	item[0] = 200;
-	item[1] = 20;
-	item[2] = 10;
-	item[3] = 5;
-	item[4] = 5;
-	item[5] = 5;
-	item[6] = 5;
-	item[1001] = 1;
-	item[1002] = 1;
-	item[2001] = 1;
-	item[2002] = 1;
-	item[3001] = 1;
-};
+	while (mainPlayer.xp >= mainPlayer.reqexp)
+	{
+		mainPlayer.xp = mainPlayer.xp - mainPlayer.reqexp;
+		mainPlayer.reqexp = mainPlayer.reqexp + 250;
+		mainPlayer.lvl++;
+	}
+}
 
 void updateHpMp()
 {
@@ -75,31 +51,107 @@ void updateHpMp()
 	if (mainPlayer.mp < mainPlayer.maxmp) mainPlayer.mp = mainPlayer.mp + mainPlayer.mpRegen; else mainPlayer.mp = mainPlayer.maxmp;
 }
 
+void drawInterface(sf::RenderWindow& window)
+{
+	sf::Texture tInterface;
+	sf::Sprite sInterface;
+	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 320, 200));
+	sInterface.setScale(5.f,5.f);
+	sInterface.setTexture(tInterface);
+	sInterface.setPosition(0.f, 0.f);
+	window.draw(sInterface);
+}
+
 int main()
 {
-	_setmode(_fileno(stdout), _O_WTEXT);
 	srand(time(NULL));
-	intMap map1;
-	map1.loadMap(L"map1");
+	sf::Font font;
+	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
+	window.setVerticalSyncEnabled(true);
+	bool recentlyLeft = 0;
+	mtnChance = 14;
+	los = false;
+
+	hns::Equipment mainEquipment;
+	hns::Interface mainUI(mainPlayer);
+
+	mainEquipment.addItem(1000, 1);
+	mainEquipment.addItem(2000, 1);
+	mainEquipment.addItem(3000, 1);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.addItem(0, 3);
+	mainEquipment.addItem(100, mainPlayer.gold);
+	mainEquipment.addItem(101, 20);
+	mainEquipment.addItem(102, 20);
+	mainEquipment.addItem(103, 20);
+	mainEquipment.addItem(1001, 1);
+	mainEquipment.addItem(1002, 1);
+	mainEquipment.addItem(1003, 1);
+	mainEquipment.addItem(1004, 1);
+	mainEquipment.addItem(1005, 1);
+	mainEquipment.addItem(1006, 1);
+	mainEquipment.addItem(1007, 1);
+	mainEquipment.addItem(1008, 1);
+	mainEquipment.addItem(2001, 1);
+	mainEquipment.addItem(2002, 1);
+	mainEquipment.addItem(2003, 1);
+	mainEquipment.addItem(3001, 1);
+	mainEquipment.addItem(3002, 1);
+
+	bool hasRolled = false;
+	int rollX = -1, rollY = -1;
 	while (true)
 	{
 		system("color 0f");
-		system("mode con: cols=126 lines=50");
-		setBaseValues();
-		gameGui();
-		map1.viewMap();
+		system("mode con: cols=106 lines=25");
 		menu();
 		mainMap.generateMap();
-
-		while (los == false)
+		wcout << L"READY.";
+		while (window.isOpen() and mainPlayer.alive == true)
 		{
-			updateHpMp();
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+				{
+					window.close();
+					exit(1);
+				}
+			}
+
+			window.clear();
 			mainMap.clearFog(mainPlayer);
-			mainMap.viewMap();
-			gameGui();
-			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1) textbox(3, 0);
-			if (rand() % 7 == 0 and mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) textbox(1, 300 + rand() % 2); //0 - Polany   1 - Góry   2 - Pustynia   3 - Arktyka   4 - Lasy
-			mainPlayer.movePlayer(mainMap);
+			mainMap.viewMapSFML(window, mainPlayer);
+
+			if (rollX != mainPlayer.x or rollY != mainPlayer.y)
+			{
+				rollX = mainPlayer.x;
+				rollY = mainPlayer.y;
+				hasRolled = false;
+			}
+
+			if (hasRolled == false)
+			{
+				if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 && rand() % 10 == 0)
+				{
+					hns::Fight fight;
+					fight.start(window, mainPlayer, mainUI, mainEquipment);
+				}
+				else hasRolled = true;
+			}
+
+			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
+			{
+				cityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
+				recentlyLeft = 1;
+			}
+			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
+
+			mainUI.hns::Interface::draw(window, mainPlayer);
+			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
+			window.display();
 		}
 	}
 };

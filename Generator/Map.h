@@ -1,5 +1,8 @@
 #pragma once
-#include "Player.h"
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 
 class Player;
 
@@ -8,9 +11,12 @@ class Map
 public:
 	int biome[48][46];
 	int city[48][46];
+	int cityID[48][46];
+	int cityGuardian[48][46];
 	int hero[48][46];
 	int fog[48][46];
 	int path[48][46];
+
 	Map()
 	{
 		for (int x = 0; x < 48; x++)
@@ -29,6 +35,8 @@ public:
 	std::wstring genCityName();
 
 	void clearFog(Player& player1);
+
+	void viewMapSFML(sf::RenderWindow &window, Player player);
 
 	void setBaseValues();
 
@@ -53,6 +61,4 @@ public:
 	void generatePaths();
 
 	void generateMap();
-
-	void viewMap();
 };
