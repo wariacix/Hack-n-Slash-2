@@ -81,15 +81,14 @@ int main()
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.addItem(5000, 1);
 	mainEquipment.addItem(4000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.addItem(0, 3);
+	mainEquipment.equipItem(mainEquipment.eqItem[4], mainPlayer);
+	mainEquipment.addItem(5000, 1);
+	mainEquipment.equipItem(mainEquipment.eqItem[5], mainPlayer);
 	mainEquipment.addItem(100, mainPlayer.gold);
 	mainEquipment.addItem(101, 20);
 	mainEquipment.addItem(102, 20);
-	mainEquipment.addItem(103, 20);
+	mainEquipment.addItem(103, 10);
 
 	bool hasRolled = false;
 	int rollX = -1, rollY = -1;
