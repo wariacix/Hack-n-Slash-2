@@ -27,7 +27,7 @@ class hns::Fight
 	sf::Sprite sprite;
 	void viewBackground(sf::RenderWindow& window);
 public:
-	Fight(hns::Enemy enemy = Enemy(), std::string sprName = "plains.png");
+	Fight(hns::Enemy enemy = Enemy(), std::string sprName = "forest.png");
 	void start(sf::RenderWindow& window, Player& mainPlayer, hns::Interface mainInterface, hns::Equipment& mainEquipment);
 };
 

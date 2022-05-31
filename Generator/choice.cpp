@@ -142,52 +142,100 @@ void hns::Dialogue::getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButt
 		if (choice == i) buttonS.setColor(sf::Color{ 252,255,0,255 });
 		else buttonS.setColor(sf::Color::White);
 		buttonS.setScale(5.f, 5.f);
-		if (i < 3)
+
+		if (numberOfButtons == 2 or numberOfButtons == 4)
 		{
-			if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 780.f);
-			else buttonS.setPosition(165.f + (i * 260), 780.f);
+			if (i < 2)
+			{
+				buttonS.setPosition(290.f + (i * 260), 780.f);
+			}
+			else
+			{
+				buttonS.setPosition(290.f + ((i - 2) * 260), 840.f);
+			}
+			window.draw(buttonS);
+
+			text.setCharacterSize(24);
+			text.setString(choiceString[i]);
+
+			if (i < 2)
+			{
+				text.setPosition(305.f + (i * 260), 790.f);
+			}
+			else
+			{
+				text.setPosition(305.f + ((i - 2) * 260), 850.f);
+			}
+			window.draw(text);
 		}
 		else
 		{
-			if (numberOfButtons == 2 or numberOfButtons == 4) buttonS.setPosition(290.f + (i * 260), 840.f);
-			else buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
-		}
-		window.draw(buttonS);
+			if (i < 3)
+			{
+				buttonS.setPosition(165.f + (i * 260), 780.f);
+			}
+			else
+			{
+				buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+			}
+			window.draw(buttonS);
 
-		text.setCharacterSize(24);
-		text.setString(choiceString[i]);
+			text.setCharacterSize(24);
+			text.setString(choiceString[i]);
 
-		if (i < 3)
-		{
-			if (numberOfButtons == 2 or numberOfButtons == 4) text.setPosition(305.f + (i * 260), 790.f);
-			else text.setPosition(180.f + (i * 260), 790.f);
+			if (i < 3)
+			{
+				text.setPosition(180.f + (i * 260), 790.f);
+			}
+			else
+			{
+				text.setPosition(180.f + ((i - 3) * 260), 850.f);
+			}
+			window.draw(text);
 		}
-		else
-		{
-			if (numberOfButtons == 2 or numberOfButtons == 4) text.setPosition(305.f + ((i - 3) * 260), 850.f);
-			else text.setPosition(180.f + ((i - 3) * 260), 850.f);
-		}
-		window.draw(text);
 	}
 
 
 	//Choice manipulation
-	int sleepTime = 100;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+	if (numberOfButtons == 2 or numberOfButtons == 4)
 	{
-		choice--; Sleep(sleepTime);
+		int sleepTime = 100;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+		{
+			choice--; Sleep(sleepTime);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+		{
+			choice++; Sleep(sleepTime);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 2 >= 0)
+		{
+			choice = choice - 2; Sleep(sleepTime);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 2 < numberOfButtons)
+		{
+			choice = choice + 2; Sleep(sleepTime);
+		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+	else
 	{
-		choice++; Sleep(sleepTime);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 3 >= 0)
-	{
-		choice = choice - 3; Sleep(sleepTime);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 3 < numberOfButtons)
-	{
-		choice = choice + 3; Sleep(sleepTime);
+		int sleepTime = 100;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+		{
+			choice--; Sleep(sleepTime);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+		{
+			choice++; Sleep(sleepTime);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 3 >= 0)
+		{
+			choice = choice - 3; Sleep(sleepTime);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 3 < numberOfButtons)
+		{
+			choice = choice + 3; Sleep(sleepTime);
+		}
 	}
 }
 
@@ -255,22 +303,30 @@ void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, hns::
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) cityDialogue.Dialogue::Dialogue("orcCityView", "HORN3", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) cityDialogue.Dialogue::Dialogue("forestCityView", "GARDENS3", "interface", "dpcomic");
 
-	hns::Shop testShop(3, 4, "alchemy");
+	hns::Shop alchemyShop(3, 4, "alchemy"), armorerShop(4, 4, "armorer"), blacksmithShop(4, 4, "blacksmith"), jewelerShop(4,4, "jeweler");
 
 	int exit = false;
 	while (exit == false)
 	{
-		switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface,new (std::wstring[]){ L"Enter the City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
+		switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
 		{
 		case 0:
-			switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the Alchemist",L"Exit the City",L"",L"",L"",L"" }))
+			switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Alchemist",L"Armorer",L"Blacksmith",L"Jeweler",L"Exit the City",L"",L""}))
 			{
 			case 0:
-				testShop.viewEquipment(window, mainPlayer, mainEquipment);
+				alchemyShop.viewEquipment(window, mainPlayer, mainEquipment);
 				break;
 			case 1:
+				armorerShop.viewEquipment(window, mainPlayer, mainEquipment);
 				break;
 			case 2:
+				blacksmithShop.viewEquipment(window, mainPlayer, mainEquipment);
+				break;
+			case 3:
+				jewelerShop.viewEquipment(window, mainPlayer, mainEquipment);
+				break;
+			case 4:
+				exit = true;
 				break;
 			case 999:
 				break;

@@ -114,7 +114,7 @@ public:
 		eqName = "itemStats";
 		numOfItems = 1;
 		eqItem = new Item[9999];
-		equippedItem = new Item[3];
+		equippedItem = new Item[8];
 	}
 
 	std::string getEqName();
@@ -126,6 +126,7 @@ public:
 	void itemSwapping(Item& item, int type);
 	void addNumOfItems(int add);
 	void equipItem(Item& item, Player& player);
+	bool checkItemRequirements(Item item, Player& player);
 };
 
 class hns::Shop : public hns::Equipment

@@ -194,12 +194,12 @@ void hns::Equipment::addItem(int idVar = 0, int howManyItems = 1)
 
 void hns::Equipment::updateStats(Player &player)
 {
-	player.maxhp = 100 + equippedItem[0].getItemAddedHp() + equippedItem[1].getItemAddedHp() + equippedItem[2].getItemAddedHp();
-	player.maxmp = 20 + equippedItem[0].getItemAddedMp() + equippedItem[1].getItemAddedMp() + equippedItem[2].getItemAddedMp();
-	player.hpRegen = 1 + equippedItem[0].getItemHpRegen() + equippedItem[1].getItemHpRegen() + equippedItem[2].getItemHpRegen();
-	player.mpRegen = 1 + equippedItem[0].getItemMpRegen() + equippedItem[1].getItemMpRegen() + equippedItem[2].getItemMpRegen();
-	player.dmg = equippedItem[0].getItemDmg() + equippedItem[1].getItemDmg() + equippedItem[2].getItemDmg();
-	player.def = equippedItem[0].getItemDef() + equippedItem[1].getItemDef() + equippedItem[2].getItemDef();
+	player.maxhp = 100 + equippedItem[0].getItemAddedHp() + equippedItem[1].getItemAddedHp() + equippedItem[2].getItemAddedHp() + equippedItem[3].getItemAddedHp() + equippedItem[4].getItemAddedHp() + equippedItem[5].getItemAddedHp() + equippedItem[6].getItemAddedHp() + equippedItem[7].getItemAddedHp();
+	player.maxmp = 20 + equippedItem[0].getItemAddedMp() + equippedItem[1].getItemAddedMp() + equippedItem[2].getItemAddedMp() + equippedItem[3].getItemAddedMp() + equippedItem[4].getItemAddedMp() + equippedItem[5].getItemAddedMp() + equippedItem[6].getItemAddedMp() + equippedItem[7].getItemAddedMp();
+	player.hpRegen = 1 + equippedItem[0].getItemHpRegen() + equippedItem[1].getItemHpRegen() + equippedItem[2].getItemHpRegen() + equippedItem[3].getItemHpRegen() + equippedItem[4].getItemHpRegen() + equippedItem[5].getItemHpRegen() + equippedItem[6].getItemHpRegen() + equippedItem[7].getItemHpRegen();
+	player.mpRegen = 1 + equippedItem[0].getItemMpRegen() + equippedItem[1].getItemMpRegen() + equippedItem[2].getItemMpRegen() + equippedItem[3].getItemMpRegen() + equippedItem[4].getItemMpRegen() + equippedItem[5].getItemMpRegen() + equippedItem[6].getItemMpRegen() + equippedItem[7].getItemMpRegen();
+	player.dmg = equippedItem[0].getItemDmg() + equippedItem[1].getItemDmg() + equippedItem[2].getItemDmg() + equippedItem[3].getItemDmg() + equippedItem[4].getItemDmg() + equippedItem[5].getItemDmg() + equippedItem[6].getItemDmg() + equippedItem[7].getItemDmg();
+	player.def = equippedItem[0].getItemDef() + equippedItem[1].getItemDef() + equippedItem[2].getItemDef() + equippedItem[3].getItemDef() + equippedItem[4].getItemDef() + equippedItem[5].getItemDef() + equippedItem[6].getItemDef() + equippedItem[7].getItemDef();
 }
 
 void hns::Equipment::viewEquipment(sf::RenderWindow &window, Player &player)
@@ -387,6 +387,21 @@ afterItemUse:
 
 		//SHIELD
 		drawItemSprite(window, 1435, 170, equippedItem[2].getItemId());
+
+		//BOOTS
+		drawItemSprite(window, 1325, 845, equippedItem[3].getItemId());
+
+		//HELMET
+		drawItemSprite(window, 1325, 95, equippedItem[4].getItemId());
+
+		//NECKLACE
+		drawItemSprite(window, 1210, 170, equippedItem[5].getItemId());
+
+		//RING 1
+		drawItemSprite(window, 1210, 810, equippedItem[6].getItemId());
+
+		//RING 2
+		drawItemSprite(window, 1435, 810, equippedItem[7].getItemId());
 
 		//Check for mouse position and change item choice accordingly
 		for (int eqy = 0; eqy < 200; eqy++)
@@ -916,18 +931,46 @@ void hns::Equipment::equipItem(Item &item, Player &player)
 			break;
 		}
 	}
-	else if (item.getItemId() >= 1000 and item.getItemId() < 2000 and item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp)
+	else if (item.getItemId() >= 1000 and item.getItemId() < 2000 and checkItemRequirements(item, player) == true) //Weapons
 	{
 		itemSwapping(item, 0);
 	}
-	else if (item.getItemId() >= 2000 and item.getItemId() < 3000 and item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp)
+	else if (item.getItemId() >= 2000 and item.getItemId() < 3000 and checkItemRequirements(item, player) == true) //Armor
 	{
 		itemSwapping(item, 1);
 	}
-	else if (item.getItemId() >= 3000 and item.getItemId() < 4000 and item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp)
+	else if (item.getItemId() >= 3000 and item.getItemId() < 4000 and checkItemRequirements(item, player) == true) //Shield
 	{
 		itemSwapping(item, 2);
 	}
+	else if (item.getItemId() >= 4000 and item.getItemId() < 5000 and checkItemRequirements(item, player) == true) //Boots
+	{
+		itemSwapping(item, 3);
+	}
+	else if (item.getItemId() >= 5000 and item.getItemId() < 6000 and checkItemRequirements(item, player) == true) //Helmet
+	{
+		itemSwapping(item, 4);
+	}
+	else if (item.getItemId() >= 6000 and item.getItemId() < 7000 and checkItemRequirements(item, player) == true) //Necklace
+	{
+		itemSwapping(item, 5);
+	}
+	else if (item.getItemId() >= 7000 and item.getItemId() < 8000 and checkItemRequirements(item, player) == true) //Ring slot 1 & 2
+	{
+		if (equippedItem[6].getItemId() == -1) itemSwapping(item, 6);
+		else if (equippedItem[7].getItemId() == -1) itemSwapping(item, 7);
+		else
+		{
+			if (rand() % 2 == 0) itemSwapping(item, 6);
+			else itemSwapping(item, 7);
+		}
+	}
+}
+
+bool hns::Equipment::checkItemRequirements(Item item, Player& player)
+{
+	if (item.getItemInReq() <= player.in and item.getItemLvlReq() <= player.lvl and item.getItemStrReq() <= player.str and item.getItemMpReq() <= player.maxmp) return true;
+	else false;
 }
 
 void hns::Equipment::viewItemStats(sf::RenderWindow& window, Item &item, int x, int y)
@@ -1013,6 +1056,7 @@ void hns::Shop::viewItemStats(sf::RenderWindow& window, Item& item, int x, int y
 		wchar_t* ptr = _wcsdup(item.getItemName().c_str());
 		textWidth = std::wcslen(ptr);
 	}
+
 	if (item.getItemAddedHp() != 0) textHeight++;
 	if (item.getItemAddedMp() != 0) textHeight++;
 	if (item.getItemHpRegen() != 0) textHeight++;

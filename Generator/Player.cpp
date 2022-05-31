@@ -30,7 +30,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
-			if (x < 47)
+			if (x < map1.getMapWidth() - 1)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x + 1][y] = 1;
@@ -54,7 +54,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			if (y < 45)
+			if (y < map1.getMapHeight() - 1)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x][y + 1] = 1;

@@ -22,7 +22,7 @@
 #include "Map.h"
 #include "Fight.h"
 
-Map mainMap;
+Map mainMap(100,60);
 Player mainPlayer;
 
 int debugMode = 0;
@@ -81,24 +81,15 @@ int main()
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.addItem(5000, 1);
+	mainEquipment.addItem(4000, 1);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(0, 3);
 	mainEquipment.addItem(100, mainPlayer.gold);
 	mainEquipment.addItem(101, 20);
 	mainEquipment.addItem(102, 20);
 	mainEquipment.addItem(103, 20);
-	mainEquipment.addItem(1001, 1);
-	mainEquipment.addItem(1002, 1);
-	mainEquipment.addItem(1003, 1);
-	mainEquipment.addItem(1004, 1);
-	mainEquipment.addItem(1005, 1);
-	mainEquipment.addItem(1006, 1);
-	mainEquipment.addItem(1007, 1);
-	mainEquipment.addItem(1008, 1);
-	mainEquipment.addItem(2001, 1);
-	mainEquipment.addItem(2002, 1);
-	mainEquipment.addItem(2003, 1);
-	mainEquipment.addItem(3001, 1);
-	mainEquipment.addItem(3002, 1);
 
 	bool hasRolled = false;
 	int rollX = -1, rollY = -1;
@@ -149,7 +140,7 @@ int main()
 			}
 			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
 
-			mainUI.hns::Interface::draw(window, mainPlayer);
+			mainUI.draw(window, mainPlayer);
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}
