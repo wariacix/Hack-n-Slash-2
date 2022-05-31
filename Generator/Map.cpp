@@ -53,9 +53,9 @@ std::wstring Map::genCityName()
 
 void Map::setBaseValues()
 		{
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					biome[x][y] = 0;
 					city[x][y] = 0;
@@ -66,13 +66,13 @@ void Map::setBaseValues()
 					if (rand() % mtnChance == 1) biome[x][y] = 1;
 					if (biome[x][y] == 1) //POSZERZANIE GÓR
 					{
-						if (rand() % 5 > 1 and x < 48) biome[x + 1][y] = 1;
+						if (rand() % 5 > 1 and x < mapWidth - 1) biome[x + 1][y] = 1;
 						if (rand() % 5 > 1 and x > 0) biome[x - 1][y] = 1;
-						if (rand() % 5 > 1 and y < 46) biome[x][y + 1] = 1;
+						if (rand() % 5 > 1 and y < mapHeight - 1) biome[x][y + 1] = 1;
 						if (rand() % 5 > 1 and y > 0) biome[x][y - 1] = 1;
-						if (rand() % 5 > 0 and x < 48 and y < 46) biome[x + 1][y + 1] = 1;
-						if (rand() % 5 > 0 and x > 0 and y < 46) biome[x - 1][y + 1] = 1;
-						if (rand() % 5 > 0 and x < 48 and y > 0) biome[x + 1][y - 1] = 1;
+						if (rand() % 5 > 0 and x < mapWidth - 1 and y < mapHeight - 1) biome[x + 1][y + 1] = 1;
+						if (rand() % 5 > 0 and x > 0 and y < mapHeight - 1) biome[x - 1][y + 1] = 1;
+						if (rand() % 5 > 0 and x < mapWidth - 1 and y > 0) biome[x + 1][y - 1] = 1;
 						if (rand() % 5 > 0 and x > 0 and y > 0) biome[x - 1][y - 1] = 1;
 					}
 				}
@@ -82,22 +82,22 @@ void Map::setBaseValues()
 
 void Map::enlargeMountains()
 		{
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
-					if (x > 0 and x < 48 and y > 0 and y < 46 and biome[x][y] == 1 and biome[x + 1][y] == 0 and biome[x - 1][y] == 0 and biome[x][y - 1] == 0 and biome[x][y + 1] == 0) biome[x][y] = 0;
-					if (x > 0 and x < 48 and y > 0 and y < 46 and biome[x][y] == 0 and biome[x + 1][y] == 1 and biome[x - 1][y] == 1 and biome[x][y - 1] == 1 and biome[x][y + 1] == 1) biome[x][y] = 1;
+					if (x > 1 and x < mapWidth - 1 and y > 1 and y < mapHeight - 1 and biome[x][y] == 1 and biome[x + 1][y] == 0 and biome[x - 1][y] == 0 and biome[x][y - 1] == 0 and biome[x][y + 1] == 0) biome[x][y] = 0;
+					if (x > 1 and x < mapWidth - 1 and y > 1 and y < mapHeight - 1 and biome[x][y] == 0 and biome[x + 1][y] == 1 and biome[x - 1][y] == 1 and biome[x][y - 1] == 1 and biome[x][y + 1] == 1) biome[x][y] = 1;
 				}
 			}
 		};
 
 void Map::createDeserts()
 		{
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
 				if (rand() % 2 == 0) biome[x][36] = 2;
-				for (int y = 37; y < 46; y++)
+				for (int y = 37; y < mapHeight; y++)
 				{
 					biome[x][y] = 2;
 				}
@@ -106,7 +106,7 @@ void Map::createDeserts()
 
 void Map::createArctic()
 		{
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
 				if (rand() % 2 == 0) biome[x][5] = 3;
 				for (int y = 0; y < 5; y++) biome[x][y] = 3;
@@ -125,9 +125,9 @@ void Map::createBaseBiomes()
 void Map::createCities()
 		{
 			int x1, y1;
-			for (int x = 6; x < 43; x++)
+			for (int x = 6; x < mapWidth - 5; x++)
 			{
-				for (int y = 6; y < 41; y++)
+				for (int y = 6; y < mapHeight - 5; y++)
 				{
 					int cityChance = 1;
 					for (x1 = 0; x1 < 5; x1++)
@@ -145,25 +145,25 @@ void Map::createCities()
 			}
 			for (int i = 0; i < 50000; i++)
 			{
-				int x = rand() % 43;
-				int y = rand() % 41;
+				int x = rand() % (mapWidth - 5);
+				int y = rand() % (mapHeight - 5);
 				int cityChance = 0;
 				for (x1 = 0; x1 < 15; x1++)
 				{
 					for (y1 = 0; y1 < 15; y1++)
 					{
-						if (city[x + x1 - 7][y + y1 - 7] == 1) cityChance++;
+						if ((x + x1 - 7 >= 0) && (y + y1 - 7 >= 0) && (x + x1 - 7 < mapWidth) && (y + y1 - 7 < mapHeight) && city[x + x1 - 7][y + y1 - 7] == 1) cityChance++;
 					}
 				}
 				if (cityChance > 1) city[x][y] = 0;
 			}
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				city[x][44] = 0;
-				city[x][45] = 0;
-				city[x][46] = 0;
+				city[x][mapHeight - 3] = 0;
+				city[x][mapHeight - 2] = 0;
+				city[x][mapHeight - 1] = 0;
 			}
-			for (int y = 0; y < 46; y++)
+			for (int y = 0; y < mapHeight; y++)
 			{
 				city[0][y] = 0;
 				city[1][y] = 0;
@@ -171,9 +171,9 @@ void Map::createCities()
 				city[3][y] = 0;
 				city[4][y] = 0;
 			}
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					int a = 1;
 					if (city[x][y] == 1)
@@ -188,45 +188,45 @@ void Map::createCities()
 void Map::createForests()
 		{
 			int x1, y1;
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					int forestChance = 1;
 					for (x1 = 0; x1 < 3; x1++)
 					{
 						for (y1 = 0; y1 < 3; y1++)
 						{
-							if (biome[x + x1 - 1][y + y1 - 1] != 0 and biome[x + x1 - 1][y + y1 - 1] != 1) forestChance = 0;
+							if (x + x1 - 1 >= 0 && x + x1 - 1 < mapWidth && y + y1 - 1 >= 0 && y + y1 - 1 < mapHeight && biome[x + x1 - 1][y + y1 - 1] != 0 and biome[x + x1 - 1][y + y1 - 1] != 1) forestChance = 0;
 						}
 					}
 					for (x1 = 0; x1 < 9; x1++)
 					{
 						for (y1 = 0; y1 < 9; y1++)
 						{
-							if (city[x + x1 - 4][y + y1 - 4] != 0) forestChance = 0;
+							if (x + x1 - 4 >= 0 && x + x1 - 4 < mapWidth && y + y1 - 4 >= 0 && y + y1 - 4 < mapHeight && city[x + x1 - 4][y + y1 - 4] != 0) forestChance = 0;
 						}
 					}
-					if (forestChance == 1 and rand() % 14 == 0 and x > 0 and y > 0 and y < 46 and x < 48)
+					if (forestChance == 1 and rand() % 14 == 0 and x > 0 and y > 0 and y < mapHeight and x < mapWidth)
 					{
 						for (x1 = 0; x1 < 3; x1++)
 						{
 							for (y1 = 0; y1 < 3; y1++)
 							{
-								if (biome[x + x1 - 1][y + y1 - 1] == 0) biome[x + x1 - 1][y + y1 - 1] = 4;
+								if (x + x1 - 1 >= 0 && x + x1 - 1 < mapWidth && y + y1 - 1 >= 0 && y + y1 - 1 < mapHeight && biome[x + x1 - 1][y + y1 - 1] == 0) biome[x + x1 - 1][y + y1 - 1] = 4;
 							}
 						}
 					}
 				}
 			}
 
-			for (int x = 1; x < 47; x++)
+			for (int x = 1; x < mapWidth - 1; x++)
 			{
-				for (int y = 1; y < 45; y++)
+				for (int y = 1; y < mapHeight - 1; y++)
 				{
 					if (biome[x][y] == 4 and (biome[x + 1][y] == 0 or biome[x - 1][y] == 0 or biome[x][y + 1] == 0 or biome[x][y - 1] == 0))
 					{
-						if (x < 48)
+						if (x < mapWidth)
 						{
 							if (biome[x + 1][y] == 0)
 							{
@@ -240,7 +240,7 @@ void Map::createForests()
 								biome[x - 1][y] = 100;
 							}
 						}
-						if (y < 46)
+						if (y < mapHeight)
 						{
 							if (biome[x][y + 1] == 0)
 							{
@@ -258,9 +258,9 @@ void Map::createForests()
 				}
 			}
 
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					if (biome[x][y] == 100)
 					{
@@ -282,14 +282,14 @@ void Map::createForestCities()
 					{
 						for (y1 = 0; y1 < 3; y1++)
 						{
-							if (biome[x + x1 - 1][y + y1 - 1] != 4 or city[x + x1 - 1][y + y1 - 1] == 1 and x + x1 - 4 > 0 and x + x1 - 4 < 48 and y + y1 + 4 > 0 and y + y1 + 4 < 46) cityChance = 0;
+							if (biome[x + x1 - 1][y + y1 - 1] != 4 or city[x + x1 - 1][y + y1 - 1] == 1 and x + x1 - 4 > 0 and x + x1 - 4 < mapWidth and y + y1 + 4 > 0 and y + y1 + 4 < mapHeight) cityChance = 0;
 						}
 					}
 					for (x1 = 0; x1 < 9; x1++)
 					{
 						for (y1 = 0; y1 < 9; y1++)
 						{
-							if (city[x + x1 - 4][y + y1 - 4] == 1 and x + x1 - 4 > 0 and x + x1 - 4 < 48 and y + y1 + 4 > 0 and y + y1 + 4 < 46) cityChance = 0;
+							if (city[x + x1 - 4][y + y1 - 4] == 1 and x + x1 - 4 > 0 and x + x1 - 4 < mapWidth and y + y1 + 4 > 0 and y + y1 + 4 < mapHeight) cityChance = 0;
 						}
 					}
 					if (cityChance == 1 and city[x][y] != 1 and rand() % 20 == 0)
@@ -303,9 +303,9 @@ void Map::createForestCities()
 void Map::furtherCityGen()
 		{
 			int cityCount = 0;
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					if (city[x][y] == 1)
 					{
@@ -315,9 +315,9 @@ void Map::furtherCityGen()
 					cityGuardian[x][y] = 1;
 				}
 			}
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					for (int i = 0; i < 20; i++)
 					{
@@ -333,9 +333,9 @@ void Map::furtherCityGen()
 int Map::checkForCityCount()
 		{
 			int human = 0, orc = 0, elve = 0;
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < mapWidth; x++)
 			{
-				for (int y = 0; y < 46; y++)
+				for (int y = 0; y < mapHeight; y++)
 				{
 					if (city[x][y] == 1)
 					{
@@ -371,7 +371,7 @@ void Map::clearFog(Player &player1)
 	{
 		for (y1 = 0; y1 < 5; y1++)
 		{
-			if (player1.x + x1 - 3 < 48 and player1.y + y1 - 2 < 46 and player1.x + x1 - 3 > 0 and player1.y + y1 - 2 > 0)
+			if (player1.x + x1 - 3 < mapWidth and player1.y + y1 - 2 < mapHeight and player1.x + x1 - 3 > 0 and player1.y + y1 - 2 > 0)
 			{
 				fog[player1.x + x1 - 3][player1.y + y1 - 2] = 0;
 			}
@@ -381,12 +381,21 @@ void Map::clearFog(Player &player1)
 	{
 		for (y1 = 0; y1 < 7; y1++)
 		{
-			if (player1.x + x1 - 2 < 48 and player1.y + y1 - 3 < 46 and player1.x + x1 - 2 > 0 and player1.y + y1 - 3 > 0)
+			if (player1.x + x1 - 2 < mapWidth and player1.y + y1 - 3 < mapHeight and player1.x + x1 - 2 > 0 and player1.y + y1 - 3 > 0)
 			{
 				fog[player1.x + x1 - 2][player1.y + y1 - 3] = 0;
 			}
 		}
 	}
+}
+
+int Map::getMapHeight()
+{
+	return mapHeight;
+}
+int Map::getMapWidth()
+{
+	return mapWidth;
 }
 
 void Map::viewMapSFML(sf::RenderWindow &window, Player player)
@@ -402,9 +411,9 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 	tDesert.loadFromFile("Textures\\desert.png", sf::IntRect(0, 0, 16, 16));
 	tArctic.loadFromFile("Textures\\arctic.png", sf::IntRect(0, 0, 16, 16));
 	tPlayer.loadFromFile("Textures\\player.png", sf::IntRect(0, 0, 16, 16));
-	for (int u = 0; u < 46; u++)
+	for (int u = 0; u < mapHeight; u++)
 	{
-		for (int c = 0; c < 48; c++)
+		for (int c = 0; c < mapWidth; c++)
 		{
 			if (biome[c][u] == 0)
 			{
@@ -426,21 +435,21 @@ void Map::viewMapSFML(sf::RenderWindow &window, Player player)
 			}
 			else if (biome[c][u] == 1)
 			{
-				if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(16, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(32, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(48, 0, 16, 16));
-				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(64, 0, 16, 16));
-				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(80, 0, 16, 16));
-				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(96, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(112, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(128, 0, 16, 16));
-				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(144, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(160, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(176, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(192, 0, 16, 16));
-				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] != 1 and u + 1 < 46 and biome[c][u - 1] == 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(208, 0, 16, 16));
-				else if (biome[c - 1][u] == 1 and c + 1 > 0 and biome[c + 1][u] != 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(224, 0, 16, 16));
-				else if (biome[c - 1][u] != 1 and c + 1 > 0 and biome[c + 1][u] == 1 and c - 1 < 48 and biome[c][u + 1] == 1 and u + 1 < 46 and biome[c][u - 1] != 1 and u - 1 > 0) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(240, 0, 16, 16));
+        if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(16, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(32, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(48, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(64, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(80, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(96, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(112, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(128, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(144, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(160, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(176, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(192, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(208, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(224, 0, 16, 16));
+				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(240, 0, 16, 16));
 				else tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(0, 0, 16, 16));
 				tileSprite.setTexture(tMountains);
 				tileSprite.setScale(textureRes / 16, textureRes / 16);

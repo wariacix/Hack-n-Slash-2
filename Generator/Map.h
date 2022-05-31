@@ -8,31 +8,35 @@ class Player;
 
 class Map
 {
+private:
+	int mapWidth = 48;
+	int mapHeight = 46;
 public:
-	int biome[48][46];
-	int city[48][46];
-	int cityID[48][46];
-	int cityGuardian[48][46];
-	int hero[48][46];
-	int fog[48][46];
-	int path[48][46];
+	std::vector<std::vector<int>> biome;
+	std::vector<std::vector<int>> city;
+	std::vector<std::vector<int>> cityID;
+	std::vector<std::vector<int>> cityGuardian;
+	std::vector<std::vector<int>> hero;
+	std::vector<std::vector<int>> fog;
+	std::vector<std::vector<int>> path;
 
-	Map()
+	Map(int mW = 48, int mH = 46)
 	{
-		for (int x = 0; x < 48; x++)
-		{
-			for (int y = 0; y < 46; y++)
-			{
-				biome[x][y] = 0;
-				city[x][y] = 0;
-				hero[x][y] = 0;
-				fog[x][y] = 1;
-				path[x][y] = 0;
-			}
-		}
+		mapWidth = mW;
+		mapHeight = mH;
+		biome.resize(mW, std::vector<int>(mH, 0));
+		city.resize(mW, std::vector<int>(mH, 0));
+		cityID.resize(mW, std::vector<int>(mH, 0));
+		cityGuardian.resize(mW, std::vector<int>(mH, 0));
+		hero.resize(mW, std::vector<int>(mH, 0));
+		fog.resize(mW, std::vector<int>(mH, 1));
+		path.resize(mW, std::vector<int>(mH, 0));
 	};
 
 	std::wstring genCityName();
+
+	int getMapWidth();
+	int getMapHeight();
 
 	void clearFog(Player& player1);
 

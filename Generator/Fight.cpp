@@ -35,7 +35,7 @@ void hns::Fight::viewBackground(sf::RenderWindow &window)
 
 void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interface mainInterface, hns::Equipment &mainEquipment)
 {
-	hns::FightDialogue fightDialogue("plains", "GARDENS3", "interface", "dpcomic");
+	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "interface", "dpcomic");
 	bool left = false;
 	while (left == false)
 	{
@@ -65,9 +65,9 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 			left = true;
 			mainPlayer.gold += enemy.gold;
 			mainPlayer.xp += enemy.xp;
-			if (mainPlayer.xp > 250 + mainPlayer.lvl * 250)
+			if (mainPlayer.xp > 250 + (mainPlayer.lvl * 250))
 			{
-				mainPlayer.xp -= 250 + mainPlayer.lvl * 250;
+				mainPlayer.xp -= 250 + (mainPlayer.lvl * 250);
 				mainPlayer.lvl++;
 				std::wcout << L"Level up!" << std::endl;
 			}

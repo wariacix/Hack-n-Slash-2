@@ -16,4 +16,14 @@ Currently ported most of it.
 - Skill tree.
 - Statistics window.
 
+# Currently working: (as of 31/05/2022)
+- Displaying fully random procedurally generated 2D world with different biomes & cities that you can move on.
+- Camera centered on player.
+- Equipment with many types of armor, potions & weapons.
+- Showing items' stats.
+- Interface gfx + health and mana bars.
+- Displaying city view & sound when entered.
+- Working shop system.
+- Most of dialogue & choice system working.
+ 
 ![Map interface WIP](https://github.com/wariacix/Hack-n-Slash-2/blob/sfml-master/map.png?raw=true)
