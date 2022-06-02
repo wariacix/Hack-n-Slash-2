@@ -275,7 +275,7 @@ void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindo
 			int charsLeft = i;
 			window.clear();
 			while (window.pollEvent(event)) if (event.type == sf::Event::KeyPressed) sec = 1.f;
-			mainMap.viewMapSFML(window, mainPlayer);
+			mainMap.viewMap(window, mainPlayer);
 			while (charsLeft > 0)
 			{
 				if (a > lineLength)

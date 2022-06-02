@@ -113,7 +113,7 @@ int main()
 
 			window.clear();
 			mainMap.clearFog(mainPlayer);
-			mainMap.viewMapSFML(window, mainPlayer);
+			mainMap.viewMap(window, mainPlayer);
 
 			if (rollX != mainPlayer.x or rollY != mainPlayer.y)
 			{
@@ -143,5 +143,6 @@ int main()
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}
+		mainPlayer = Player();
 	}
 };

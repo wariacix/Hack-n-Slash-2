@@ -40,7 +40,7 @@ public:
 
 	void clearFog(Player& player1);
 
-	void viewMapSFML(sf::RenderWindow &window, Player player);
+	void viewMap(sf::RenderWindow &window, Player player);
 
 	void setBaseValues();
 
