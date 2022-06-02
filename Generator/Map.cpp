@@ -425,10 +425,10 @@ void Map::viewMap(sf::RenderWindow &window, Player player)
 	{
 		for (int c = 0; c < mapWidth; c++)
 		{
+			totalX = (c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2;
+			totalY = (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2;
 			if (biome[c][u] == 0)
 			{
-				totalX = (c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2;
-				totalY = (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2;
 				if (city[c][u] == 1)
 				{
 					tCity.loadFromFile("Textures\\grasscity.png", sf::IntRect(0, 0, 16, 16));
@@ -438,7 +438,7 @@ void Map::viewMap(sf::RenderWindow &window, Player player)
 			}
 			else if (biome[c][u] == 1)
 			{
-        if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(16, 0, 16, 16));
+				if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(16, 0, 16, 16));
 				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(32, 0, 16, 16));
 				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(48, 0, 16, 16));
 				else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) tMountains.loadFromFile("Textures\\mountains.png", sf::IntRect(64, 0, 16, 16));
@@ -465,38 +465,18 @@ void Map::viewMap(sf::RenderWindow &window, Player player)
 				}
 				else drawTile(window, tDesert, totalX, totalY);
 			}
-			else if (biome[c][u] == 3)
-			{
-				tileSprite.setTexture(tArctic);
-				tileSprite.setScale(textureRes / 16, textureRes / 16);
-				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
-				window.draw(tileSprite);
-			}
+			else if (biome[c][u] == 3) drawTile(window, tArctic, totalX, totalY);
 			else if (biome[c][u] == 4)
 			{
 				if (city[c][u] == 1)
 				{
 					tCity.loadFromFile("Textures\\forestcity.png", sf::IntRect(0, 0, 16, 16));
-					tileSprite.setTexture(tCity);
-					tileSprite.setScale(textureRes / 16, textureRes / 16);
-					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
-					window.draw(tileSprite);
+					drawTile(window, tCity, totalX, totalY);
 				}
-				else
-				{
-					tileSprite.setTexture(tForest);
-					tileSprite.setScale(textureRes / 16, textureRes / 16);
-					tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
-					window.draw(tileSprite);
-				}
+				else drawTile(window, tForest, totalX, totalY);
 			}
-			if (player.x == c and player.y == u)
-			{
-				tileSprite.setTexture(tPlayer);
-				tileSprite.setScale(textureRes / 16, textureRes / 16);
-				tileSprite.setPosition((c - player.x) * (textureRes)+(mapWindowX / 2) + 70 - textureRes / 2, (u - player.y) * (textureRes)+(mapWindowY / 2) + 50 - textureRes / 2);
-				window.draw(tileSprite);
-			}
+
+			if (player.x == c and player.y == u) drawTile(window, tPlayer, totalX, totalY);
 		}
 	}
 }
