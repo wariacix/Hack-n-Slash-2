@@ -111,7 +111,7 @@ public:
 	{
 		bottomTxt = "eqInterfaceBottom";
 		topTxt = "eqInterfaceTop";
-		eqName = "itemStats";
+		eqName = "Data\\itemStats";
 		numOfItems = 1;
 		eqItem = new Item[9999];
 		equippedItem = new Item[8];
@@ -144,7 +144,7 @@ public:
 		this->shopName = shopName;
 		bottomTxt = shopName + "bot";
 		topTxt = shopName + "top";
-		std::wstring shopStats = loadFileString(fileName);
+		std::wstring shopStats = loadFileString("Data\\Shop\\" + fileName);
 		std::wstring currentId = L"";
 
 		for (int i = 0; i < shopStats.size(); i++)

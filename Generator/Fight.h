@@ -18,6 +18,7 @@ public:
 	int xp;
 	int gold;
 	Enemy(int id = 0, std::wstring name = L"Wolf", float damage = 10, float hp = 75, float maxhp = 75, int xp = 250, int gold = 30);
+	void loadEnemy(std::string fileName);
 };
 
 class hns::Fight

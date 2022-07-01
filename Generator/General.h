@@ -18,4 +18,6 @@ namespace hns
 	class Enemy;
 	class Dialogue;
 	class FightDialogue;
+	class Menu;
+	class menuButton;
 }

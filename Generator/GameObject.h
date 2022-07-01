@@ -17,7 +17,16 @@ public:
 	sf::Sprite sprite;
 	GameObject(int x = 0, int y = 0, int sizeX = 320, int sizeY = 200, std::string texName = "interface");
 
-	void changeSprite(sf::Texture sprTexture);
+	void changeSprite(sf::Texture& sprTexture);
 
 	void draw(sf::RenderWindow& window);
+
+	bool isHovered(sf::RenderWindow& window);
+	bool isClicked(sf::RenderWindow& window);
+};
+
+class hns::menuButton : public GameObject
+{
+	sf::Font font;
+	sf::Text title;
 };

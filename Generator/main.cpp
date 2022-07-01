@@ -18,11 +18,11 @@
 #include "equipment.h"
 #include "Player.h"
 #include "GameObject.h"
+#include "menu.h"
 #include "Interface.h"
 #include "Map.h"
 #include "Fight.h"
 
-Map mainMap(100,60);
 Player mainPlayer;
 
 int debugMode = 0;
@@ -74,6 +74,7 @@ int main()
 
 	hns::Equipment mainEquipment;
 	hns::Interface mainUI(mainPlayer);
+	Map mainMap(48, 46);
 
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
@@ -92,13 +93,16 @@ int main()
 
 	bool hasRolled = false;
 	int rollX = -1, rollY = -1;
+
+	hns::Menu menu;
+
 	while (true)
 	{
 		system("color 0f");
-		system("mode con: cols=106 lines=25");
-		menu();
+		system("mode con: cols=50 lines=5");
 		mainMap.generateMap();
 		wcout << L"READY.";
+		menu.Start(window);
 		while (window.isOpen() and mainPlayer.alive == true)
 		{
 			sf::Event event;

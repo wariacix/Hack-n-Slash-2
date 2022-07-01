@@ -19,6 +19,72 @@ hns::Enemy::Enemy(int id, std::wstring name, float damage, float hp, float maxhp
 	this->gold = gold;
 }
 
+void hns::Enemy::loadEnemy(std::string fileName)
+{
+	std::wstring load = loadFileString(fileName);
+	std::wstring stats[6];
+	int numOfEnemies = 0;
+
+	int a = 0;
+	bool hasItemStatBeenRead = false;
+	bool addedItem = false;
+
+	for (int i = 0; i < load.size(); i++)
+	{
+		if (hasItemStatBeenRead == true)
+		{
+			for (int u = 0; u < 6; u++) stats[u] = L"";
+			hasItemStatBeenRead = false;
+		}
+
+		if (load[i] == *L",")
+		{
+			a++;
+		}
+		else if (load[i] == *L";")
+		{
+
+			i++;
+			a = 0;
+			hasItemStatBeenRead = true;
+			numOfEnemies++;
+		}
+		else stats[a] = stats[a] + load[i];
+	}
+
+	int chooseEnemy = rand() % numOfEnemies;
+
+	for (int i = 0; i < load.size(); i++)
+	{
+		if (hasItemStatBeenRead == true)
+		{
+			for (int u = 0; u < 6; u++) stats[u] = L"";
+			hasItemStatBeenRead = false;
+		}
+
+		if (load[i] == *L",")
+		{
+			a++;
+		}
+		else if (load[i] == *L";")
+		{
+			if (std::stoi(stats[0]) == chooseEnemy)
+			{
+				name = stats[1];
+				damage = std::stoi(stats[2]);
+				maxhp = std::stoi(stats[3]);
+				hp = maxhp;
+				xp = std::stoi(stats[4]);
+				gold = std::stoi(stats[5]);
+			}
+			i++;
+			a = 0;
+			hasItemStatBeenRead = true;
+		}
+		else stats[a] = stats[a] + load[i];
+	}
+}
+
 hns::Fight::Fight(hns::Enemy enemy, std::string sprName)
 {
 	this->enemy = enemy;

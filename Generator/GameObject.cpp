@@ -19,7 +19,7 @@ hns::GameObject::GameObject(int x, int y, int sizeX, int sizeY, std::string texN
 	sprite.setTexture(texture);
 }
 
-void hns::GameObject::changeSprite(sf::Texture sprTexture)
+void hns::GameObject::changeSprite(sf::Texture& sprTexture)
 {
 	sprite.setTexture(sprTexture);
 }
@@ -27,4 +27,17 @@ void hns::GameObject::changeSprite(sf::Texture sprTexture)
 void hns::GameObject::draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
+}
+
+bool hns::GameObject::isHovered(sf::RenderWindow& window)
+{
+	sf::Vector2i mouse = sf::Mouse::getPosition(window);
+	if (mouse.x >= x && mouse.x <= x + (sizeX * 5) && mouse.y >= y && mouse.y <= y + (sizeY * 5)) return true;
+	else return false;
+}
+
+bool hns::GameObject::isClicked(sf::RenderWindow& window)
+{
+	if (isHovered(window) == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) return true;
+	else return false;
 }

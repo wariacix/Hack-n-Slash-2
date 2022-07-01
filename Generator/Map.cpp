@@ -289,7 +289,7 @@ void Map::createForestCities()
 					{
 						for (y1 = 0; y1 < 9; y1++)
 						{
-							if (city[x + x1 - 4][y + y1 - 4] == 1 and x + x1 - 4 > 0 and x + x1 - 4 < mapWidth and y + y1 + 4 > 0 and y + y1 + 4 < mapHeight) cityChance = 0;
+							if (x + x1 - 4 > 0 and x + x1 - 4 < mapWidth - 1 and y + y1 + 4 > 0 and y + y1 + 4 < mapHeight - 1 and city[x + x1 - 4][y + y1 - 4] == 1) cityChance = 0;
 						}
 					}
 					if (cityChance == 1 and city[x][y] != 1 and rand() % 20 == 0)
@@ -400,11 +400,14 @@ int Map::getMapWidth()
 
 void drawTile(sf::RenderWindow &window, sf::Texture texture, int x, int y, int textureRes = 48)
 {
-	sf::Sprite tileSprite;
-	tileSprite.setTexture(texture);
-	tileSprite.setScale(textureRes / 16, textureRes / 16);
-	tileSprite.setPosition(x, y);
-	window.draw(tileSprite);
+	if (x > 0 && x < 1064 && y > 0 && y < 704)
+	{
+		sf::Sprite tileSprite;
+		tileSprite.setTexture(texture);
+		tileSprite.setScale(textureRes / 16, textureRes / 16);
+		tileSprite.setPosition(x, y);
+		window.draw(tileSprite);
+	}
 }
 
 void Map::viewMap(sf::RenderWindow &window, Player player)
