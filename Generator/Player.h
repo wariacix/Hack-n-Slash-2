@@ -30,6 +30,7 @@ public:
 	int reqexp;
 	double xp;
 	bool alive;
+	bool hasBeenPressed[4];
 	std::wstring heroName;
 	Player()
 	{
@@ -50,9 +51,13 @@ public:
 		lvl = 1;
 		reqexp = 500;
 		xp = 0;
+		for (int i = 0; i < 4; i++) hasBeenPressed[i] = false;
 		heroName = L"NO NAME";
 		alive = true;
 	}
 	void movePlayer(Map &map1, sf::RenderWindow& window, hns::Equipment &eq, Player& player);
+	void Regenerate();
+private:
+	void CheckForKeyActivity();
 };
 extern Player mainPlayer;

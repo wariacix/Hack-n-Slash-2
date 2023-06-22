@@ -931,29 +931,9 @@ void hns::Equipment::equipItem(Item &item, Player &player)
 			break;
 		}
 	}
-	else if (item.getItemId() >= 1000 and item.getItemId() < 2000 and checkItemRequirements(item, player) == true) //Weapons
+	else if (item.getItemId() >= 1000 and item.getItemId() < 7000 and checkItemRequirements(item, player) == true)
 	{
-		itemSwapping(item, 0);
-	}
-	else if (item.getItemId() >= 2000 and item.getItemId() < 3000 and checkItemRequirements(item, player) == true) //Armor
-	{
-		itemSwapping(item, 1);
-	}
-	else if (item.getItemId() >= 3000 and item.getItemId() < 4000 and checkItemRequirements(item, player) == true) //Shield
-	{
-		itemSwapping(item, 2);
-	}
-	else if (item.getItemId() >= 4000 and item.getItemId() < 5000 and checkItemRequirements(item, player) == true) //Boots
-	{
-		itemSwapping(item, 3);
-	}
-	else if (item.getItemId() >= 5000 and item.getItemId() < 6000 and checkItemRequirements(item, player) == true) //Helmet
-	{
-		itemSwapping(item, 4);
-	}
-	else if (item.getItemId() >= 6000 and item.getItemId() < 7000 and checkItemRequirements(item, player) == true) //Necklace
-	{
-		itemSwapping(item, 5);
+		itemSwapping(item, item.getItemId() / 1000);
 	}
 	else if (item.getItemId() >= 7000 and item.getItemId() < 8000 and checkItemRequirements(item, player) == true) //Ring slot 1 & 2
 	{

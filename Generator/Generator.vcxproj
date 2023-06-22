@@ -92,13 +92,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\waria\Desktop\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\waria\Desktop\SFML-2.5.1\include;C:\Users\waria\source\repos\Hack-n-Slash-2\Generator\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\waria\Desktop\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window-s-d.lib;sfml-system-s-d.lib;winmm.lib;opengl32.lib;freetype.lib;sfml-graphics-s-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\waria\Desktop\SFML-2.5.1\lib;C:\Users\waria\source\repos\Hack-n-Slash-2\Generator\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libz.a;libzstd.a;libssl.a;libssh2.a;libngtcp2_crypto_openssl.a;libngtcp2.a;libnghttp2.a;libnghttp3.a;libgsasl.a;libcurl.dll.a;libcrypto.a;libcurl.a;libbrotlidec.a;sfml-window-s-d.lib;sfml-system-s-d.lib;winmm.lib;opengl32.lib;freetype.lib;sfml-graphics-s-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libbrotlicommon.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -169,6 +169,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="General.cpp" />
     <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="InterfaceObjects.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="InterfaceObjects.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />

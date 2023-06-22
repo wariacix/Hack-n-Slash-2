@@ -16,50 +16,59 @@
 
 using namespace std;
 
+void Player::CheckForKeyActivity()
+{
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == true) hasBeenPressed[0] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == true) hasBeenPressed[1] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && hasBeenPressed[2] == true) hasBeenPressed[2] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == true) hasBeenPressed[3] = false;
+}
+
 void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
 {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		CheckForKeyActivity();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == false)
 		{
+			hasBeenPressed[0] = true;
 			if (x > 0)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x - 1][y] = 1;
 				x--;
-				Sleep(30);
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == false)
 		{
+			hasBeenPressed[1] = true;
 			if (x < map1.getMapWidth() - 1)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x + 1][y] = 1;
 				x++;
-				Sleep(30);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) or sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 		{
 			eq.viewEquipment(window, player);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && hasBeenPressed[2] == false)
 		{
+			hasBeenPressed[2] = true;
 			if (y > 0)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x][y - 1] = 1;
 				y--;
-				Sleep(30);
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == false)
 		{
+			hasBeenPressed[3] = true;
 			if (y < map1.getMapHeight() - 1)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x][y + 1] = 1;
 				y++;
-				Sleep(30);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -76,4 +85,9 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 				}
 			}
 		}
+}
+void Player::Regenerate()
+{
+	if (hp < maxhp) hp = hp + hpRegen; else hp = maxhp;
+	if (mp < maxmp) mp = mp + mpRegen; else mp = maxmp;
 }

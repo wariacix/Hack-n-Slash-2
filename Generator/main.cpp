@@ -45,12 +45,6 @@ void xpCount()
 	}
 }
 
-void updateHpMp()
-{
-	if (mainPlayer.hp < mainPlayer.maxhp) mainPlayer.hp = mainPlayer.hp + mainPlayer.hpRegen; else mainPlayer.hp = mainPlayer.maxhp;
-	if (mainPlayer.mp < mainPlayer.maxmp) mainPlayer.mp = mainPlayer.mp + mainPlayer.mpRegen; else mainPlayer.mp = mainPlayer.maxmp;
-}
-
 void drawInterface(sf::RenderWindow& window)
 {
 	sf::Texture tInterface;
@@ -66,8 +60,6 @@ int main()
 {
 	srand(time(NULL));
 	sf::Font font;
-	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
-	window.setVerticalSyncEnabled(true);
 	bool recentlyLeft = 0;
 	mtnChance = 14;
 	los = false;
@@ -98,10 +90,11 @@ int main()
 
 	while (true)
 	{
-		system("color 0f");
-		system("mode con: cols=50 lines=5");
+		wcout << L"Generating map...";
 		mainMap.generateMap();
 		wcout << L"READY.";
+		sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
+		window.setVerticalSyncEnabled(true);
 		menu.Start(window);
 		while (window.isOpen() and mainPlayer.alive == true)
 		{

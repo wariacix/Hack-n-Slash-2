@@ -24,9 +24,3 @@ public:
 	bool isHovered(sf::RenderWindow& window);
 	bool isClicked(sf::RenderWindow& window);
 };
-
-class hns::menuButton : public GameObject
-{
-	sf::Font font;
-	sf::Text title;
-};
