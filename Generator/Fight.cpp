@@ -213,7 +213,7 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 		window.draw(enemyText);
 
 		hns::Bar enemyBar = Bar(Player(), 400, 60, 61, 5, "enemyUIbot", "enemyUItop");
-		enemyBar.draw(window, enemy.hp, enemy.maxhp);
+		enemyBar.Draw(window, enemy.hp, enemy.maxhp);
 		window.display();
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
