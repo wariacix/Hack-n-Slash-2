@@ -58,6 +58,7 @@ void drawInterface(sf::RenderWindow& window)
 
 int main()
 {
+	wcout << L"Started the game." << std::endl;
 	srand(time(NULL));
 	sf::Font font;
 	bool recentlyLeft = 0;
@@ -66,18 +67,22 @@ int main()
 
 	hns::Equipment mainEquipment;
 	hns::Interface mainUI(mainPlayer);
-	Map mainMap(48, 46);
+	Map mainMap("default", 48, 46);
 
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
 	mainEquipment.addItem(3000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
 	mainEquipment.addItem(4000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[4], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
 	mainEquipment.addItem(5000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[5], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.addItem(6000, 1);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.addItem(7000, 1);
+	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
 	mainEquipment.addItem(100, mainPlayer.gold);
 	mainEquipment.addItem(101, 20);
 	mainEquipment.addItem(102, 20);
@@ -90,8 +95,9 @@ int main()
 
 	while (true)
 	{
+		sf::Clock clock;
 		wcout << L"Generating map...";
-		mainMap.generateMap();
+		mainMap.Initialize();
 		wcout << L"READY.";
 		sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
 		window.setVerticalSyncEnabled(true);
@@ -109,8 +115,8 @@ int main()
 			}
 
 			window.clear();
-			mainMap.clearFog(mainPlayer);
-			mainMap.viewMap(window, mainPlayer);
+			mainMap.ClearFog(mainPlayer);
+			mainMap.ViewMap(window, mainPlayer, clock);
 
 			if (rollX != mainPlayer.x or rollY != mainPlayer.y)
 			{
@@ -131,12 +137,12 @@ int main()
 
 			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
 			{
-				cityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
+				CityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
 				recentlyLeft = 1;
 			}
 			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
 
-			mainUI.draw(window, mainPlayer);
+			mainUI.Draw(window, mainPlayer);
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}

@@ -29,7 +29,7 @@ protected:
 public:
 	Bar(Player player = Player(), int x = 40, int y = 10, int sizeX = 41, int sizeY = 5, std::string topTexName = "hpUItop", std::string botTexName = "hpUIbot");
 	void setSize(float stat1, float stat2);
-	void draw(sf::RenderWindow& window, float stat1, float stat2);
+	void Draw(sf::RenderWindow& window, float stat1, float stat2);
 };
 
 class hns::Interface : public hns::GameObject
@@ -39,5 +39,5 @@ private:
 public:
 	Interface(Player player = Player(), int x = 0, int y = 0, int sizeX = 320, int sizeY = 200, std::string texName = "interface");
 	
-	void draw(sf::RenderWindow& window, Player player);
+	void Draw(sf::RenderWindow& window, Player player);
 };

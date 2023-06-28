@@ -255,7 +255,7 @@ void hns::Dialogue::drawView(sf::RenderWindow& window)
 
 void hns::Dialogue::drawInterface(sf::RenderWindow& window, Player player, hns::Interface ui)
 {
-	ui.hns::Interface::draw(window, player);
+	ui.hns::Interface::Draw(window, player);
 }
 
 void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer)
@@ -265,7 +265,7 @@ void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindo
 		wstring* text = new wstring(input);
 		int a = 0; int lines = 0; int lineLength = 56;
 		const wchar_t* textArray = text->c_str();
-		float sec = 3.f;
+		float sec = 3.0f;
 
 		for (int i = 1; i < wcslen(textArray); i++)
 		{
@@ -275,7 +275,7 @@ void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindo
 			int charsLeft = i;
 			window.clear();
 			while (window.pollEvent(event)) if (event.type == sf::Event::KeyPressed) sec = 1.f;
-			mainMap.viewMap(window, mainPlayer);
+			mainMap.ViewMap(window, mainPlayer, clock);
 			while (charsLeft > 0)
 			{
 				if (a > lineLength)
@@ -296,7 +296,7 @@ void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindo
 		delete text;
 	}
 
-void cityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, hns::Equipment &mainEquipment, hns::Interface &mainInterface)
+void CityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, hns::Equipment &mainEquipment, hns::Interface &mainInterface)
 {
 	hns::Dialogue cityDialogue;
 	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) cityDialogue.Dialogue::Dialogue("humanCityView", "FANFARE", "interface", "dpcomic");

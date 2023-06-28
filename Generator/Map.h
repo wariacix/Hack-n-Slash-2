@@ -6,11 +6,28 @@
 
 class Player;
 
+class ExtendedTexture
+{
+public:
+	sf::Texture mainTexture;
+	std::string name;
+	ExtendedTexture(sf::Texture mainTexture, std::string name)
+	{
+		this->mainTexture = mainTexture;
+		this->name = name;
+	}
+	ExtendedTexture()
+	{
+	}
+};
+
 class Map
 {
 private:
-	int mapWidth = 48;
-	int mapHeight = 46;
+	int mapWidth;
+	int mapHeight;
+	std::string mapName;
+	std::vector<ExtendedTexture*> mapTextures;
 public:
 	std::vector<std::vector<int>> biome;
 	std::vector<std::vector<int>> city;
@@ -20,10 +37,13 @@ public:
 	std::vector<std::vector<int>> fog;
 	std::vector<std::vector<int>> path;
 
-	Map(int mW = 48, int mH = 46)
+	Map(std::string mapName = "default", int mW = 48, int mH = 46)
 	{
 		mapWidth = mW;
 		mapHeight = mH;
+		this->mapName = mapName;
+
+		mapTextures.begin();
 		biome.resize(mW, std::vector<int>(mH, 0));
 		city.resize(mW, std::vector<int>(mH, 0));
 		cityID.resize(mW, std::vector<int>(mH, 0));
@@ -33,36 +53,46 @@ public:
 		path.resize(mW, std::vector<int>(mH, 0));
 	};
 
-	std::wstring genCityName();
+	std::wstring GenCityName();
 
 	int getMapWidth();
 	int getMapHeight();
 
-	void clearFog(Player& player1);
+	void ClearFog(Player& player1);
 
-	void viewMap(sf::RenderWindow &window, Player player);
+	sf::Texture ChooseConnectedTexture(int c, int u, std::string fileName, sf::RenderWindow& window, Player player);
 
-	void setBaseValues();
+	sf::Texture LookForTexture(std::string name);
 
-	void enlargeMountains();
+	void ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock);
 
-	void createDeserts();
+	void BakeTextures();
 
-	void createArctic();
+	void Initialize();
+
+	void SetBaseValues();
+
+	void EnlargeMountains();
+
+	void CreateDeserts();
+
+	void CreateArctic();
 
 	void createBaseBiomes();
 
-	void createCities();
+	void CreateCities();
 
-	void createForests();
+	void CreateForests();
 
-	void createForestCities();
+	void CreateForestCities();
 
-	void furtherCityGen();
+	void FurtherCityGen();
 
-	int checkForCityCount();
+	int CheckForCityCount();
 
 	void generatePaths();
 
-	void generateMap();
+	void GenerateMap();
+
+	void AssignNewTexture(std::string name, sf::IntRect intRect);
 };

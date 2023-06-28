@@ -19,7 +19,7 @@ public:
 
 	void changeSprite(sf::Texture& sprTexture);
 
-	void draw(sf::RenderWindow& window);
+	void Draw(sf::RenderWindow& window);
 
 	bool isHovered(sf::RenderWindow& window);
 	bool isClicked(sf::RenderWindow& window);

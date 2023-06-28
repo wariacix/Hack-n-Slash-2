@@ -24,7 +24,7 @@ void hns::GameObject::changeSprite(sf::Texture& sprTexture)
 	sprite.setTexture(sprTexture);
 }
 
-void hns::GameObject::draw(sf::RenderWindow& window)
+void hns::GameObject::Draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
 }

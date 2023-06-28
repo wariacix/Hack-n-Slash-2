@@ -38,7 +38,7 @@ void hns::Bar::setSize(float stat1, float stat2)
 	frontSpr.setTextureRect(sf::IntRect(0, 0, (stat1 / stat2 * sizeX), sizeY));
 }
 
-void hns::Bar::draw(sf::RenderWindow& window, float stat1, float stat2)
+void hns::Bar::Draw(sf::RenderWindow& window, float stat1, float stat2)
 {
 	setSize(stat1, stat2);
 	window.draw(sprite);
@@ -53,9 +53,9 @@ hns::Interface::Interface(Player player, int x, int y, int sizeX, int sizeY, std
 	mpBar.setSize(player.mp, player.maxmp);
 }
 
-void hns::Interface::draw(sf::RenderWindow& window, Player player)
+void hns::Interface::Draw(sf::RenderWindow& window, Player player)
 {
-	GameObject::draw(window);
-	hpBar.draw(window, player.hp, player.maxhp);
-	mpBar.draw(window, player.mp, player.maxmp);
+	GameObject::Draw(window);
+	hpBar.Draw(window, player.hp, player.maxhp);
+	mpBar.Draw(window, player.mp, player.maxmp);
 }

@@ -5,12 +5,12 @@
 #include "General.h"
 #include "menu.h"
 
-void hns::Menu::draw(sf::RenderWindow& window)
+void hns::Menu::Draw(sf::RenderWindow& window)
 {
-	background.draw(window);
-	redButton.draw(window);
-	blueButton.draw(window);
-	yellowButton.draw(window);
+	background.Draw(window);
+	redButton.Draw(window);
+	blueButton.Draw(window);
+	yellowButton.Draw(window);
 }
 
 void hns::Menu::Start(sf::RenderWindow& window)
@@ -79,7 +79,7 @@ void hns::Menu::Start(sf::RenderWindow& window)
 
 
 		window.clear();
-		draw(window);
+		Draw(window);
 		window.display();
 	}
 }

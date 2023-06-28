@@ -13,7 +13,7 @@ private:
 	hns::GameObject blueButton = GameObject(36 * 5, 99 * 5, 103, 20, "UI\\blueScroll");
 	hns::GameObject yellowButton = GameObject(36 * 5, 147 * 5, 83, 20, "UI\\yellowScroll");
 public:
-	void draw(sf::RenderWindow &window);
+	void Draw(sf::RenderWindow &window);
 	
 	void Start(sf::RenderWindow& window);
 };

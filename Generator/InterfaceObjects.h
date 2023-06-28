@@ -12,6 +12,6 @@ class hns::menuButton : public GameObject
 	sf::Text title;
 	int textSize = 24;
 
-	void draw(sf::RenderWindow& window);
+	void Draw(sf::RenderWindow& window);
 	void setTitle(std::wstring input);
 };

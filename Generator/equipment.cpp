@@ -379,23 +379,23 @@ afterItemUse:
 		window.draw(eqInterfaceSprite);
 
 		//Drawing equipped items
-			//WEAPON
-		drawItemSprite(window, 1210, 630, equippedItem[0].getItemId());
+		//WEAPON
+		drawItemSprite(window, 1210, 630, equippedItem[1].getItemId());
 
-		//ARMOR
-		drawItemSprite(window, 1210, 265, equippedItem[1].getItemId());
+		//ARMOR-
+		drawItemSprite(window, 1210, 265, equippedItem[2].getItemId());
 
-		//SHIELD
-		drawItemSprite(window, 1435, 170, equippedItem[2].getItemId());
+		//SHIELD-
+		drawItemSprite(window, 1435, 170, equippedItem[3].getItemId());
 
 		//BOOTS
-		drawItemSprite(window, 1325, 845, equippedItem[3].getItemId());
+		drawItemSprite(window, 1325, 845, equippedItem[4].getItemId());
 
 		//HELMET
-		drawItemSprite(window, 1325, 95, equippedItem[4].getItemId());
+		drawItemSprite(window, 1325, 95, equippedItem[5].getItemId());
 
 		//NECKLACE
-		drawItemSprite(window, 1210, 170, equippedItem[5].getItemId());
+		drawItemSprite(window, 1210, 170, equippedItem[0].getItemId());
 
 		//RING 1
 		drawItemSprite(window, 1210, 810, equippedItem[6].getItemId());
@@ -437,11 +437,11 @@ afterItemUse:
 						sf::Vector2i mouse = sf::Mouse::getPosition(window);
 						if (mouse.x >= 1210.f && mouse.y >= 630.f && mouse.x <= 1285.f && mouse.y <= 705.f)
 						{
-							viewItemStats(window, equippedItem[0], 1210 - offsetX, 630 - offsetY);
+							viewItemStats(window, equippedItem[1], 1210 - offsetX, 630 - offsetY);
 						}
 						else if (mouse.x >= 1210.f && mouse.y >= 265.f && mouse.x <= 1285.f && mouse.y <= 340.f)
 						{
-							viewItemStats(window, equippedItem[1], 1210 - offsetX, 265 - offsetY);
+							viewItemStats(window, equippedItem[0], 1210 - offsetX, 265 - offsetY);
 						}
 						else if (mouse.x >= 1435.f && mouse.y >= 170.f && mouse.x <= 1510.f && mouse.y <= 245.f)
 						{
@@ -991,7 +991,7 @@ void hns::Equipment::viewItemStats(sf::RenderWindow& window, Item &item, int x, 
 	//Item stats black backside
 	sf::RectangleShape backside;
 	backside.setScale(1.f, 1.f);
-	backside.setSize(sf::Vector2f((textWidth * 9) + 44, 36 + (textHeight * 18)));
+	backside.setSize(sf::Vector2f((textWidth * 8.85) + 44, 36 + (textHeight * 17.6)));
 	backside.setFillColor(sf::Color{ 23,8,0,255 });
 	backside.setPosition(255.f + x, 135.f + y);
 	window.draw(backside);

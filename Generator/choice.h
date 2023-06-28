@@ -10,7 +10,7 @@
 #include "Interface.h"
 
 void drawInterface(sf::RenderWindow& window);
-void cityEnter(sf::RenderWindow& window, Map& mainMap, Player& mainPlayer, hns::Equipment &mainEquipment, hns::Interface& mainInterface);
+void CityEnter(sf::RenderWindow& window, Map& mainMap, Player& mainPlayer, hns::Equipment &mainEquipment, hns::Interface& mainInterface);
 class hns::Dialogue
 {
 protected:
