@@ -18,6 +18,8 @@ public:
 	}
 	ExtendedTexture()
 	{
+		mainTexture.create(16,16);
+		name = "null";
 	}
 };
 
@@ -27,7 +29,7 @@ private:
 	int mapWidth;
 	int mapHeight;
 	std::string mapName;
-	std::vector<ExtendedTexture*> mapTextures;
+	std::vector<ExtendedTexture> mapTextures;
 public:
 	std::vector<std::vector<int>> biome;
 	std::vector<std::vector<int>> city;
@@ -78,7 +80,7 @@ public:
 
 	void CreateArctic();
 
-	void createBaseBiomes();
+	void CreateBaseBiomes();
 
 	void CreateCities();
 

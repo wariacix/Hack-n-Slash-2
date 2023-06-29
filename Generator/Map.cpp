@@ -117,7 +117,7 @@ void Map::CreateArctic()
 			}
 		};
 
-void Map::createBaseBiomes()
+void Map::CreateBaseBiomes()
 		{
 			srand(time(NULL));
 			SetBaseValues();
@@ -361,7 +361,7 @@ void Map::GenerateMap()
 			SetBaseValues();
 			while (CheckForCityCount() == 0)
 			{
-				createBaseBiomes();
+				CreateBaseBiomes();
 				CreateCities();
 				CreateForests();
 				CreateForestCities();
@@ -428,20 +428,19 @@ void Map::AssignNewTexture(std::string name, sf::IntRect intRect)
 {
 	sf::Texture texture;
 	texture.loadFromFile("Textures/Map/" + mapName + "/" + name, intRect);
-	ExtendedTexture* exTexturePtr;
-	ExtendedTexture exTexture(sf::Texture(texture), name);
-	exTexturePtr = &exTexture;
+	ExtendedTexture returnTexture(texture, name);
 
-	mapTextures.resize(mapTextures.capacity() + 1);
-	mapTextures.assign(mapTextures.capacity(), exTexturePtr);
 
+	std::cout << mapTextures.size() << std::endl;
+	mapTextures.resize(mapTextures.size() + 1);
+	mapTextures[mapTextures.size()-1] = std::move(returnTexture);
 }
 
 sf::Texture Map::LookForTexture(std::string name)
 {
 	for (int i = 0; i < mapTextures.size(); i++)
 	{
-		if (mapTextures[i]->name == name) return mapTextures[i]->mainTexture;
+		if (mapTextures[i].name == name) return mapTextures[i].mainTexture;
 	}
 }
 
@@ -489,28 +488,25 @@ sf::Texture Map::ChooseConnectedTexture(int c, int u, std::string fileName, sf::
 	int i;
 	for (i = 0; i < mapTextures.size(); i++)
 	{
-		if (mapTextures[i]->name == "fileName") break;
+		if (mapTextures[i].name == fileName) break;
 	}
 
-	sf::Texture returnedTexture;
-
-	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 1]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 2]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 3]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 4]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 5]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 6]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 7]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 8]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 9]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 10]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 11]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 12]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) returnedTexture = mapTextures[i + 13]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 14]->mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) returnedTexture = mapTextures[i + 15]->mainTexture;
-	else returnedTexture = mapTextures[i]->mainTexture;
-	return returnedTexture;
+	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) return mapTextures[i + 1].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) return mapTextures[i + 2].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) return mapTextures[i + 3].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 4].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 5].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 6].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 7].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 8].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 9].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 10].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 11].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 12].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 13].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 14].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 15].mainTexture;
+	else return mapTextures[i].mainTexture;
 }
 
 void Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
