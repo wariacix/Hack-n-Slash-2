@@ -14,7 +14,7 @@ Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 - Skill tree.
 - Statistics window.
 
-# Currently working: (as of 31/05/2022)
+# Currently working: (as of 29/06/2023)
 - Displaying fully random procedurally generated 2D world with different biomes & cities that you can move on.
 - Camera centered on player.
 - Equipment with many types of armor, potions & weapons.
@@ -22,7 +22,7 @@ Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 - Interface gfx + health and mana bars.
 - Displaying city view & sound when entered.
 - Working shop system.
-- Most of dialogue & choice system working.
+- Dialogue & choice system working.
  
 ![Map interface WIP](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/mainmapimg.png)
 ![City view](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/dialogueimg.png)
