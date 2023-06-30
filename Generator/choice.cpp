@@ -28,12 +28,12 @@ hns::Dialogue::Dialogue()
 		hasSoundBeenPlayed = false;
 		font.loadFromFile("dpcomic.ttf");
 
-		viewTexture.loadFromFile("Textures\\humanCityView.png");
+		viewTexture.loadFromFile("Textures/humanCityView.png");
 		viewSprite.setTexture(viewTexture);
 		viewSprite.setPosition(70.f, 50.f);
 		viewSprite.setScale(5.f, 5.f);
 
-		interfaceTexture.loadFromFile("Textures\\interface.png");
+		interfaceTexture.loadFromFile("Textures/interface.png");
 		interfaceSprite.setTexture(interfaceTexture);
 		interfaceSprite.setPosition(0.f, 0.f);
 
@@ -42,7 +42,7 @@ hns::Dialogue::Dialogue()
 		text.setOutlineColor(sf::Color{ 23,8,0,255 });
 		text.setOutlineThickness(2.f);
 
-		buffer.loadFromFile("Sounds\\FANFARE.wav");
+		buffer.loadFromFile("Sounds/FANFARE.wav");
 		enterSound.setBuffer(buffer);
 	};
 

@@ -10,6 +10,7 @@ class ExtendedTexture
 {
 public:
 	sf::Texture mainTexture;
+	sf::Sprite mainSprite;
 	std::string name;
 	ExtendedTexture(sf::Texture mainTexture, std::string name)
 	{
@@ -62,7 +63,7 @@ public:
 
 	void ClearFog(Player& player1);
 
-	sf::Texture ChooseConnectedTexture(int c, int u, std::string fileName, sf::RenderWindow& window, Player player);
+	sf::Texture ChooseConnectedTexture(int c, int u, int biomeId, std::vector<std::vector<int>> valueType, std::string fileName, sf::RenderWindow& window, Player player);
 
 	sf::Texture LookForTexture(std::string name);
 

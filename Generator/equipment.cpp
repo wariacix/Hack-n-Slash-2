@@ -380,22 +380,22 @@ afterItemUse:
 
 		//Drawing equipped items
 		//WEAPON
-		drawItemSprite(window, 1210, 630, equippedItem[1].getItemId());
+		drawItemSprite(window, 1210, 630, equippedItem[0].getItemId());
 
 		//ARMOR-
-		drawItemSprite(window, 1210, 265, equippedItem[2].getItemId());
+		drawItemSprite(window, 1210, 265, equippedItem[1].getItemId());
 
 		//SHIELD-
-		drawItemSprite(window, 1435, 170, equippedItem[3].getItemId());
+		drawItemSprite(window, 1435, 170, equippedItem[2].getItemId());
 
 		//BOOTS
-		drawItemSprite(window, 1325, 845, equippedItem[4].getItemId());
+		drawItemSprite(window, 1325, 845, equippedItem[3].getItemId());
 
 		//HELMET
-		drawItemSprite(window, 1325, 95, equippedItem[5].getItemId());
+		drawItemSprite(window, 1325, 95, equippedItem[4].getItemId());
 
 		//NECKLACE
-		drawItemSprite(window, 1210, 170, equippedItem[0].getItemId());
+		drawItemSprite(window, 1210, 170, equippedItem[5].getItemId());
 
 		//RING 1
 		drawItemSprite(window, 1210, 810, equippedItem[6].getItemId());
@@ -437,15 +437,35 @@ afterItemUse:
 						sf::Vector2i mouse = sf::Mouse::getPosition(window);
 						if (mouse.x >= 1210.f && mouse.y >= 630.f && mouse.x <= 1285.f && mouse.y <= 705.f)
 						{
-							viewItemStats(window, equippedItem[1], 1210 - offsetX, 630 - offsetY);
+							viewItemStats(window, equippedItem[0], 1210 - offsetX, 630 - offsetY);
 						}
 						else if (mouse.x >= 1210.f && mouse.y >= 265.f && mouse.x <= 1285.f && mouse.y <= 340.f)
 						{
-							viewItemStats(window, equippedItem[0], 1210 - offsetX, 265 - offsetY);
+							viewItemStats(window, equippedItem[1], 1210 - offsetX, 265 - offsetY);
 						}
 						else if (mouse.x >= 1435.f && mouse.y >= 170.f && mouse.x <= 1510.f && mouse.y <= 245.f)
 						{
 							viewItemStats(window, equippedItem[2], 1435 - offsetX, 170 - offsetY);
+						}
+						else if (mouse.x >= 1325.f && mouse.y >= 845.f && mouse.x <= 1400.f && mouse.y <= 920.f)
+						{
+							viewItemStats(window, equippedItem[3], 1325 - offsetX, 845 - offsetY);
+						}
+						else if (mouse.x >= 1325.f && mouse.y >= 95.f && mouse.x <= 1400.f && mouse.y <= 170.f)
+						{
+							viewItemStats(window, equippedItem[4], 1325 - offsetX, 95 - offsetY);
+						}
+						else if (mouse.x >= 1210.f && mouse.y >= 170.f && mouse.x <= 1285.f && mouse.y <= 245.f)
+						{
+							viewItemStats(window, equippedItem[5], 1210 - offsetX, 170 - offsetY);
+						}
+						else if (mouse.x >= 1210.f && mouse.y >= 810.f && mouse.x <= 1285.f && mouse.y <= 885.f)
+						{
+							viewItemStats(window, equippedItem[6], 1210 - offsetX, 810 - offsetY);
+						}
+						else if (mouse.x >= 1435.f && mouse.y >= 810.f && mouse.x <= 1510.f && mouse.y <= 885.f)
+						{
+							viewItemStats(window, equippedItem[6], 1435 - offsetX, 810 - offsetY);
 						}
 
 						int whichItem = 0;
@@ -855,8 +875,8 @@ void hns::Equipment::drawItemSprite(sf::RenderWindow &window, int x, int y, int 
 
 void hns::Equipment::itemSwapping(Item& item, int type)
 {
-	if (equippedItem[type].getItemId() != -1) addItem(equippedItem[type].getItemId(), 1);
-	equippedItem[type] = item;
+	if (equippedItem[type - 1].getItemId() != -1) addItem(equippedItem[type - 1].getItemId(), 1);
+	equippedItem[type - 1] = item;
 	if (item.getItemCount() > 1) item.addItemCount(-1);
 	else itemDeletion(item.getItemId());
 }
@@ -937,12 +957,12 @@ void hns::Equipment::equipItem(Item &item, Player &player)
 	}
 	else if (item.getItemId() >= 7000 and item.getItemId() < 8000 and checkItemRequirements(item, player) == true) //Ring slot 1 & 2
 	{
-		if (equippedItem[6].getItemId() == -1) itemSwapping(item, 6);
-		else if (equippedItem[7].getItemId() == -1) itemSwapping(item, 7);
+		if (equippedItem[6].getItemId() == -1) itemSwapping(item, 7);
+		else if (equippedItem[7].getItemId() == -1) itemSwapping(item, 8);
 		else
 		{
-			if (rand() % 2 == 0) itemSwapping(item, 6);
-			else itemSwapping(item, 7);
+			if (rand() % 2 == 0) itemSwapping(item, 7);
+			else itemSwapping(item, 8);
 		}
 	}
 }

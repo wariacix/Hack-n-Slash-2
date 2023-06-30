@@ -50,7 +50,7 @@ public:
 		in = 10;
 		lvl = 1;
 		reqexp = 500;
-		xp = 0;
+		xp = 2250;
 		for (int i = 0; i < 4; i++) hasBeenPressed[i] = false;
 		heroName = L"NO NAME";
 		alive = true;

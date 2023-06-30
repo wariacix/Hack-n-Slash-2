@@ -419,7 +419,7 @@ void DrawTile(sf::RenderWindow &window, sf::Texture texture, int x, int y, int p
 		sf::Sprite tileSprite;
 		tileSprite.setTexture(texture);
 		tileSprite.setScale(textureRes / 16, textureRes / 16);
-		tileSprite.setPosition((x - playerX + 11) * textureRes, (y - playerY + 7) * textureRes);
+		tileSprite.setPosition((x - playerX + 11) * textureRes, ((y - playerY + 7) * textureRes) + 2);
 		window.draw(tileSprite);
 	}
 }
@@ -454,6 +454,22 @@ void Map::BakeTextures()
 	AssignNewTexture("desertcity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("arctic.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("player.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(16, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(32, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(48, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(64, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(80, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(96, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(112, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(128, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(144, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(160, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(176, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(192, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(208, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(224, 0, 16, 16));
+	AssignNewTexture("fog.png", sf::IntRect(240, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(16, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(32, 0, 16, 16));
@@ -479,11 +495,7 @@ void Map::Initialize()
 	wcout << L"Baked the textures." << std::endl;
 }
 
-//TODO, VERY IMPORTANT FOR OPTIMIZATION:
-// INSTEAD OF LOADING FILES MID-GAME, LOAD THEM UP BEFORE IN A SEPARATE METHOD SO THE FPS ISN'T HORRYFING. STORE THEM IN MEMORY BEFORE THAT, AND JUST SELECT THEM HERE.
-// ALSO, CREATE A FUNCTION FOR SELECTING THE APPROPRIATE TEXTURE WITH CONNECTED TEXTURES.
-
-sf::Texture Map::ChooseConnectedTexture(int c, int u, std::string fileName, sf::RenderWindow& window, Player player)
+sf::Texture Map::ChooseConnectedTexture(int c, int u, int value, std::vector<std::vector<int>> valueType, std::string fileName, sf::RenderWindow& window, Player player)
 {
 	int i;
 	for (i = 0; i < mapTextures.size(); i++)
@@ -491,21 +503,21 @@ sf::Texture Map::ChooseConnectedTexture(int c, int u, std::string fileName, sf::
 		if (mapTextures[i].name == fileName) break;
 	}
 
-	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) return mapTextures[i + 1].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) return mapTextures[i + 2].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] != 1) return mapTextures[i + 3].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 4].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 5].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 6].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 7].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 8].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 9].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 10].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] == 1) return mapTextures[i + 11].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 12].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] != 1 and biome[c][u - 1] == 1) return mapTextures[i + 13].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] == 1 and biome[c + 1][u] != 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 14].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and biome[c - 1][u] != 1 and biome[c + 1][u] == 1 and biome[c][u + 1] == 1 and biome[c][u - 1] != 1) return mapTextures[i + 15].mainTexture;
+	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return mapTextures[i + 1].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return mapTextures[i + 2].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return mapTextures[i + 3].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 4].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 5].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 6].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 7].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 8].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 9].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 10].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 11].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 12].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 13].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 14].mainTexture;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 15].mainTexture;
 	else return mapTextures[i].mainTexture;
 }
 
@@ -513,23 +525,23 @@ void Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
 {
 	sf::Vector2u resolution = window.getSize();
 	int textureRes = 48;
-	for (int u = player.y - 8; u < player.y + 8; u++)
+	for (int u = player.y - 6; u < player.y + 7; u++)
 	{
-		for (int c = player.x - 12; c < player.x + 12; c++)
+		for (int c = player.x - 10; c < player.x + 11; c++)
 		{
-			if (c < mapWidth || c > 0 || u < mapHeight || u > 0)
+			if (c <= mapWidth && c >= 0 && u <= mapHeight && u >= 0)
 			{
 				if (biome[c][u] == 0)
 				{
 					if (city[c][u] == 1)
 					{
-						DrawTile(window, LookForTexture("grasscity.png"), c, u, player.x, player.y);
+						DrawTile(window, mapTextures[1].mainTexture, c, u, player.x, player.y);
 					}
-					else DrawTile(window, LookForTexture("grass.png"), c, u, player.x, player.y);
+					else DrawTile(window, mapTextures[0].mainTexture, c, u, player.x, player.y);
 				}
 				else if (biome[c][u] == 1)
 				{
-					DrawTile(window, ChooseConnectedTexture(c, u, "mountains.png", window, player), c, u, player.x, player.y);
+					DrawTile(window, ChooseConnectedTexture(c, u, 1, biome, "mountains.png", window, player), c, u, player.x, player.y);
 				}
 				else if (biome[c][u] == 2)
 				{
@@ -548,8 +560,12 @@ void Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
 					}
 					else DrawTile(window, LookForTexture("forest.png"), c, u, player.x, player.y);
 				}
-
 				if (player.x == c and player.y == u) DrawTile(window, LookForTexture("player.png"), c, u, player.x, player.y);
+
+				if (fog[c][u] == 1)
+				{
+					DrawTile(window, ChooseConnectedTexture(c, u, 1, fog, "fog.png", window, player), c, u, player.x, player.y);
+				}
 			}
 		}
 	}

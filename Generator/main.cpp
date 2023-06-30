@@ -147,5 +147,6 @@ int main()
 			window.display();
 		}
 		mainPlayer = Player();
+		mainEquipment = Equipment();
 	}
 };
