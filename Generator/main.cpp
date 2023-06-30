@@ -67,7 +67,7 @@ int main()
 
 	hns::Equipment mainEquipment;
 	hns::Interface mainUI(mainPlayer);
-	Map mainMap("default", 48, 46);
+	Map mainMap("default", 64, 52);
 
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);

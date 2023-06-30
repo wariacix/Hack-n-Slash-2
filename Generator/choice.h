@@ -22,7 +22,7 @@ protected:
 	sf::Text text;
 	bool hasSoundBeenPlayed;
 
-	void getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButtons, int& choice, std::wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui);
+	void getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, std::wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui);
 public:
 	Dialogue();
 

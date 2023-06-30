@@ -19,6 +19,8 @@ public:
 
 	void changeSprite(sf::Texture& sprTexture);
 
+	void SetPosition(int x, int y);
+
 	void Draw(sf::RenderWindow& window);
 
 	bool isHovered(sf::RenderWindow& window);

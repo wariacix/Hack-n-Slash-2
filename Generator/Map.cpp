@@ -81,7 +81,7 @@ void Map::SetBaseValues()
 					}
 				}
 			}
-			hero[24][23] = 1;
+			hero[mapWidth/2][mapHeight/2] = 1;
 		};
 
 void Map::EnlargeMountains()
@@ -100,8 +100,8 @@ void Map::CreateDeserts()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
-				if (rand() % 2 == 0) biome[x][36] = 2;
-				for (int y = 37; y < mapHeight; y++)
+				if (rand() % 2 == 0) biome[x][mapHeight-10] = 2;
+				for (int y = mapHeight - 9; y < mapHeight; y++)
 				{
 					biome[x][y] = 2;
 				}
@@ -277,9 +277,9 @@ void Map::CreateForests()
 void Map::CreateForestCities()
 		{
 			int x1, y1;
-			for (int x = 6; x < 43; x++)
+			for (int x = 6; x < mapWidth - 5; x++)
 			{
-				for (int y = 6; y < 41; y++)
+				for (int y = 6; y < mapHeight - 5; y++)
 				{
 					int cityChance = 1;
 					for (x1 = 0; x1 < 3; x1++)
@@ -350,7 +350,7 @@ int Map::CheckForCityCount()
 					path[x][y] = 0;
 				}
 			}
-			if (human < 5 or orc < 3 or elve < 3) return 0;
+			if (human < 3 or orc < 3 or elve < 3) return 0;
 			else return 1;
 		}
 
@@ -367,6 +367,10 @@ void Map::GenerateMap()
 				CreateForestCities();
 				FurtherCityGen();
 				mapCount++;
+				if (mapCount == 100) wcout << L"Denied 100th map." << endl;
+				if (mapCount == 500) wcout << L"Denied 500th map." << endl;
+				if (mapCount == 1000) wcout << L"Denied 1000th map." << endl;
+				if (mapCount == 2500) wcout << L"Denied 2500th map." << endl;
 			}
 			wcout << L"Map chosen.   Maps generated total: " << mapCount << endl;
 		}
@@ -529,7 +533,7 @@ void Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
 	{
 		for (int c = player.x - 10; c < player.x + 11; c++)
 		{
-			if (c <= mapWidth && c >= 0 && u <= mapHeight && u >= 0)
+			if (c < mapWidth && c >= 0 && u < mapHeight && u >= 0)
 			{
 				if (biome[c][u] == 0)
 				{

@@ -18,6 +18,7 @@
 #include "choice.h"
 #include "Interface.h"
 #include "equipment.h"
+#include "GameObject.h"
 
 class hns::Interface;
 
@@ -96,11 +97,9 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 		}
 
 		int choice = 0; // Starting at first button
+		bool clickFlag = false;
 
-		sf::Texture buttonT;
-		buttonT.loadFromFile("Textures\\button.png", sf::IntRect(0, 0, 51, 11));
-		sf::Sprite buttonS;
-		buttonS.setTexture(buttonT);
+		hns::GameObject button(290, 780, 51, 11, "button");
 
 		if (playSound == true) playViewSound();
 
@@ -118,13 +117,14 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 
 			window.clear();
 
-			getDialogueAnswerTick(buttonS, numberOfButtons, choice, choiceString, window, player, ui);
+			getDialogueAnswerTick(clickFlag, button, numberOfButtons, choice, choiceString, window, player, ui);
 
 			window.display();
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) or clickFlag == true)
 			{
-				Sleep(150);
+				wcout << L" WORKS \n";
+				Sleep(100);
 				return choice;
 			}
 		}
@@ -132,28 +132,28 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 		return 999;
 	}
 
-void hns::Dialogue::getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButtons, int& choice, wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui)
+void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui)
 {
 	drawView(window);
 	drawInterface(window, player, ui);
 
 	for (int i = 0; i < numberOfButtons; i++)
 	{
-		if (choice == i) buttonS.setColor(sf::Color{ 252,255,0,255 });
-		else buttonS.setColor(sf::Color::White);
-		buttonS.setScale(5.f, 5.f);
+		if (choice == i) button.sprite.setColor(sf::Color{ 252,255,0,255 });
+		else button.sprite.setColor(sf::Color::White);
 
 		if (numberOfButtons == 2 or numberOfButtons == 4)
 		{
 			if (i < 2)
 			{
-				buttonS.setPosition(290.f + (i * 260), 780.f);
+				button.SetPosition(290.f + (i * 260), 780.f);
 			}
 			else
 			{
-				buttonS.setPosition(290.f + ((i - 2) * 260), 840.f);
+				button.SetPosition(290.f + ((i - 2) * 260), 840.f);
 			}
-			window.draw(buttonS);
+			if (button.isClicked(window)) clickFlag = true;
+			window.draw(button.sprite);
 
 			text.setCharacterSize(24);
 			text.setString(choiceString[i]);
@@ -172,13 +172,14 @@ void hns::Dialogue::getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButt
 		{
 			if (i < 3)
 			{
-				buttonS.setPosition(165.f + (i * 260), 780.f);
+				button.SetPosition(165.f + (i * 260), 780.f);
 			}
 			else
 			{
-				buttonS.setPosition(165.f + ((i - 3) * 260), 840.f);
+				button.SetPosition(165.f + ((i - 3) * 260), 840.f);
 			}
-			window.draw(buttonS);
+			if (button.isClicked(window)) clickFlag = true;
+			window.draw(button.sprite);
 
 			text.setCharacterSize(24);
 			text.setString(choiceString[i]);
@@ -193,6 +194,7 @@ void hns::Dialogue::getDialogueAnswerTick(sf::Sprite& buttonS, int& numberOfButt
 			}
 			window.draw(text);
 		}
+		if (button.isHovered(window)) choice = i;
 	}
 
 

@@ -187,10 +187,9 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 	enemyText.setString(enemy.name);
 	enemyText.setPosition(550 - 6 * enemy.name.length(),90);
 
-	sf::Texture buttonT;
-	buttonT.loadFromFile("Textures\\button.png", sf::IntRect(0, 0, 51, 11));
-	sf::Sprite buttonS;
-	buttonS.setTexture(buttonT);
+	bool clickFlag = false;
+
+	hns::GameObject button(290, 780, 51, 11, "button");
 
 	if (playSound == true) playViewSound();
 
@@ -208,7 +207,7 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 
 		window.clear();
 
-		getDialogueAnswerTick(buttonS, numberOfButtons, choice, choiceString, window, player, ui);
+		getDialogueAnswerTick(clickFlag, button, numberOfButtons, choice, choiceString, window, player, ui);
 		
 		window.draw(enemyText);
 
@@ -216,9 +215,9 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 		enemyBar.Draw(window, enemy.hp, enemy.maxhp);
 		window.display();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) or clickFlag == true)
 		{
-			Sleep(150);
+			Sleep(100);
 			return choice;
 		}
 	}

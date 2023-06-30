@@ -29,6 +29,13 @@ void hns::GameObject::Draw(sf::RenderWindow& window)
 	window.draw(sprite);
 }
 
+void hns::GameObject::SetPosition(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+	sprite.setPosition(x, y);
+}
+
 bool hns::GameObject::isHovered(sf::RenderWindow& window)
 {
 	sf::Vector2i mouse = sf::Mouse::getPosition(window);
@@ -38,6 +45,6 @@ bool hns::GameObject::isHovered(sf::RenderWindow& window)
 
 bool hns::GameObject::isClicked(sf::RenderWindow& window)
 {
-	if (isHovered(window) == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) return true;
+	if (isHovered(window) == true and sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) == true) return true;
 	else return false;
 }
