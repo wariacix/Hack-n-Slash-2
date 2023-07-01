@@ -34,8 +34,8 @@ void hns::Menu::Start(sf::RenderWindow& window)
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				if (redButton.isHovered(window) == true) gameStarted = true;
-				if (yellowButton.isHovered(window) == true)
+				if (redButton.isClicked(window) == true) gameStarted = true;
+				if (yellowButton.isClicked(window) == true)
 				{
 					window.close();
 					exit(1);

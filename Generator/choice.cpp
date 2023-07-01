@@ -99,7 +99,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 		int choice = 0; // Starting at first button
 		bool clickFlag = false;
 
-		hns::GameObject button(290, 780, 51, 11, "button");
+		hns::GameObject button(288, 778, 53, 13, "button");
 
 		if (playSound == true) playViewSound();
 
@@ -139,18 +139,18 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 
 	for (int i = 0; i < numberOfButtons; i++)
 	{
-		if (choice == i) button.sprite.setColor(sf::Color{ 252,255,0,255 });
-		else button.sprite.setColor(sf::Color::White);
+		if (choice == i) button.sprite.setTextureRect(sf::IntRect(53, 0, 53, 13));
+		else button.sprite.setTextureRect(sf::IntRect(0, 0, 53, 13));
 
 		if (numberOfButtons == 2 or numberOfButtons == 4)
 		{
 			if (i < 2)
 			{
-				button.SetPosition(290.f + (i * 260), 780.f);
+				button.SetPosition(288.f + (i * 260), 778.f);
 			}
 			else
 			{
-				button.SetPosition(290.f + ((i - 2) * 260), 840.f);
+				button.SetPosition(288.f + ((i - 2) * 260), 838.f);
 			}
 			if (button.isClicked(window)) clickFlag = true;
 			window.draw(button.sprite);
@@ -160,11 +160,11 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 
 			if (i < 2)
 			{
-				text.setPosition(305.f + (i * 260), 790.f);
+				text.setPosition(319.f + (i * 260), 796.f);
 			}
 			else
 			{
-				text.setPosition(305.f + ((i - 2) * 260), 850.f);
+				text.setPosition(319.f + ((i - 2) * 260), 856.f);
 			}
 			window.draw(text);
 		}
@@ -172,11 +172,11 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 		{
 			if (i < 3)
 			{
-				button.SetPosition(165.f + (i * 260), 780.f);
+				button.SetPosition(163.f + (i * 260), 778.f);
 			}
 			else
 			{
-				button.SetPosition(165.f + ((i - 3) * 260), 840.f);
+				button.SetPosition(163.f + ((i - 3) * 260), 838.f);
 			}
 			if (button.isClicked(window)) clickFlag = true;
 			window.draw(button.sprite);
@@ -186,11 +186,11 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 
 			if (i < 3)
 			{
-				text.setPosition(180.f + (i * 260), 790.f);
+				text.setPosition(194.f + (i * 260), 796.f);
 			}
 			else
 			{
-				text.setPosition(180.f + ((i - 3) * 260), 850.f);
+				text.setPosition(194.f + ((i - 3) * 260), 856.f);
 			}
 			window.draw(text);
 		}

@@ -7,7 +7,13 @@
 #include "GameObject.h"
 #include "InterfaceObjects.h"
 
-void menuButton::setTitle(std::wstring input)
+void MenuButton::SetTitle(std::wstring input)
 {
 	title.setString(input);
+}
+
+void MenuButton::Draw(sf::RenderWindow& window)
+{
+	window.draw(sprite);
+	window.draw(title);
 }
