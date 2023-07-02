@@ -40,7 +40,7 @@ public:
 		hpRegen = 1;
 		mpRegen = 1;
 		hp = 100;
-		mp = 4;
+		mp = 8;
 		maxmp = 20;
 		maxhp = 100;
 		dodgeChance = 5;

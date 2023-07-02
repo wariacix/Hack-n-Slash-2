@@ -33,9 +33,7 @@ public:
 		title.setString(titleName);
 		title.setCharacterSize(textSize);
 		title.setPosition(x + xOffset, y + yOffset);
-		title.setFillColor(sf::Color::White);
-		title.setOutlineColor(sf::Color::Black);
-		title.setOutlineThickness(2.f);
+		title.setFillColor(sf::Color::Black);
 	}
 
 	void Draw(sf::RenderWindow& window);
