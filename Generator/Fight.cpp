@@ -21,7 +21,7 @@ hns::Enemy::Enemy(int id, std::wstring name, float damage, float hp, float maxhp
 
 void hns::Enemy::loadEnemy(std::string fileName)
 {
-	std::wstring load = loadFileString(fileName);
+	std::wstring load = loadFileString("Data\\Enemies\\" + fileName);
 	std::wstring stats[6];
 	int numOfEnemies = 0;
 

@@ -74,9 +74,6 @@
     <ClInclude Include="Player.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="City.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>

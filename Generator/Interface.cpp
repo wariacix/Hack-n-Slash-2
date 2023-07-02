@@ -4,12 +4,10 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <cstdlib>
-#include <windows.h>
 #include <conio.h>
 #include <stdio.h>
 #include <time.h>
 #include <string>
-#include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
 #include "menu.h"

@@ -117,7 +117,6 @@ public:
 		equippedItem = new Item[8];
 	}
 
-	std::string getEqName();
 	void addItem(int id, int howManyItems);
 	void updateStats(Player& player);
 	virtual void viewEquipment(sf::RenderWindow& window, Player& player);

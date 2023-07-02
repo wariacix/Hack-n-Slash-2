@@ -1,14 +1,12 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <windows.h>
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
 #include <stdio.h>
 #include <time.h>
 #include <string>
-#include <winuser.h>
 #include <fcntl.h>
 #include <io.h>
 #include "menu.h"
@@ -30,7 +28,6 @@ int mtnChance;
 std::wstring cityName[30];
 bool los = false;
 std::wstring enemyName;
-HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 using namespace std;
 
@@ -66,27 +63,27 @@ int main()
 	los = false;
 
 	hns::Equipment mainEquipment;
-	hns::Interface mainUI(mainPlayer);
-	Map mainMap("default", 64, 52);
-
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
 	mainEquipment.addItem(3000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(4000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(5000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(6000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(7000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[0], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(100, mainPlayer.gold);
 	mainEquipment.addItem(101, 20);
 	mainEquipment.addItem(102, 20);
 	mainEquipment.addItem(103, 10);
+
+	hns::Interface mainUI(mainPlayer);
+	Map mainMap("default", 64, 52);
 
 	bool hasRolled = false;
 	int rollX = -1, rollY = -1;
@@ -129,7 +126,9 @@ int main()
 			{
 				if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 && rand() % 10 == 0)
 				{
-					hns::Fight fight;
+					hns::Enemy enemy;
+					enemy.loadEnemy("forest");
+					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, mainUI, mainEquipment);
 				}
 				else hasRolled = true;
@@ -148,5 +147,23 @@ int main()
 		}
 		mainPlayer = Player();
 		mainEquipment = Equipment();
+		mainEquipment.addItem(1000, 1);
+		mainEquipment.addItem(2000, 1);
+		mainEquipment.addItem(3000, 1);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.addItem(4000, 1);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.addItem(5000, 1);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.addItem(6000, 1);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.addItem(7000, 1);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.addItem(100, mainPlayer.gold);
+		mainEquipment.addItem(101, 20);
+		mainEquipment.addItem(102, 20);
+		mainEquipment.addItem(103, 10);
 	}
 };

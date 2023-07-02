@@ -178,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="choice.h" />
-    <ClInclude Include="City.h" />
     <ClInclude Include="equipment.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="GameObject.h" />
