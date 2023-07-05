@@ -119,7 +119,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 
 			window.display();
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) or clickFlag == true)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && window.hasFocus() or clickFlag == true)
 			{
 				wcout << L" WORKS \n";
 				Sleep(100);
@@ -200,19 +200,19 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 	if (numberOfButtons == 2 or numberOfButtons == 4)
 	{
 		int sleepTime = 100;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && window.hasFocus() && choice >= 1)
 		{
 			choice--; Sleep(sleepTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && window.hasFocus() && choice < numberOfButtons - 1)
 		{
 			choice++; Sleep(sleepTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 2 >= 0)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && window.hasFocus() && choice - 2 >= 0)
 		{
 			choice = choice - 2; Sleep(sleepTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 2 < numberOfButtons)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && window.hasFocus() && choice + 2 < numberOfButtons)
 		{
 			choice = choice + 2; Sleep(sleepTime);
 		}
@@ -220,19 +220,19 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 	else
 	{
 		int sleepTime = 100;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && choice >= 1)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && window.hasFocus() && choice >= 1)
 		{
 			choice--; Sleep(sleepTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && choice < numberOfButtons - 1)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && window.hasFocus() && choice < numberOfButtons - 1)
 		{
 			choice++; Sleep(sleepTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && choice - 3 >= 0)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && window.hasFocus() && choice - 3 >= 0)
 		{
 			choice = choice - 3; Sleep(sleepTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && choice + 3 < numberOfButtons)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && window.hasFocus() && choice + 3 < numberOfButtons)
 		{
 			choice = choice + 3; Sleep(sleepTime);
 		}

@@ -16,18 +16,18 @@
 
 using namespace std;
 
-void Player::CheckForKeyActivity()
+void Player::CheckForKeyActivity(sf::RenderWindow& window)
 {
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == true) hasBeenPressed[0] = false;
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == true) hasBeenPressed[1] = false;
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && hasBeenPressed[2] == true) hasBeenPressed[2] = false;
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == true) hasBeenPressed[3] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == true && window.hasFocus()) hasBeenPressed[0] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == true && window.hasFocus()) hasBeenPressed[1] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && hasBeenPressed[2] == true && window.hasFocus()) hasBeenPressed[2] = false;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == true && window.hasFocus()) hasBeenPressed[3] = false;
 }
 
 void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
 {
-		CheckForKeyActivity();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == false)
+		CheckForKeyActivity(window);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == false && window.hasFocus())
 		{
 			hasBeenPressed[0] = true;
 			if (x > 0)
@@ -37,7 +37,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 				x--;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == false)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == false && window.hasFocus())
 		{
 			hasBeenPressed[1] = true;
 			if (x < map1.getMapWidth() - 1)
@@ -47,11 +47,11 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 				x++;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) or sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && window.hasFocus() or sf::Keyboard::isKeyPressed(sf::Keyboard::I) && window.hasFocus())
 		{
 			eq.viewEquipment(window, player);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && hasBeenPressed[2] == false)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && hasBeenPressed[2] == false && window.hasFocus())
 		{
 			hasBeenPressed[2] = true;
 			if (y > 0)
@@ -61,7 +61,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 				y--;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == false)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == false && window.hasFocus())
 		{
 			hasBeenPressed[3] = true;
 			if (y < map1.getMapHeight() - 1)
@@ -71,11 +71,11 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 				y++;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && window.hasFocus())
 		{
 			los = true;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && window.hasFocus())
 		{
 			for (int x0 = 0; x0 < 48; x0++)
 			{

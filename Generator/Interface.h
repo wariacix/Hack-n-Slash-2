@@ -37,7 +37,7 @@ class hns::Interface : public hns::GameObject
 private:
 	hns::Bar hpBar; hns::Bar mpBar = hns::Bar(Player(), 250, 10, 41, 5, "mpUItop", "mpUIbot");
 	hns::TextObject goldIndicator = TextObject(920, 5, 20, 7, "goldBar", 28, sf::Color(255, 197, 0, 255), "test", 10, -2, sf::Color::Black, 2.0f);
-	hns::TextObject levelIndicator = TextObject(1280, 5, 27, 7, "levelBar", 28, sf::Color(83, 210, 0, 255), "test", 10, -2, sf::Color::Black, 2.0f);
+	hns::TextObject levelIndicator = TextObject(1280, 5, 27, 7, "levelBar", 28, sf::Color(83, 225, 0, 255), "test", 25, -2, sf::Color::Black, 2.0f);
 public:
 	Interface(Player player = Player(), int x = 0, int y = 0, int sizeX = 320, int sizeY = 200, std::string texName = "interface");
 	

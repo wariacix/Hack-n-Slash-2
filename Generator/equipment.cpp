@@ -475,7 +475,7 @@ afterItemUse:
 					}
 					while (true)
 					{
-						if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) == true)
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) == true && window.hasFocus())
 						{
 							hasBeenPressed = 1;
 							if (eqx > 0 and equipmentItem[eqx - 1][eqy][0] > 0)
@@ -491,7 +491,7 @@ afterItemUse:
 							}
 							Sleep(80);
 						}
-						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) == true)
+						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) == true && window.hasFocus())
 						{
 							hasBeenPressed = 2;
 							if (eqx < equipmentWidth - 1 and equipmentItem[eqx + 1][eqy][0] > 0)
@@ -510,7 +510,7 @@ afterItemUse:
 							}
 							Sleep(80);
 						}
-						else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true or sf::Keyboard::isKeyPressed(sf::Keyboard::E) == true or sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true)
+						else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true or sf::Keyboard::isKeyPressed(sf::Keyboard::E) == true or sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true && window.hasFocus())
 						{
 							hasBeenPressed = 3;
 							int whichItem = 0;
@@ -524,7 +524,7 @@ afterItemUse:
 							Sleep(80);
 							goto afterItemUse;
 						}
-						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) == 1)
+						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) == 1 && window.hasFocus())
 						{
 							hasBeenPressed = 4;
 							if (eqy > 0 and equipmentItem[eqx][eqy - 1][0] > 0)
@@ -535,7 +535,7 @@ afterItemUse:
 							}
 							Sleep(80);
 						}
-						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) == 1)
+						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) == 1 && window.hasFocus())
 						{
 							hasBeenPressed = 5;
 							if (eqy < 200 and equipmentItem[eqx][eqy + 1][0] > 0)
@@ -549,7 +549,7 @@ afterItemUse:
 							}
 							Sleep(80);
 						}
-						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) == 1)
+						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) == 1 && window.hasFocus())
 						{
 							hasBeenPressed = 0;
 							goto exit;

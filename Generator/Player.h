@@ -58,6 +58,6 @@ public:
 	void movePlayer(Map &map1, sf::RenderWindow& window, hns::Equipment &eq, Player& player);
 	void Regenerate();
 private:
-	void CheckForKeyActivity();
+	void CheckForKeyActivity(sf::RenderWindow& window);
 };
 extern Player mainPlayer;
