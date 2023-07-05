@@ -493,7 +493,7 @@ void Map::BakeMap()
 					{
 						sprIndex[c][u] = LookForIndex("desertcity.png");
 					}
-					else sprIndex[c][u] = LookForIndex("desert.png");
+					else sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 2, biome, "desert.png");
 				}
 				else if (biome[c][u] == 3) sprIndex[c][u] = LookForIndex("arctic.png");
 				else if (biome[c][u] == 4)
@@ -535,7 +535,6 @@ void Map::BakeTextures()
 	AssignNewTexture("forestCold.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("forestcity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("forestColdCity.png", sf::IntRect(0, 0, 16, 16));
-	AssignNewTexture("desert.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("desertcity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("arctic.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("player.png", sf::IntRect(0, 0, 16, 16));
@@ -571,6 +570,22 @@ void Map::BakeTextures()
 	AssignNewTexture("mountains.png", sf::IntRect(208, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(224, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(240, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(16, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(32, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(48, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(64, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(80, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(96, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(112, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(128, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(144, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(160, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(176, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(192, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(208, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(224, 0, 16, 16));
+	AssignNewTexture("desert.png", sf::IntRect(240, 0, 16, 16));
 }
 
 void Map::Initialize()

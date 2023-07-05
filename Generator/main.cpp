@@ -97,7 +97,7 @@ int main()
 		mainMap.Initialize();
 		wcout << L"READY.";
 		sf::RenderWindow window(sf::VideoMode(1600, 1000), "Hack n' Slash 2");
-		window.setVerticalSyncEnabled(true);
+		window.setVerticalSyncEnabled(false);
 		menu.Start(window);
 		while (window.isOpen() and mainPlayer.alive == true)
 		{
