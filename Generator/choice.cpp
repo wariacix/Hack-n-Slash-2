@@ -117,6 +117,14 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 
 			getDialogueAnswerTick(clickFlag, button, numberOfButtons, choice, choiceString, window, player, ui);
 
+			sf::Texture cursorT;
+			cursorT.loadFromFile("Textures\\cursor.png");
+			sf::Sprite cursorS;
+			cursorS.setTexture(cursorT);
+			cursorS.setPosition((sf::Vector2f)sf::Mouse::getPosition() - (sf::Vector2f)window.getPosition() - sf::Vector2f(0, 30));
+			cursorS.setScale(4.0f, 4.0f);
+			window.draw(cursorS);
+
 			window.display();
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && window.hasFocus() or clickFlag == true)

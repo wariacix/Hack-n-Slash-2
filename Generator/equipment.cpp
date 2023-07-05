@@ -475,6 +475,12 @@ afterItemUse:
 					}
 					while (true)
 					{
+						sf::Texture cursorT;
+						cursorT.loadFromFile("Textures\\cursor.png");
+						sf::Sprite cursorS;
+						cursorS.setTexture(cursorT);
+						cursorS.setPosition((sf::Vector2f)sf::Mouse::getPosition() - (sf::Vector2f)window.getPosition() - sf::Vector2f(0, 30));
+						cursorS.setScale(4.0f, 4.0f);
 						if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) == true && window.hasFocus())
 						{
 							hasBeenPressed = 1;
@@ -520,8 +526,12 @@ afterItemUse:
 							}
 							equipItem(eqItem[whichItem], player); //function in other file for equipping/using items
 							updateStats(player);
+							sf::Texture cursorClicked;
+							cursorClicked.loadFromFile("Textures\\cursorClicked.png");
+							cursorS.setTexture(cursorClicked);
+							window.draw(cursorS);
 							window.display();
-							Sleep(80);
+							Sleep(70);
 							goto afterItemUse;
 						}
 						else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) == 1 && window.hasFocus())
@@ -554,6 +564,7 @@ afterItemUse:
 							hasBeenPressed = 0;
 							goto exit;
 						}
+						window.draw(cursorS);
 						window.display();
 						goto equipmentManeuveringLoop;
 						hasBeenPressed = 0;
