@@ -6,14 +6,14 @@
 #include "General.h"
 #include "GameObject.h"
 
-class hns::MenuButton : public GameObject
+class hns::TextObject : public GameObject
 {
 protected:
 	sf::Font font;
 	sf::Text title;
 	int textSize;
 public:
-	MenuButton(int x, int y, int sizeX, int sizeY, std::string texName, int textSize, std::string titleName, int xOffset = 84, int yOffset = 13)
+	TextObject(int x, int y, int sizeX, int sizeY, std::string texName, int textSize, sf::Color color, std::string titleName, int xOffset = 84, int yOffset = 13, sf::Color outlineColor = sf::Color::Black, float outlineSize = 0.0f)
 	{
 		this->x = x;
 		this->y = y;
@@ -33,7 +33,9 @@ public:
 		title.setString(titleName);
 		title.setCharacterSize(textSize);
 		title.setPosition(x + xOffset, y + yOffset);
-		title.setFillColor(sf::Color::Black);
+		title.setFillColor(color);
+		title.setOutlineColor(outlineColor);
+		title.setOutlineThickness(outlineSize);
 	}
 
 	void Draw(sf::RenderWindow& window);

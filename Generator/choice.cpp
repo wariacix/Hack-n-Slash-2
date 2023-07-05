@@ -299,9 +299,9 @@ void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindo
 void CityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, hns::Equipment &mainEquipment, hns::Interface &mainInterface)
 {
 	hns::Dialogue cityDialogue;
-	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0) cityDialogue.Dialogue::Dialogue("humanCityView", "FANFARE", "interface", "dpcomic");
+	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0 || mainMap.biome[mainPlayer.x][mainPlayer.y] == 5) cityDialogue.Dialogue::Dialogue("humanCityView", "FANFARE", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) cityDialogue.Dialogue::Dialogue("orcCityView", "HORN3", "interface", "dpcomic");
-	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4) cityDialogue.Dialogue::Dialogue("forestCityView", "GARDENS3", "interface", "dpcomic");
+	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 || mainMap.biome[mainPlayer.x][mainPlayer.y] == 6) cityDialogue.Dialogue::Dialogue("forestCityView", "GARDENS3", "interface", "dpcomic");
 
 	hns::Shop alchemyShop(3, 4, "alchemy"), armorerShop(4, 4, "armorer"), blacksmithShop(4, 4, "blacksmith"), jewelerShop(4,4, "jeweler");
 

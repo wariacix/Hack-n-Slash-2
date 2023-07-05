@@ -10,9 +10,9 @@ class hns::Menu
 {
 private:
 	hns::GameObject background = GameObject(0, 0, 320, 200, "UI\\mainMenu");
-	hns::MenuButton redButton = MenuButton(36*5, 75*5, 103, 20, "UI\\redScroll", 48, "Start a new game");
-	hns::MenuButton blueButton = MenuButton(36 * 5, 99 * 5, 103, 20, "UI\\blueScroll", 48, "Load the game");
-	hns::MenuButton yellowButton = MenuButton(36 * 5, 147 * 5, 83, 20, "UI\\yellowScroll", 48, "Exit");
+	hns::TextObject redButton = TextObject(36 * 5, 75 * 5, 103, 20, "UI\\redScroll", 48, sf::Color::Black, "Start a new game");
+	hns::TextObject blueButton = TextObject(36 * 5, 99 * 5, 103, 20, "UI\\blueScroll", 48, sf::Color::Black, "Load the game");
+	hns::TextObject yellowButton = TextObject(36 * 5, 147 * 5, 83, 20, "UI\\yellowScroll", 48, sf::Color::Black, "Exit");
 public:
 	void Draw(sf::RenderWindow &window);
 	

@@ -56,4 +56,8 @@ void hns::Interface::Draw(sf::RenderWindow& window, Player player)
 	GameObject::Draw(window);
 	hpBar.Draw(window, player.hp, player.maxhp);
 	mpBar.Draw(window, player.mp, player.maxmp);
+	goldIndicator.SetTitle(std::to_wstring(player.gold));
+	levelIndicator.SetTitle(L"Level: " + std::to_wstring(player.lvl));
+	goldIndicator.Draw(window);
+	levelIndicator.Draw(window);
 }

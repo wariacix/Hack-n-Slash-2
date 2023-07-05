@@ -83,7 +83,7 @@ int main()
 	mainEquipment.addItem(103, 10);
 
 	hns::Interface mainUI(mainPlayer);
-	Map mainMap("default", 64, 52);
+	Map mainMap("default", 78, 70);
 
 	bool hasRolled = false;
 	int rollX = -1, rollY = -1;

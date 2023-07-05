@@ -323,6 +323,12 @@ void Map::FurtherCityGen()
 			{
 				for (int y = 0; y < mapHeight; y++)
 				{
+					if (y < mapHeight*2 / 5)
+					{
+						if (biome[x][y] == 0) biome[x][y] = 5;
+						if (biome[x][y] == 4) biome[x][y] = 6;
+					}
+
 					for (int i = 0; i < 20; i++)
 					{
 						if (cityID[x][y] == i)
@@ -343,14 +349,14 @@ int Map::CheckForCityCount()
 				{
 					if (city[x][y] == 1)
 					{
-						if (biome[x][y] == 0) human++;
+						if (biome[x][y] == 0 || biome[x][y] == 5) human++;
 						else if (biome[x][y] == 2) orc++;
-						else if (biome[x][y] == 4) elve++;
+						else if (biome[x][y] == 4 || biome[x][y] == 6) elve++;
 					}
 					path[x][y] = 0;
 				}
 			}
-			if (human < 3 or orc < 3 or elve < 3) return 0;
+			if (human < 6 or orc < 4 or elve < 4) return 0;
 			else return 1;
 		}
 
@@ -414,25 +420,22 @@ float Lerp(float a, float b, float t)
 	return a + t * (b - a);
 }
 
-void DrawTile(sf::RenderWindow &window, sf::Texture texture, int x, int y, int playerX, int playerY, int textureRes = 48)
+void Map::DrawTile(sf::RenderWindow &window, int sprIndex, int x, int y, int playerX, int playerY, int textureRes)
 {
-	int mapWindowX = 960;
-	int mapWindowY = 620;
-	if (true)
-	{
-		sf::Sprite tileSprite;
-		tileSprite.setTexture(texture);
-		tileSprite.setScale(textureRes / 16, textureRes / 16);
-		tileSprite.setPosition((x - playerX + 11) * textureRes, ((y - playerY + 7) * textureRes) + 2);
-		window.draw(tileSprite);
-	}
+	mapTextures[sprIndex].mainSprite.setScale(textureRes / 16, textureRes / 16);
+	mapTextures[sprIndex].mainSprite.setPosition((x - playerX + 11) * textureRes, ((y - playerY + 7) * textureRes) + 2);
+	mapTextures[sprIndex].mainSprite.setTexture(mapTextures[sprIndex].mainTexture);
+	window.draw(mapTextures[sprIndex].mainSprite);
+	wcout << L"Działa!";
 }
 
 void Map::AssignNewTexture(std::string name, sf::IntRect intRect)
 {
 	sf::Texture texture;
+	sf::Sprite sprite;
 	texture.loadFromFile("Textures/Map/" + mapName + "/" + name, intRect);
-	ExtendedTexture returnTexture(texture, name);
+	sprite.setTexture(texture);
+	ExtendedTexture returnTexture(texture, sprite, name);
 
 
 	std::cout << mapTextures.size() << std::endl;
@@ -448,12 +451,90 @@ sf::Texture Map::LookForTexture(std::string name)
 	}
 }
 
+sf::Sprite Map::LookForSprite(std::string name)
+{
+	for (int i = 0; i < mapTextures.size(); i++)
+	{
+		if (mapTextures[i].name == name) return mapTextures[i].mainSprite;
+	}
+}
+
+int Map::LookForIndex(std::string name)
+{
+	for (int i = 0; i < mapTextures.size(); i++)
+	{
+		if (mapTextures[i].name == name) return i;
+	}
+}
+
+void Map::BakeMap()
+{
+	for (int u = 0; u < mapHeight; u++)
+	{
+		for (int c = 0; c < mapWidth; c++)
+		{
+			if (c < mapWidth && c >= 0 && u < mapHeight && u >= 0)
+			{
+				if (biome[c][u] == 0)
+				{
+					if (city[c][u] == 1)
+					{
+						sprIndex[c][u] = LookForIndex("grasscity.png");
+					}
+					else sprIndex[c][u] = LookForIndex("grass.png");
+				}
+				else if (biome[c][u] == 1)
+				{
+					sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 1, biome, "mountains.png");
+				}
+				else if (biome[c][u] == 2)
+				{
+					if (city[c][u] == 1)
+					{
+						sprIndex[c][u] = LookForIndex("desertcity.png");
+					}
+					else sprIndex[c][u] = LookForIndex("desert.png");
+				}
+				else if (biome[c][u] == 3) sprIndex[c][u] = LookForIndex("arctic.png");
+				else if (biome[c][u] == 4)
+				{
+					if (city[c][u] == 1)
+					{
+						sprIndex[c][u] = LookForIndex("forestcity.png");
+					}
+					else sprIndex[c][u] = LookForIndex("forest.png");
+				}
+				else if (biome[c][u] == 5)
+				{
+					if (city[c][u] == 1)
+					{
+						sprIndex[c][u] = LookForIndex("grassColdCity.png");
+					}
+					else sprIndex[c][u] = LookForIndex("grassCold.png");
+				}
+				else if (biome[c][u] == 6)
+				{
+					if (city[c][u] == 1)
+					{
+						sprIndex[c][u] = LookForIndex("forestColdCity.png");
+					}
+					else sprIndex[c][u] = LookForIndex("forestCold.png");
+				}
+			}
+		}
+	}
+}
+
 void Map::BakeTextures()
 {
 	AssignNewTexture("grass.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("grassCold.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("grasscity.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("grassColdCity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("forest.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("forestCold.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("forestcity.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("forestColdCity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("desert.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("desertcity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("arctic.png", sf::IntRect(0, 0, 16, 16));
@@ -497,9 +578,11 @@ void Map::Initialize()
 	GenerateMap();
 	BakeTextures();
 	wcout << L"Baked the textures." << std::endl;
+	BakeMap();
+	wcout << L"Baked the map." << std::endl;
 }
 
-sf::Texture Map::ChooseConnectedTexture(int c, int u, int value, std::vector<std::vector<int>> valueType, std::string fileName, sf::RenderWindow& window, Player player)
+int Map::ChooseConnectedSpriteIndex(int c, int u, int value, std::vector<std::vector<int>> valueType, std::string fileName)
 {
 	int i;
 	for (i = 0; i < mapTextures.size(); i++)
@@ -507,68 +590,38 @@ sf::Texture Map::ChooseConnectedTexture(int c, int u, int value, std::vector<std
 		if (mapTextures[i].name == fileName) break;
 	}
 
-	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return mapTextures[i + 1].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return mapTextures[i + 2].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return mapTextures[i + 3].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 4].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 5].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 6].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 7].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 8].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 9].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 10].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return mapTextures[i + 11].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 12].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return mapTextures[i + 13].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 14].mainTexture;
-	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return mapTextures[i + 15].mainTexture;
-	else return mapTextures[i].mainTexture;
+	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return i + 1;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return i + 2;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return i + 3;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 4;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 5;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 6;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 7;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 8;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 9;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 10;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 11;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 12;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 13;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 14;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 15;
+	else return i;
 }
 
 void Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
 {
-	sf::Vector2u resolution = window.getSize();
-	int textureRes = 48;
 	for (int u = player.y - 6; u < player.y + 7; u++)
 	{
 		for (int c = player.x - 10; c < player.x + 11; c++)
 		{
 			if (c < mapWidth && c >= 0 && u < mapHeight && u >= 0)
 			{
-				if (biome[c][u] == 0)
-				{
-					if (city[c][u] == 1)
-					{
-						DrawTile(window, mapTextures[1].mainTexture, c, u, player.x, player.y);
-					}
-					else DrawTile(window, mapTextures[0].mainTexture, c, u, player.x, player.y);
-				}
-				else if (biome[c][u] == 1)
-				{
-					DrawTile(window, ChooseConnectedTexture(c, u, 1, biome, "mountains.png", window, player), c, u, player.x, player.y);
-				}
-				else if (biome[c][u] == 2)
-				{
-					if (city[c][u] == 1)
-					{
-						DrawTile(window, LookForTexture("desertcity.png"), c, u, player.x, player.y);
-					}
-					else DrawTile(window, LookForTexture("desert.png"), c, u, player.x, player.y);
-				}
-				else if (biome[c][u] == 3) DrawTile(window, LookForTexture("arctic.png"), c, u, player.x, player.y);
-				else if (biome[c][u] == 4)
-				{
-					if (city[c][u] == 1)
-					{
-						DrawTile(window, LookForTexture("forestcity.png"), c, u, player.x, player.y);
-					}
-					else DrawTile(window, LookForTexture("forest.png"), c, u, player.x, player.y);
-				}
-				if (player.x == c and player.y == u) DrawTile(window, LookForTexture("player.png"), c, u, player.x, player.y);
+				DrawTile(window, sprIndex[c][u], c, u, player.x, player.y);
+				if (player.x == c and player.y == u) DrawTile(window, LookForIndex("player.png"), c, u, player.x, player.y);
 
 				if (fog[c][u] == 1)
 				{
-					DrawTile(window, ChooseConnectedTexture(c, u, 1, fog, "fog.png", window, player), c, u, player.x, player.y);
+					DrawTile(window, ChooseConnectedSpriteIndex(c, u, 1, fog, "fog.png"), c, u, player.x, player.y);
 				}
 			}
 		}

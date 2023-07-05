@@ -19,5 +19,5 @@ namespace hns
 	class Dialogue;
 	class FightDialogue;
 	class Menu;
-	class MenuButton;
+	class TextObject;
 }

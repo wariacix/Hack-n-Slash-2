@@ -12,7 +12,7 @@ public:
 	sf::Texture mainTexture;
 	sf::Sprite mainSprite;
 	std::string name;
-	ExtendedTexture(sf::Texture mainTexture, std::string name)
+	ExtendedTexture(sf::Texture mainTexture, sf::Sprite mainSprite, std::string name)
 	{
 		this->mainTexture = mainTexture;
 		this->name = name;
@@ -38,6 +38,7 @@ public:
 	std::vector<std::vector<int>> cityGuardian;
 	std::vector<std::vector<int>> hero;
 	std::vector<std::vector<int>> fog;
+	std::vector<std::vector<int>> sprIndex;
 	std::vector<std::vector<int>> path;
 
 	Map(std::string mapName = "default", int mW = 48, int mH = 46)
@@ -53,6 +54,7 @@ public:
 		cityGuardian.resize(mW, std::vector<int>(mH, 0));
 		hero.resize(mW, std::vector<int>(mH, 0));
 		fog.resize(mW, std::vector<int>(mH, 1));
+		sprIndex.resize(mW, std::vector<int>(mH, 0));
 		path.resize(mW, std::vector<int>(mH, 0));
 	};
 
@@ -61,13 +63,21 @@ public:
 	int getMapWidth();
 	int getMapHeight();
 
+	void DrawTile(sf::RenderWindow& window, int sprIndex, int x, int y, int playerX, int playerY, int textureRes = 48);
+
 	void ClearFog(Player& player1);
 
-	sf::Texture ChooseConnectedTexture(int c, int u, int biomeId, std::vector<std::vector<int>> valueType, std::string fileName, sf::RenderWindow& window, Player player);
+	int ChooseConnectedSpriteIndex(int c, int u, int biomeId, std::vector<std::vector<int>> valueType, std::string fileName);
 
 	sf::Texture LookForTexture(std::string name);
 
+	sf::Sprite LookForSprite(std::string name);
+
+	int LookForIndex(std::string name);
+
 	void ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock);
+
+	void BakeMap();
 
 	void BakeTextures();
 
