@@ -27,4 +27,6 @@ Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 ![Map interface WIP](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/mainmapimg.png)
 ![City view](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/dialogueimg.png)
 ![Alchemy shop view](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/shopimg.png)
+
+I'm still working on a name of the project. For now it's Castler (as seen in the main menu), but I think I'll change it again.
 ![Menu (work in progress)](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/mainmenuimg.png)
