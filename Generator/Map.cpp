@@ -100,8 +100,8 @@ void Map::CreateDeserts()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
-				if (rand() % 2 == 0) biome[x][mapHeight-10] = 2;
-				for (int y = mapHeight - 9; y < mapHeight; y++)
+				if (rand() % 2 == 0) biome[x][mapHeight*10/13] = 2;
+				for (int y = (mapHeight * 10 / 13) + 1; y < mapHeight; y++)
 				{
 					biome[x][y] = 2;
 				}

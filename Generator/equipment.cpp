@@ -202,6 +202,7 @@ void hns::Equipment::updateStats(Player &player)
 
 void hns::Equipment::viewEquipment(sf::RenderWindow &window, Player &player)
 {
+	hns::Interface eqUI(mainPlayer, 0, 0, 320, 200, "eqInterfaceTop");
 	for (int i = 0; i < numOfItems; i++)
 	{
 		if (eqItem[i].getItemId() == 100)
@@ -248,15 +249,12 @@ afterItemUse:
 		}
 	}
 
-	sf::Texture tBottom, tTop, tRope, tSlot;
+	sf::Texture tBottom, tTop, tSlot;
 	tBottom.loadFromFile("Textures\\eqInterfaceBottom.png", sf::IntRect(0, 0, 320, 200));
 	tTop.loadFromFile("Textures\\eqInterfaceTop.png", sf::IntRect(0, 0, 320, 200));
-	tRope.loadFromFile("Textures\\eqInterfaceRope.png", sf::IntRect(0, 0, 320, 200));
 	tSlot.loadFromFile("Textures\\eqSlot.png", sf::IntRect(0, 0, 15, 15));
 
-	sf::Sprite eqInterfaceSprite, eqSlot;
-	eqInterfaceSprite.setScale(5.f, 5.f);
-	eqInterfaceSprite.setPosition(0, 0);
+	sf::Sprite eqSlot;
 
 	if (window.isOpen())
 	{
@@ -274,9 +272,8 @@ afterItemUse:
 			}
 		}
 		window.clear();
-		eqInterfaceSprite.setScale(5.f, 5.f);
-		eqInterfaceSprite.setTexture(tBottom);
-		window.draw(eqInterfaceSprite);
+		eqUI.changeSprite(tBottom);
+		eqUI.Draw(window, player);
 		bool maxItemsLimitFlag = false;
 		int eqy = 0;
 		int eqx = 0;
@@ -371,10 +368,8 @@ afterItemUse:
 				if (g == 9998) maxItemsLimitFlag = true; //if there's too many items, equipment function won't display any more
 			}
 		}
-		eqInterfaceSprite.setTexture(tTop);
-		eqInterfaceSprite.setScale(5.f, 5.f);
-		eqInterfaceSprite.setPosition(0, 0);
-		window.draw(eqInterfaceSprite);
+		eqUI.changeSprite(tTop);
+		eqUI.Draw(window, player);
 
 		//Drawing equipped items
 		//WEAPON
@@ -568,6 +563,7 @@ exit:;
 
 void hns::Shop::viewEquipment(sf::RenderWindow& window, Player& player, Equipment& playerEq)
 {
+	hns::Interface shopUI(mainPlayer,0,0,320,200,"interface");
 	for (int i = 0; i < numOfItems; i++)
 	{
 		if (eqItem[i].getItemId() == 100)
@@ -614,15 +610,12 @@ afterItemUse:
 		}
 	}
 
-	sf::Texture tBottom, tTop, tRope, tSlot;
+	sf::Texture tBottom, tTop, tSlot;
 	tBottom.loadFromFile("Textures\\"+ bottomTxt +".png", sf::IntRect(0, 0, 320, 200));
 	tTop.loadFromFile("Textures\\" + topTxt + ".png", sf::IntRect(0, 0, 320, 200));
-	tRope.loadFromFile("Textures\\eqInterfaceRope.png", sf::IntRect(0, 0, 320, 200));
 	tSlot.loadFromFile("Textures\\eqSlot.png", sf::IntRect(0, 0, 15, 15));
 
-	sf::Sprite eqInterfaceSprite, eqSlot;
-	eqInterfaceSprite.setScale(5.f, 5.f);
-	eqInterfaceSprite.setPosition(0, 0);
+	sf::Sprite eqSlot;
 
 	if (window.isOpen())
 	{
@@ -641,9 +634,8 @@ afterItemUse:
 		}
 		window.clear();
 
-		eqInterfaceSprite.setScale(5.f, 5.f);
-		eqInterfaceSprite.setTexture(tBottom);
-		window.draw(eqInterfaceSprite);
+		shopUI.changeSprite(tBottom);
+		shopUI.Draw(window, player);
 		bool maxItemsLimitFlag = false;
 		int eqy = 0;
 		int eqx = 0;
@@ -716,10 +708,8 @@ afterItemUse:
 				if (g == 9998) maxItemsLimitFlag = true; //if there's too many items, equipment function won't display any more
 			}
 		}
-		eqInterfaceSprite.setTexture(tTop);
-		eqInterfaceSprite.setScale(5.f, 5.f);
-		eqInterfaceSprite.setPosition(0, 0);
-		window.draw(eqInterfaceSprite);
+		shopUI.changeSprite(tTop);
+		shopUI.Draw(window, player);
 
 		sf::Text text;
 		text.setFont(font);
@@ -760,6 +750,7 @@ afterItemUse:
 			{
 				if (equipmentItem[eqx][eqy][1] == 1)
 				{
+					shopUI.Draw(window, player);
 					if (equipmentItem[eqx][eqy][2] >= 0)
 					{
 						int whichItem = 0;
