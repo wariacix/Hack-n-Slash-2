@@ -84,6 +84,7 @@ int main()
 	mainEquipment.addItem(7000, 1);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(100, mainPlayer.gold);
+	mainEquipment.addItem(0, 2);
 	mainEquipment.addItem(101, 20);
 	mainEquipment.addItem(102, 20);
 	mainEquipment.addItem(103, 10);
