@@ -11,13 +11,7 @@ void hns::Menu::Draw(sf::RenderWindow& window)
 	redButton.Draw(window);
 	blueButton.Draw(window);
 	yellowButton.Draw(window);
-	sf::Texture cursorT;
-	cursorT.loadFromFile("Textures\\cursor.png");
-	sf::Sprite cursorS;
-	cursorS.setTexture(cursorT);
-	cursorS.setPosition((sf::Vector2f)sf::Mouse::getPosition() - (sf::Vector2f)window.getPosition() - sf::Vector2f(0,30));
-	cursorS.setScale(4.0f, 4.0f);
-	window.draw(cursorS);
+	hns::Cursor::Draw(window);
 }
 
 void hns::Menu::Start(sf::RenderWindow& window)

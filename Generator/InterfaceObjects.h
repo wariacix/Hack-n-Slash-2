@@ -41,3 +41,20 @@ public:
 	void Draw(sf::RenderWindow& window);
 	void SetTitle(std::wstring input);
 };
+
+class hns::Cursor
+{
+public:
+	static sf::Texture texture, textureClicked;
+	static sf::Sprite sprite;
+	
+	hns::Cursor()
+	{
+		texture.loadFromFile("Textures\\cursor.png");
+		textureClicked.loadFromFile("Textures\\cursorClicked.png");
+		sprite.setTexture(texture);
+		sprite.setScale(4.0f, 4.0f);
+	}
+
+	static void Draw(sf::RenderWindow& window);
+};

@@ -18,10 +18,16 @@
 #include "GameObject.h"
 #include "menu.h"
 #include "Interface.h"
+#include "InterfaceObjects.h"
 #include "Map.h"
 #include "Fight.h"
 
 Player mainPlayer;
+
+sf::Texture hns::Cursor::texture;
+sf::Texture hns::Cursor::textureClicked;
+sf::Sprite hns::Cursor::sprite;
+hns::Cursor cursor = hns::Cursor();
 
 int debugMode = 0;
 int mtnChance;

@@ -1,5 +1,5 @@
-#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
@@ -15,6 +15,7 @@
 #include "variables.h"
 #include "choice.h"
 #include "Interface.h"
+#include "InterfaceObjects.h"
 #include "equipment.h"
 #include "GameObject.h"
 
@@ -117,13 +118,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 
 			getDialogueAnswerTick(clickFlag, button, numberOfButtons, choice, choiceString, window, player, ui);
 
-			sf::Texture cursorT;
-			cursorT.loadFromFile("Textures\\cursor.png");
-			sf::Sprite cursorS;
-			cursorS.setTexture(cursorT);
-			cursorS.setPosition((sf::Vector2f)sf::Mouse::getPosition() - (sf::Vector2f)window.getPosition() - sf::Vector2f(0, 30));
-			cursorS.setScale(4.0f, 4.0f);
-			window.draw(cursorS);
+			hns::Cursor::Draw(window);
 
 			window.display();
 
