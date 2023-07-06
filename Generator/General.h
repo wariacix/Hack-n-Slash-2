@@ -20,5 +20,6 @@ namespace hns
 	class FightDialogue;
 	class Menu;
 	class TextObject;
+	class FightDiary;
 	static class Cursor;
 }

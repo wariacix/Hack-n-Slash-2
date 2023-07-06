@@ -136,7 +136,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui)
 {
 	drawView(window);
-	drawInterface(window, player, ui);
+	ui.Draw(window, player);
 
 	for (int i = 0; i < numberOfButtons; i++)
 	{
@@ -254,11 +254,6 @@ void hns::Dialogue::playViewSound()
 void hns::Dialogue::drawView(sf::RenderWindow& window)
 {
 	window.draw(viewSprite);
-}
-
-void hns::Dialogue::drawInterface(sf::RenderWindow& window, Player player, hns::Interface ui)
-{
-	ui.hns::Interface::Draw(window, player);
 }
 
 void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer)

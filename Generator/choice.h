@@ -36,7 +36,6 @@ public:
 
 	void drawView(sf::RenderWindow& window);
 
-	void drawInterface(sf::RenderWindow& window, Player player, hns::Interface ui);
 
 	static void textWriting(std::wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer);
 };

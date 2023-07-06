@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "choice.h"
 #include "Interface.h"
+#include "InterfaceObjects.h"
 
 class hns::Enemy
 {
@@ -36,5 +37,29 @@ class hns::FightDialogue : public hns::Dialogue
 {
 public:
 	FightDialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr, std::string fontName);
-	int getDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::Interface ui, std::wstring choiceString[6], bool playSound);
+	int getDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::FightDiary diary, hns::Interface ui, std::wstring choiceString[6], bool playSound);
+};
+
+class hns::FightDiary
+{
+	sf::Font font;
+	sf::Text textField[36];
+public:
+	FightDiary()
+	{
+		font.loadFromFile("dpcomic.ttf");
+		for (int i = 0; i < 36; i++)
+		{
+			textField[i].setFont(font);
+			textField[i].setFillColor(sf::Color::Yellow);
+			textField[i].setOutlineColor(sf::Color::Black);
+			textField[i].setOutlineThickness(2.0f);
+			textField[i].setString("");
+			textField[i].setCharacterSize(20.0f);
+			textField[i].setPosition(1175 + 10, 50 + (i * 25));
+		}
+	}
+
+	void Push(std::wstring string, sf::Color inColor = sf::Color::Yellow, sf::Color outColor = sf::Color::Black);
+	void Draw(sf::RenderWindow& window);
 };

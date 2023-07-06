@@ -4,6 +4,7 @@
 #include "Fight.h"
 #include "choice.h"
 #include "Player.h"
+#include "InterfaceObjects.h"
 
 class Player;
 class hns::Dialogue;
@@ -101,15 +102,19 @@ void hns::Fight::viewBackground(sf::RenderWindow &window)
 
 void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interface mainInterface, hns::Equipment &mainEquipment)
 {
-	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "interface", "dpcomic");
+	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "fightInterface", "dpcomic");
+	hns::FightDiary fightDiary = hns::FightDiary();
 	bool left = false;
 	while (left == false)
 	{
-		switch (fightDialogue.getDialogueAnswer(window, mainPlayer, enemy, mainInterface, new (std::wstring[]){ L"Attack",L"Equipment",L"Try to Break Free",L"",L"",L"" }, false))
+		switch (fightDialogue.getDialogueAnswer(window, mainPlayer, enemy, fightDiary, mainInterface, new (std::wstring[]){ L"Attack",L"Equipment",L"Try to Break Free",L"",L"",L"" }, false))
 		{
 		case 0:
 			mainPlayer.hp -= enemy.damage;
 			enemy.hp -= mainPlayer.dmg;
+			fightDiary.Push(L"You attacked enemy for " + std::to_wstring(mainPlayer.dmg) + L"dmg.");
+			fightDiary.Push(L"Enemy retaliated with " + std::to_wstring((int)enemy.damage) + L"dmg.");
+			
 			break;
 		case 1:
 			mainEquipment.viewEquipment(window, mainPlayer);
@@ -117,6 +122,7 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 		case 2:
 			if (rand() % 4 == 0) left = true;
 			else mainPlayer.hp -= enemy.damage;
+			fightDiary.Push(L"While escaping, enemy stopped you with " + std::to_wstring(enemy.damage) + L"dmg.");
 			break;
 		case 999:
 			break;
@@ -165,7 +171,7 @@ hns::FightDialogue::FightDialogue(std::string viewTextureName, std::string enter
 
 };
 
-int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::Interface ui, std::wstring choiceString[6], bool playSound)
+int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::FightDiary diary, hns::Interface ui, std::wstring choiceString[6], bool playSound)
 {
 	int numberOfButtons = 0;
 	for (int i = 0; i < 6; i++)
@@ -213,6 +219,10 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 
 		hns::Bar enemyBar = Bar(Player(), 400, 60, 61, 5, "enemyUIbot", "enemyUItop");
 		enemyBar.Draw(window, enemy.hp, enemy.maxhp);
+		
+		diary.Draw(window);
+
+		hns::Cursor::Draw(window);
 		window.display();
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) or clickFlag == true)
@@ -223,4 +233,27 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 	}
 	los = true;
 	return 999;
+}
+
+void hns::FightDiary::Push(std::wstring string, sf::Color inColor, sf::Color outColor)
+{
+	for (int i = 1; i < 36; i++)
+	{
+		textField[i - 1] = textField[i];
+
+		textField[i - 1].setPosition(1175 + 10, 50 + ((i - 1) * 25));
+	}
+
+	textField[35].setFillColor(inColor);
+	textField[35].setOutlineColor(outColor);
+	textField[35].setOutlineThickness(2.0f);
+	textField[35].setString(string);
+}
+
+void hns::FightDiary::Draw(sf::RenderWindow& window)
+{
+	for (int i = 0; i < 36; i++)
+	{
+		window.draw(textField[i]);
+	}
 }

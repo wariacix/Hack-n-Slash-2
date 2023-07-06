@@ -90,6 +90,7 @@ int main()
 	mainEquipment.addItem(103, 10);
 
 	hns::Interface mainUI(mainPlayer);
+	hns::Interface fightUI(mainPlayer,0,0,320,200,"fightInterface");
 	Map mainMap("default", 78, 70);
 
 	bool hasRolled = false;
@@ -137,7 +138,7 @@ int main()
 					hns::Enemy enemy;
 					enemy.loadEnemy("forest");
 					hns::Fight fight(enemy);
-					fight.start(window, mainPlayer, mainUI, mainEquipment);
+					fight.start(window, mainPlayer, fightUI, mainEquipment);
 				}
 				else hasRolled = true;
 			}
