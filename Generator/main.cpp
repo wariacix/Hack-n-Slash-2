@@ -22,13 +22,13 @@
 #include "Map.h"
 #include "Fight.h"
 
-Player mainPlayer;
-
 
 sf::Texture hns::Cursor::texture;
 sf::Texture hns::Cursor::textureClicked;
 sf::Sprite hns::Cursor::sprite;
+
 hns::Cursor cursor = hns::Cursor();
+Player mainPlayer;
 
 int debugMode = 0;
 int mtnChance;
