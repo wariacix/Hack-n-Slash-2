@@ -65,7 +65,8 @@ hns::Dialogue::Dialogue(std::string viewTextureName, std::string enterSoundName,
 		text.setOutlineColor(sf::Color{ 23,8,0,255 });
 		text.setOutlineThickness(2.f);
 
-		buffer.loadFromFile("Sounds\\" + enterSoundName + ".wav");
+		buffer = sf::SoundBuffer();
+		buffer.loadFromFile("Sounds/" + enterSoundName + ".wav");
 		enterSound.setBuffer(buffer);
 
 	};

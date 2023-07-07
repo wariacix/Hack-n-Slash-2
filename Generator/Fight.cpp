@@ -104,16 +104,21 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 {
 	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "fightInterface", "dpcomic");
 	hns::FightDiary fightDiary = hns::FightDiary();
+	mainPlayer.hp += mainPlayer.def;
 	bool left = false;
 	while (left == false)
 	{
+		int damageResult = enemy.damage + (rand() % 3);
+		int enemyDamageResult = mainPlayer.dmg + (rand() % 3);
 		switch (fightDialogue.getDialogueAnswer(window, mainPlayer, enemy, fightDiary, mainInterface, new (std::wstring[]){ L"Attack",L"Equipment",L"Try to Break Free",L"",L"",L"" }, false))
 		{
 		case 0:
-			mainPlayer.hp -= enemy.damage;
-			enemy.hp -= mainPlayer.dmg;
-			fightDiary.Push(L"You attacked enemy for " + std::to_wstring(mainPlayer.dmg) + L"dmg.");
-			fightDiary.Push(L"Enemy retaliated with " + std::to_wstring((int)enemy.damage) + L"dmg.");
+			damageResult = enemy.damage + (rand() % 3);
+			enemyDamageResult = mainPlayer.dmg + (rand() % 3);
+			mainPlayer.hp -= damageResult;
+			enemy.hp -= enemyDamageResult;
+			fightDiary.Push(L"You attacked enemy for " + std::to_wstring(enemyDamageResult) + L"dmg.", sf::Color(255,220,0,255));
+			fightDiary.Push(L"Enemy retaliated with " + std::to_wstring(damageResult) + L"dmg.", sf::Color(154, 137, 0, 255));
 			
 			break;
 		case 1:
@@ -241,7 +246,7 @@ void hns::FightDiary::Push(std::wstring string, sf::Color inColor, sf::Color out
 	{
 		textField[i - 1] = textField[i];
 
-		textField[i - 1].setPosition(1175 + 10, 50 + ((i - 1) * 25));
+		textField[i - 1].setPosition(1175 + 10, 49 + ((i - 1) * 25));
 	}
 
 	textField[35].setFillColor(inColor);

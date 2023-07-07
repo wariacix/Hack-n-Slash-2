@@ -55,8 +55,8 @@ public:
 			textField[i].setOutlineColor(sf::Color::Black);
 			textField[i].setOutlineThickness(2.0f);
 			textField[i].setString("");
-			textField[i].setCharacterSize(20.0f);
-			textField[i].setPosition(1175 + 10, 50 + (i * 25));
+			textField[i].setCharacterSize(18.0f);
+			textField[i].setPosition(1175 + 10, 49 + (i * 25));
 		}
 	}
 

@@ -485,7 +485,21 @@ void Map::BakeMap()
 				}
 				else if (biome[c][u] == 1)
 				{
-					sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 1, biome, "mountains.png");
+					bool warmFlag = false;
+					for (int x = -1; x < 2; x++)
+					{
+						for (int y = -1; y < 2; y++)
+						{
+							if (c + x < mapWidth && c + x >= 0 && u + y < mapHeight && u + y >= 0)
+							{
+								if (biome[c + x][u + y] == 0 || biome[c + x][u + y] == 4 || biome[c + x][u + y] == 2) warmFlag = true;
+							}
+						}
+					}
+
+					if (warmFlag == true) sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 1, biome, "mountains.png");
+					else sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 1, biome, "mountainsCold.png");
+					
 				}
 				else if (biome[c][u] == 2)
 				{
@@ -570,6 +584,22 @@ void Map::BakeTextures()
 	AssignNewTexture("mountains.png", sf::IntRect(208, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(224, 0, 16, 16));
 	AssignNewTexture("mountains.png", sf::IntRect(240, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(16, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(32, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(48, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(64, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(80, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(96, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(112, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(128, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(144, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(160, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(176, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(192, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(208, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(224, 0, 16, 16));
+	AssignNewTexture("mountainsCold.png", sf::IntRect(240, 0, 16, 16));
 	AssignNewTexture("desert.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("desert.png", sf::IntRect(16, 0, 16, 16));
 	AssignNewTexture("desert.png", sf::IntRect(32, 0, 16, 16));

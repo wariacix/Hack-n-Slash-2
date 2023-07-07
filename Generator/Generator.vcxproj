@@ -138,7 +138,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\waria\Desktop\SFML-2.5.1\lib;C:\Users\waria\source\repos\Hack-n-Slash-2\Generator\lib;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window-s.lib;sfml-system-s.lib;winmm.lib;gdi32.lib;opengl32.lib;freetype.lib;sfml-audio-s.lib;sfml-graphics-s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libz.a;libzstd.a;libssl.a;libssh2.a;libngtcp2_crypto_openssl.a;libngtcp2.a;libnghttp2.a;libnghttp3.a;libgsasl.a;libcurl.dll.a;libcrypto.a;libcurl.a;libbrotlidec.a;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;winmm.lib;opengl32.lib;freetype.lib;sfml-graphics-s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libbrotlicommon.a;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>16000000</StackReserveSize>
       <StackCommitSize>8000</StackCommitSize>
     </Link>

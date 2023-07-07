@@ -24,6 +24,7 @@
 
 Player mainPlayer;
 
+
 sf::Texture hns::Cursor::texture;
 sf::Texture hns::Cursor::textureClicked;
 sf::Sprite hns::Cursor::sprite;
@@ -133,10 +134,24 @@ int main()
 
 			if (hasRolled == false)
 			{
-				if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 && rand() % 10 == 0)
+				if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 && rand() % 12 == 0)
 				{
 					hns::Enemy enemy;
 					enemy.loadEnemy("forest");
+					hns::Fight fight(enemy);
+					fight.start(window, mainPlayer, fightUI, mainEquipment);
+				}
+				else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 6 && rand() % 12 == 0)
+				{
+					hns::Enemy enemy;
+					enemy.loadEnemy("forestCold");
+					hns::Fight fight(enemy);
+					fight.start(window, mainPlayer, fightUI, mainEquipment);
+				}
+				else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 1 && rand() % 15 == 0)
+				{
+					hns::Enemy enemy;
+					enemy.loadEnemy("mountains");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
 				}
@@ -170,6 +185,7 @@ int main()
 		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 		mainEquipment.addItem(7000, 1);
 		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.addItem(0, 2);
 		mainEquipment.addItem(100, mainPlayer.gold);
 		mainEquipment.addItem(101, 20);
 		mainEquipment.addItem(102, 20);
