@@ -50,6 +50,9 @@ public:
 	
 	hns::Cursor()
 	{
+		texture = sf::Texture();
+		textureClicked = sf::Texture();
+		sprite = sf::Sprite();
 		texture.loadFromFile("Textures\\cursor.png");
 		textureClicked.loadFromFile("Textures\\cursorClicked.png");
 		sprite.setTexture(texture);
