@@ -21,5 +21,8 @@ namespace hns
 	class Menu;
 	class TextObject;
 	class FightDiary;
+	class City;
+	class Player;
+	class Map;
 	static class Cursor;
 }

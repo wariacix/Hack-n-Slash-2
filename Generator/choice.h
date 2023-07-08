@@ -10,7 +10,7 @@
 #include "Interface.h"
 
 void drawInterface(sf::RenderWindow& window);
-void CityEnter(sf::RenderWindow& window, Map& mainMap, Player& mainPlayer, hns::Equipment &mainEquipment, hns::Interface& mainInterface);
+void CityEnter(sf::RenderWindow& window, hns::Map& mainMap, hns::Player& mainPlayer, hns::Equipment &mainEquipment, hns::Interface& mainInterface);
 class hns::Dialogue
 {
 protected:
@@ -22,7 +22,7 @@ protected:
 	sf::Text text;
 	bool hasSoundBeenPlayed;
 
-	void getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, std::wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui);
+	void getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, std::wstring choiceString[6], sf::RenderWindow& window, hns::Player player, hns::Interface ui);
 public:
 	Dialogue();
 
@@ -30,12 +30,12 @@ public:
 
 	Dialogue(const hns::Dialogue& copiedDialogue);
 
-	virtual int getDialogueAnswer(sf::RenderWindow& window, Player player, hns::Interface ui, std::wstring choiceString[6], bool playSound = false);
+	virtual int getDialogueAnswer(sf::RenderWindow& window, hns::Player player, hns::Interface ui, std::wstring choiceString[6], bool playSound = false);
 
 	void playViewSound();
 
 	void drawView(sf::RenderWindow& window);
 
 
-	static void textWriting(std::wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer);
+	static void textWriting(std::wstring input, sf::Text textEnt, sf::RenderWindow& window, hns::Map mainMap, hns::Player mainPlayer);
 };

@@ -7,9 +7,9 @@
 #include "General.h"
 
 class hns::Equipment;
-class Map;
+class hns::Map;
 
-class Player
+class hns::Player
 {
 public:
 	int x;
@@ -21,11 +21,12 @@ public:
 	float mp;
 	int maxmp;
 	int maxhp;
-	int dodgeChance;
 	int def;
 	int dmg;
 	int str;
 	int in;
+	int agi;
+	int crit;
 	int lvl;
 	int reqexp;
 	double xp;
@@ -43,11 +44,12 @@ public:
 		mp = 8;
 		maxmp = 20;
 		maxhp = 100;
-		dodgeChance = 5;
 		def = 8;
 		dmg = 11;
 		str = 10;
 		in = 10;
+		agi = 1;
+		crit = 3;
 		lvl = 1;
 		reqexp = 500;
 		xp = 0;
@@ -60,4 +62,4 @@ public:
 private:
 	void CheckForKeyActivity(sf::RenderWindow& window);
 };
-extern Player mainPlayer;
+extern hns::Player mainPlayer;

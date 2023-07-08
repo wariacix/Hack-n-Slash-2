@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void Player::CheckForKeyActivity(sf::RenderWindow& window)
+void hns::Player::CheckForKeyActivity(sf::RenderWindow& window)
 {
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == true && window.hasFocus()) hasBeenPressed[0] = false;
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == true && window.hasFocus()) hasBeenPressed[1] = false;
@@ -24,7 +24,7 @@ void Player::CheckForKeyActivity(sf::RenderWindow& window)
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == true && window.hasFocus()) hasBeenPressed[3] = false;
 }
 
-void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
+void hns::Player::movePlayer(hns::Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
 {
 		CheckForKeyActivity(window);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == false && window.hasFocus())
@@ -86,7 +86,7 @@ void Player::movePlayer(Map &map1, sf::RenderWindow &window, hns::Equipment &eq,
 			}
 		}
 }
-void Player::Regenerate()
+void hns::Player::Regenerate()
 {
 	if (hp < maxhp) hp = hp + hpRegen; else hp = maxhp;
 	if (mp < maxmp) mp = mp + mpRegen; else mp = maxmp;

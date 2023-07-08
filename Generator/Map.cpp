@@ -17,7 +17,7 @@
 #include "Map.h"
 
 using namespace std;
-std::wstring Map::GenCityName() //to be changed, I will expand the city name generation system and will convert it to reading from file instead of names existing in code.
+std::wstring hns::Map::GenCityName() //to be changed, I will expand the city name generation system and will convert it to reading from file instead of names existing in code.
 		{
 			wstring part1, part2, all;
 			int random;
@@ -55,7 +55,7 @@ std::wstring Map::GenCityName() //to be changed, I will expand the city name gen
 			return all;
 		}
 
-void Map::SetBaseValues()
+void hns::Map::SetBaseValues()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
@@ -84,7 +84,7 @@ void Map::SetBaseValues()
 			hero[mapWidth/2][mapHeight/2] = 1;
 		};
 
-void Map::EnlargeMountains()
+void hns::Map::EnlargeMountains()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
@@ -96,7 +96,7 @@ void Map::EnlargeMountains()
 			}
 		};
 
-void Map::CreateDeserts()
+void hns::Map::CreateDeserts()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
@@ -108,7 +108,7 @@ void Map::CreateDeserts()
 			}
 		};
 
-void Map::CreateArctic()
+void hns::Map::CreateArctic()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
@@ -117,7 +117,7 @@ void Map::CreateArctic()
 			}
 		};
 
-void Map::CreateBaseBiomes()
+void hns::Map::CreateBaseBiomes()
 		{
 			srand(time(NULL));
 			SetBaseValues();
@@ -126,7 +126,7 @@ void Map::CreateBaseBiomes()
 			CreateDeserts();
 		};
 
-void Map::CreateCities()
+void hns::Map::CreateCities()
 		{
 			int x1, y1;
 			for (int x = 6; x < mapWidth - 5; x++)
@@ -189,7 +189,7 @@ void Map::CreateCities()
 			}
 		};
 
-void Map::CreateForests()
+void hns::Map::CreateForests()
 		{
 			int x1, y1;
 			for (int x = 0; x < mapWidth; x++)
@@ -274,7 +274,7 @@ void Map::CreateForests()
 			}
 		}
 
-void Map::CreateForestCities()
+void hns::Map::CreateForestCities()
 		{
 			int x1, y1;
 			for (int x = 6; x < mapWidth - 5; x++)
@@ -304,7 +304,7 @@ void Map::CreateForestCities()
 			}
 		};
 
-void Map::FurtherCityGen()
+void hns::Map::FurtherCityGen()
 		{
 			int cityCount = 0;
 			for (int x = 0; x < mapWidth; x++)
@@ -340,7 +340,7 @@ void Map::FurtherCityGen()
 			}
 		}
 
-int Map::CheckForCityCount()
+int hns::Map::CheckForCityCount()
 		{
 			int human = 0, orc = 0, elve = 0;
 			for (int x = 0; x < mapWidth; x++)
@@ -360,7 +360,7 @@ int Map::CheckForCityCount()
 			else return 1;
 		}
 
-void Map::GenerateMap()
+void hns::Map::GenerateMap()
 		{
 			int mapCount = 0;
 			srand(time(NULL));
@@ -381,7 +381,7 @@ void Map::GenerateMap()
 			wcout << L"Map chosen.   Maps generated total: " << mapCount << endl;
 		}
 
-void Map::ClearFog(Player &player1)
+void hns::Map::ClearFog(Player &player1)
 {
 	int x1, y1;
 	for (x1 = 0; x1 < 7; x1++)
@@ -406,11 +406,11 @@ void Map::ClearFog(Player &player1)
 	}
 }
 
-int Map::getMapHeight()
+int hns::Map::getMapHeight()
 {
 	return mapHeight;
 }
-int Map::getMapWidth()
+int hns::Map::getMapWidth()
 {
 	return mapWidth;
 }
@@ -420,7 +420,7 @@ float Lerp(float a, float b, float t)
 	return a + t * (b - a);
 }
 
-void Map::DrawTile(sf::RenderWindow &window, int sprIndex, int x, int y, int playerX, int playerY, int textureRes)
+void hns::Map::DrawTile(sf::RenderWindow &window, int sprIndex, int x, int y, int playerX, int playerY, int textureRes)
 {
 	mapTextures[sprIndex].mainSprite.setScale(textureRes / 16, textureRes / 16);
 	mapTextures[sprIndex].mainSprite.setPosition((x - playerX + 11) * textureRes, ((y - playerY + 7) * textureRes) + 2);
@@ -429,7 +429,7 @@ void Map::DrawTile(sf::RenderWindow &window, int sprIndex, int x, int y, int pla
 	wcout << L"Działa!";
 }
 
-void Map::AssignNewTexture(std::string name, sf::IntRect intRect)
+void hns::Map::AssignNewTexture(std::string name, sf::IntRect intRect)
 {
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -443,7 +443,7 @@ void Map::AssignNewTexture(std::string name, sf::IntRect intRect)
 	mapTextures[mapTextures.size()-1] = std::move(returnTexture);
 }
 
-sf::Texture Map::LookForTexture(std::string name)
+sf::Texture hns::Map::LookForTexture(std::string name)
 {
 	for (int i = 0; i < mapTextures.size(); i++)
 	{
@@ -451,7 +451,7 @@ sf::Texture Map::LookForTexture(std::string name)
 	}
 }
 
-sf::Sprite Map::LookForSprite(std::string name)
+sf::Sprite hns::Map::LookForSprite(std::string name)
 {
 	for (int i = 0; i < mapTextures.size(); i++)
 	{
@@ -459,7 +459,7 @@ sf::Sprite Map::LookForSprite(std::string name)
 	}
 }
 
-int Map::LookForIndex(std::string name)
+int hns::Map::LookForIndex(std::string name)
 {
 	for (int i = 0; i < mapTextures.size(); i++)
 	{
@@ -467,7 +467,7 @@ int Map::LookForIndex(std::string name)
 	}
 }
 
-void Map::BakeMap()
+void hns::Map::BakeMap()
 {
 	for (int u = 0; u < mapHeight; u++)
 	{
@@ -539,7 +539,7 @@ void Map::BakeMap()
 	}
 }
 
-void Map::BakeTextures()
+void hns::Map::BakeTextures()
 {
 	AssignNewTexture("grass.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("grassCold.png", sf::IntRect(0, 0, 16, 16));
@@ -618,7 +618,7 @@ void Map::BakeTextures()
 	AssignNewTexture("desert.png", sf::IntRect(240, 0, 16, 16));
 }
 
-void Map::Initialize()
+void hns::Map::Initialize()
 {
 	GenerateMap();
 	BakeTextures();
@@ -627,7 +627,7 @@ void Map::Initialize()
 	wcout << L"Baked the map." << std::endl;
 }
 
-int Map::ChooseConnectedSpriteIndex(int c, int u, int value, std::vector<std::vector<int>> valueType, std::string fileName)
+int hns::Map::ChooseConnectedSpriteIndex(int c, int u, int value, std::vector<std::vector<int>> valueType, std::string fileName)
 {
 	int i;
 	for (i = 0; i < mapTextures.size(); i++)
@@ -653,7 +653,7 @@ int Map::ChooseConnectedSpriteIndex(int c, int u, int value, std::vector<std::ve
 	else return i;
 }
 
-void Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
+void hns::Map::ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock)
 {
 	for (int u = player.y - 6; u < player.y + 7; u++)
 	{

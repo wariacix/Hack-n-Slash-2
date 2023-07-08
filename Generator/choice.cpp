@@ -84,7 +84,7 @@ hns::Dialogue::Dialogue(const hns::Dialogue& copiedDialogue)
 		enterSound = copiedDialogue.enterSound;
 	};
 
-int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hns::Interface ui, wstring choiceString[6], bool playSound)
+int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, hns::Player player, hns::Interface ui, wstring choiceString[6], bool playSound)
 	{
 		int numberOfButtons = 0;
 		for (int i = 0; i < 6; i++)
@@ -133,7 +133,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, hn
 		return 999;
 	}
 
-void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, wstring choiceString[6], sf::RenderWindow& window, Player player, hns::Interface ui)
+void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, wstring choiceString[6], sf::RenderWindow& window, hns::Player player, hns::Interface ui)
 {
 	drawView(window);
 	ui.Draw(window, player);
@@ -256,7 +256,7 @@ void hns::Dialogue::drawView(sf::RenderWindow& window)
 	window.draw(viewSprite);
 }
 
-void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, Map mainMap, Player mainPlayer)
+void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindow& window, hns::Map mainMap, hns::Player mainPlayer)
 	{
 		sf::Clock clock;
 
@@ -294,7 +294,7 @@ void hns::Dialogue::textWriting(wstring input, sf::Text textEnt, sf::RenderWindo
 		delete text;
 	}
 
-void CityEnter(sf::RenderWindow& window, Map &mainMap, Player &mainPlayer, hns::Equipment &mainEquipment, hns::Interface &mainInterface)
+void CityEnter(sf::RenderWindow& window, Map &mainMap, hns::Player &mainPlayer, hns::Equipment &mainEquipment, hns::Interface &mainInterface)
 {
 	hns::Dialogue cityDialogue;
 	if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 0 || mainMap.biome[mainPlayer.x][mainPlayer.y] == 5) cityDialogue.Dialogue::Dialogue("humanCityView", "city_human", "interface", "dpcomic");

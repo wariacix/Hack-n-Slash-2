@@ -4,7 +4,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 
-class Player;
+class hns::Player;
 
 class ExtendedTexture
 {
@@ -24,7 +24,7 @@ public:
 	}
 };
 
-class Map
+class hns::Map
 {
 private:
 	int mapWidth;

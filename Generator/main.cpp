@@ -17,18 +17,17 @@
 #include "Player.h"
 #include "GameObject.h"
 #include "menu.h"
-#include "Interface.h"
 #include "InterfaceObjects.h"
+#include "Interface.h"
 #include "Map.h"
 #include "Fight.h"
-
 
 sf::Texture hns::Cursor::texture;
 sf::Texture hns::Cursor::textureClicked;
 sf::Sprite hns::Cursor::sprite;
 
 hns::Cursor cursor = hns::Cursor();
-Player mainPlayer;
+hns::Player mainPlayer;
 
 int debugMode = 0;
 int mtnChance;
@@ -73,16 +72,16 @@ int main()
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
 	mainEquipment.addItem(3000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(4000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(5000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(6000, 1);
-	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(7000, 1);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 	mainEquipment.addItem(100, mainPlayer.gold);
 	mainEquipment.addItem(0, 2);
@@ -92,7 +91,7 @@ int main()
 
 	hns::Interface mainUI(mainPlayer);
 	hns::Interface fightUI(mainPlayer,0,0,320,200,"fightInterface");
-	Map mainMap("default", 78, 70);
+	hns::Map mainMap("default", 78, 70);
 
 	bool hasRolled = false;
 	int rollX = -1, rollY = -1;
@@ -169,24 +168,24 @@ int main()
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}
-		mainPlayer = Player();
+		mainPlayer = hns::Player();
 		mainEquipment = Equipment();
 		mainEquipment.addItem(1000, 1);
 		mainEquipment.addItem(2000, 1);
 		mainEquipment.addItem(3000, 1);
-		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 		mainEquipment.addItem(4000, 1);
-		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 		mainEquipment.addItem(5000, 1);
-		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 		mainEquipment.addItem(6000, 1);
-		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 		mainEquipment.addItem(7000, 1);
 		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
-		mainEquipment.addItem(0, 2);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
+		mainEquipment.equipItem(mainEquipment.eqItem[1], mainPlayer);
 		mainEquipment.addItem(100, mainPlayer.gold);
+		mainEquipment.addItem(0, 2);
 		mainEquipment.addItem(101, 20);
 		mainEquipment.addItem(102, 20);
 		mainEquipment.addItem(103, 10);

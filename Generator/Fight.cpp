@@ -126,6 +126,13 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 			}
 			else
 			{
+				if (mainPlayer.crit >= rand() % 100)
+				{
+					mainPlayer.hp -= damageResult;
+					enemy.hp -= enemyDamageResult * 3;
+					fightDiary.Push(L"You attacked enemy critically for " + std::to_wstring(enemyDamageResult * 3) + L"dmg.", sf::Color(255, 55, 29, 255));
+					fightDiary.Push(L"Enemy retaliated with " + std::to_wstring(damageResult) + L"dmg.", sf::Color(154, 137, 0, 255));
+				}
 				mainPlayer.hp -= damageResult;
 				enemy.hp -= enemyDamageResult;
 				fightDiary.Push(L"You attacked enemy for " + std::to_wstring(enemyDamageResult) + L"dmg.", sf::Color(255, 220, 0, 255));
