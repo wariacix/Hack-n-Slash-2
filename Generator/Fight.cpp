@@ -104,6 +104,9 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 {
 	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "fightInterface", "dpcomic");
 	hns::FightDiary fightDiary = hns::FightDiary();
+
+	float missChance = 90;
+
 	mainPlayer.hp += mainPlayer.def;
 	bool left = false;
 	while (left == false)
@@ -115,10 +118,19 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 		case 0:
 			damageResult = enemy.damage + (rand() % 3);
 			enemyDamageResult = mainPlayer.dmg + (rand() % 3);
-			mainPlayer.hp -= damageResult;
-			enemy.hp -= enemyDamageResult;
-			fightDiary.Push(L"You attacked enemy for " + std::to_wstring(enemyDamageResult) + L"dmg.", sf::Color(255,220,0,255));
-			fightDiary.Push(L"Enemy retaliated with " + std::to_wstring(damageResult) + L"dmg.", sf::Color(154, 137, 0, 255));
+			if (missChance >= rand() % 1000)
+			{
+				mainPlayer.hp -= damageResult;
+				fightDiary.Push(L"You missed!", sf::Color(255, 220, 0, 255));
+				fightDiary.Push(L"Enemy retaliated with " + std::to_wstring(damageResult) + L"dmg.", sf::Color(154, 137, 0, 255));
+			}
+			else
+			{
+				mainPlayer.hp -= damageResult;
+				enemy.hp -= enemyDamageResult;
+				fightDiary.Push(L"You attacked enemy for " + std::to_wstring(enemyDamageResult) + L"dmg.", sf::Color(255, 220, 0, 255));
+				fightDiary.Push(L"Enemy retaliated with " + std::to_wstring(damageResult) + L"dmg.", sf::Color(154, 137, 0, 255));
+			}
 			
 			break;
 		case 1:
@@ -127,7 +139,7 @@ void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 		case 2:
 			if (rand() % 4 == 0) left = true;
 			else mainPlayer.hp -= enemy.damage;
-			fightDiary.Push(L"While escaping, enemy stopped you with " + std::to_wstring(enemy.damage) + L"dmg.");
+			fightDiary.Push(L"While escaping, enemy stopped you with " + std::to_wstring((int)enemy.damage) + L"dmg.");
 			break;
 		case 999:
 			break;
