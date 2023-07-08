@@ -31,14 +31,31 @@ hns::Bar::Bar(Player player, int x, int y, int sizeX, int sizeY, std::string top
 	setSize(player.hp, player.maxhp);
 }
 
-void hns::Bar::setSize(float stat1, float stat2)
+void hns::Bar::setSize(float stat1, float stat2, bool vertical, bool inverted)
 {
-	frontSpr.setTextureRect(sf::IntRect(0, 0, (stat1 / stat2 * sizeX), sizeY));
+	if (vertical == true && inverted == true)
+	{
+		frontSpr.setTextureRect(sf::IntRect(0, sizeY - (stat1 / stat2 * sizeY), sizeX, (stat1 / stat2 * sizeY)));
+		frontSpr.setPosition(x, sizeY*5 - ((stat1 / stat2) * sizeY*5));
+	}
+	else if (vertical == false && inverted == true)
+	{
+		frontSpr.setTextureRect(sf::IntRect(sizeX - (stat1 / stat2 * sizeX), 0, (stat1 / stat2 * sizeX), sizeY));
+		frontSpr.setPosition(sizeX*5 - ((stat1 / stat2) * sizeX*5), y);
+	}
+	else if (vertical == true && inverted == false)
+	{
+		frontSpr.setTextureRect(sf::IntRect(0, 0, sizeX, (stat1 / stat2 * sizeY)));
+	}
+	else if (vertical == false && inverted == false)
+	{
+		frontSpr.setTextureRect(sf::IntRect(0, 0, (stat1 / stat2 * sizeX), sizeY));
+	}
 }
 
-void hns::Bar::Draw(sf::RenderWindow& window, float stat1, float stat2)
+void hns::Bar::Draw(sf::RenderWindow& window, float stat1, float stat2, bool vertical, bool inverted)
 {
-	setSize(stat1, stat2);
+	setSize(stat1, stat2, vertical, inverted);
 	window.draw(sprite);
 	window.draw(frontSpr);
 }
@@ -56,6 +73,7 @@ void hns::Interface::Draw(sf::RenderWindow& window, Player player)
 	GameObject::Draw(window);
 	hpBar.Draw(window, player.hp, player.maxhp);
 	mpBar.Draw(window, player.mp, player.maxmp);
+	xpBar.Draw(window, player.xp, player.reqexp, true, true);
 	goldIndicator.SetTitle(std::to_wstring(player.gold));
 	levelIndicator.SetTitle(L"Level: " + std::to_wstring(player.lvl));
 	goldIndicator.Draw(window);
