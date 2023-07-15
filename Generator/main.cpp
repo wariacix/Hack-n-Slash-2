@@ -68,6 +68,8 @@ int main()
 	mtnChance = 14;
 	los = false;
 
+	hns::Scroll scroll = hns::Scroll(375, 290, 96, 64);
+
 	hns::Equipment mainEquipment;
 	mainEquipment.addItem(1000, 1);
 	mainEquipment.addItem(2000, 1);
@@ -165,6 +167,7 @@ int main()
 			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
 
 			mainUI.Draw(window, mainPlayer);
+			//scroll.Draw(window);
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			window.display();
 		}

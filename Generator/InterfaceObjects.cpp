@@ -26,3 +26,14 @@ void hns::Cursor::Draw(sf::RenderWindow& window)
 	else sprite.setTexture(texture);
 	window.draw(sprite);
 }
+
+void hns::Scroll::Draw(sf::RenderWindow& window)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		window.draw(cornerSprites[i]);
+	}
+	window.draw(topSprite);
+	window.draw(bottomSprite);
+	window.draw(scrollRect);
+}

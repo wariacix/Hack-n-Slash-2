@@ -24,5 +24,6 @@ namespace hns
 	class City;
 	class Player;
 	class Map;
+	class Scroll;
 	static class Cursor;
 }
