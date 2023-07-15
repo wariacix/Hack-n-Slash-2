@@ -116,7 +116,6 @@ int main()
 			mainMap.ClearFog(mainPlayer);
 			mainMap.ViewMap(window, mainPlayer, clock);
 
-
 			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
 			{
 				CityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
@@ -146,8 +145,17 @@ int main()
 					int howMany = rand() % 2;
 					if (true == true)
 					{
+						int searchedId;
+						for (int i = 1; i < mainEquipment.eqItem.size(); i++)
+						{
+							if (mainEquipment.eqItem[i].getItemId() == -1)
+							{
+								searchedId = mainEquipment.eqItem[i - 1].getItemId();
+								break;
+							}
+						}
 						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
-						scrollList.AddTextObject("UI\\Scrolls\\button", mainEquipment.eqItem[mainEquipment.eqItem.size() - 1].getItemName());
+						scrollList.AddTextObject("UI\\Scrolls\\scrollButton", mainEquipment.eqItem[searchedId].getItemName());
 						scrollList.Draw(window);
 						hasClickedConfirmation = false;
 					}
@@ -164,8 +172,17 @@ int main()
 					int howMany = rand() % 2;
 					if (rand() % 2 == 0)
 					{
+						int searchedId;
+						for (int i = 1; i < mainEquipment.eqItem.size(); i++)
+						{
+							if (mainEquipment.eqItem[i].getItemId() == -1)
+							{
+								searchedId = mainEquipment.eqItem[i - 1].getItemId();
+								break;
+							}
+						}
 						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
-						scrollList.AddTextObject("UI\\Scrolls\\button", mainEquipment.eqItem[mainEquipment.eqItem.size() - 1].getItemName());
+						scrollList.AddTextObject("UI\\Scrolls\\scrollButton", mainEquipment.eqItem[searchedId].getItemName());
 						scrollList.Draw(window);
 						hasClickedConfirmation = false;
 					}
@@ -182,8 +199,17 @@ int main()
 					int howMany = rand() % 2;
 					if (rand() % 2 == 0)
 					{
+						int searchedId;
+						for (int i = 1; i < mainEquipment.eqItem.size(); i++)
+						{
+							if (mainEquipment.eqItem[i].getItemId() == -1)
+							{
+								searchedId = mainEquipment.eqItem[i - 1].getItemId();
+								break;
+							}
+						}
 						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
-						scrollList.AddTextObject("UI\\Scrolls\\button", mainEquipment.eqItem[mainEquipment.eqItem.size() - 1].getItemName());
+						scrollList.AddTextObject("UI\\Scrolls\\scrollButton", mainEquipment.eqItem[searchedId].getItemName());
 						scrollList.Draw(window);
 						hasClickedConfirmation = false;
 					}
@@ -192,7 +218,7 @@ int main()
 			}
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
 			if (hasClickedConfirmation == false) scrollList.Draw(window);
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true) hasClickedConfirmation = true;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::W) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::S) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::E) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::A) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::D) == true) hasClickedConfirmation = true;
 			window.display();
 		}
 		mainPlayer = hns::Player();

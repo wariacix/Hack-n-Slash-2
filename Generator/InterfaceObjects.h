@@ -13,8 +13,9 @@ protected:
 	sf::Text title;
 	int textSize;
 public:
-	TextObject(int x, int y, int sizeX, int sizeY, std::string texName, int textSize, sf::Color color, std::wstring titleName, int xOffset = 84, int yOffset = 13, sf::Color outlineColor = sf::Color::Black, float outlineSize = 0.0f)
+	TextObject(int x, int y, int sizeX, int sizeY, std::string texName, int textSize, sf::Color color, std::wstring titleName, int xOffset = 84, int yOffset = 13, sf::Color outlineColor = sf::Color::Black, float outlineSize = 0.0f) : hns::GameObject(x, y, sizeX, sizeY, texName)
 	{
+		hns::GameObject::GameObject(x, y, sizeX, sizeY, texName);
 		this->x = x;
 		this->y = y;
 		this->sizeX = sizeX;
@@ -118,7 +119,8 @@ public:
 	int distance = 10; // in pixels
 	ScrollList(int x, int y, int sizeX, int sizeY, int titleSizeX, std::wstring titleString) : hns::Scroll(x, y, sizeX, sizeY)
 	{
-		titleObject = hns::TextObject(x + 55 + sizeX * 1 / 3, y + 10, titleSizeX, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, titleString, 15, 10, sf::Color::Black, 2.0f);
+		Scroll::Scroll(x, y, sizeX, sizeY);
+		titleObject = hns::TextObject(x + 55 + sizeX * 1 / 3, y + 10, titleSizeX, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, titleString, 15, 5, sf::Color::Black, 2.0f);
 		titleObject.SetTitle(titleString);
 		leftTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 - 75, y + 10, 16, 12, "UI\\Scrolls\\titleLeft");
 		rightTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 + titleSizeX * 5, y + 5, 16, 12, "UI\\Scrolls\\titleRight");
