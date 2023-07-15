@@ -13,7 +13,7 @@ protected:
 	sf::Text title;
 	int textSize;
 public:
-	TextObject(int x, int y, int sizeX, int sizeY, std::string texName, int textSize, sf::Color color, std::string titleName, int xOffset = 84, int yOffset = 13, sf::Color outlineColor = sf::Color::Black, float outlineSize = 0.0f)
+	TextObject(int x, int y, int sizeX, int sizeY, std::string texName, int textSize, sf::Color color, std::wstring titleName, int xOffset = 84, int yOffset = 13, sf::Color outlineColor = sf::Color::Black, float outlineSize = 0.0f)
 	{
 		this->x = x;
 		this->y = y;
@@ -27,7 +27,10 @@ public:
 		sprite.setPosition(x, y);
 		sprite.setTexture(texture);
 
+		font = sf::Font();
 		font.loadFromFile("dpcomic.ttf");
+
+		title = sf::Text();
 
 		title.setFont(font);
 		title.setString(titleName);
@@ -44,7 +47,7 @@ public:
 
 class hns::Scroll
 {
-private:
+protected:
 	int x, y, sizeX, sizeY;
 
 	sf::Texture cornerTextures[4];
@@ -100,6 +103,30 @@ public:
 		scrollRect.setFillColor(sf::Color(198, 165, 109, 255));
 	}
 
+	void Draw(sf::RenderWindow& window);
+};
+
+class hns::ScrollList : hns::Scroll
+{
+public:
+	hns::GameObject leftTitlePart;
+	hns::GameObject rightTitlePart;
+	hns::TextObject titleObject = TextObject(x + sizeX * 2 / 3, y + 10, 50, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, L"testTitle");
+
+	std::vector<hns::TextObject> textObject;
+	std::vector<bool> hasSprite;
+	int distance = 10; // in pixels
+	ScrollList(int x, int y, int sizeX, int sizeY, int titleSizeX, std::wstring titleString) : hns::Scroll(x, y, sizeX, sizeY)
+	{
+		titleObject = hns::TextObject(x + 55 + sizeX * 1 / 3, y + 10, titleSizeX, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, titleString, 15, 10, sf::Color::Black, 2.0f);
+		titleObject.SetTitle(titleString);
+		leftTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 - 75, y + 10, 16, 12, "UI\\Scrolls\\titleLeft");
+		rightTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 + titleSizeX * 5, y + 5, 16, 12, "UI\\Scrolls\\titleRight");
+
+		textObject = std::vector<hns::TextObject>();
+	}
+
+	void AddTextObject(std::string objectString, std::wstring textString);
 	void Draw(sf::RenderWindow& window);
 };
 

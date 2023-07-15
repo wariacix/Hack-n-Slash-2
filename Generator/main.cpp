@@ -48,17 +48,6 @@ void xpCount()
 	}
 }
 
-void drawInterface(sf::RenderWindow& window)
-{
-	sf::Texture tInterface;
-	sf::Sprite sInterface;
-	tInterface.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 320, 200));
-	sInterface.setScale(5.f,5.f);
-	sInterface.setTexture(tInterface);
-	sInterface.setPosition(0.f, 0.f);
-	window.draw(sInterface);
-}
-
 int main()
 {
 	wcout << L"Started the game." << std::endl;
@@ -68,7 +57,6 @@ int main()
 	mtnChance = 14;
 	los = false;
 
-	hns::Scroll scroll = hns::Scroll(375, 290, 96, 64);
 
 	hns::Equipment mainEquipment;
 	mainEquipment.addItem(1000, 1);
@@ -110,6 +98,8 @@ int main()
 		window.setVerticalSyncEnabled(false);
 		window.setMouseCursorVisible(false);
 		menu.Start(window);
+		bool hasClickedConfirmation = true;
+		hns::ScrollList scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
 		while (window.isOpen() and mainPlayer.alive == true)
 		{
 			sf::Event event;
@@ -126,6 +116,15 @@ int main()
 			mainMap.ClearFog(mainPlayer);
 			mainMap.ViewMap(window, mainPlayer, clock);
 
+
+			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
+			{
+				CityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
+				recentlyLeft = 1;
+			}
+			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
+
+			mainUI.Draw(window, mainPlayer);
 			if (rollX != mainPlayer.x or rollY != mainPlayer.y)
 			{
 				rollX = mainPlayer.x;
@@ -141,6 +140,17 @@ int main()
 					enemy.loadEnemy("forest");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
+					int itemRewardArray[4] = { 0,1,4,101 };
+					scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
+					int chosenItemId = rand() % 4;
+					int howMany = rand() % 2;
+					if (true == true)
+					{
+						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
+						scrollList.AddTextObject("UI\\Scrolls\\button", mainEquipment.eqItem[mainEquipment.eqItem.size() - 1].getItemName());
+						scrollList.Draw(window);
+						hasClickedConfirmation = false;
+					}
 				}
 				else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 6 && rand() % 12 == 0)
 				{
@@ -148,6 +158,17 @@ int main()
 					enemy.loadEnemy("forestCold");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
+					int itemRewardArray[4] = { 0,1,4,102 };
+					scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
+					int chosenItemId = rand() % 4;
+					int howMany = rand() % 2;
+					if (rand() % 2 == 0)
+					{
+						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
+						scrollList.AddTextObject("UI\\Scrolls\\button", mainEquipment.eqItem[mainEquipment.eqItem.size() - 1].getItemName());
+						scrollList.Draw(window);
+						hasClickedConfirmation = false;
+					}
 				}
 				else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 1 && rand() % 15 == 0)
 				{
@@ -155,20 +176,23 @@ int main()
 					enemy.loadEnemy("mountains");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
+					int itemRewardArray[3] = { 0,1,103 };
+					scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
+					int chosenItemId = rand() % 3;
+					int howMany = rand() % 2;
+					if (rand() % 2 == 0)
+					{
+						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
+						scrollList.AddTextObject("UI\\Scrolls\\button", mainEquipment.eqItem[mainEquipment.eqItem.size() - 1].getItemName());
+						scrollList.Draw(window);
+						hasClickedConfirmation = false;
+					}
 				}
 				else hasRolled = true;
 			}
-
-			if (mainMap.city[mainPlayer.x][mainPlayer.y] == 1 && recentlyLeft == 0)
-			{
-				CityEnter(window, mainMap, mainPlayer, mainEquipment, mainUI);
-				recentlyLeft = 1;
-			}
-			else if (mainMap.city[mainPlayer.x][mainPlayer.y] == 0) recentlyLeft = 0;
-
-			mainUI.Draw(window, mainPlayer);
-			//scroll.Draw(window);
 			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
+			if (hasClickedConfirmation == false) scrollList.Draw(window);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true) hasClickedConfirmation = true;
 			window.display();
 		}
 		mainPlayer = hns::Player();

@@ -25,5 +25,6 @@ namespace hns
 	class Player;
 	class Map;
 	class Scroll;
+	class ScrollList;
 	static class Cursor;
 }

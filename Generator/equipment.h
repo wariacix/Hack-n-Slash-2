@@ -105,16 +105,16 @@ protected:
 	void setItem(Item item);
 
 public:
-	Item* equippedItem;
-	Item* eqItem;
+	std::vector<Item> equippedItem;
+	std::vector<Item> eqItem;
 	Equipment()
 	{
+		equippedItem.resize(8);
+		eqItem.resize(9999);
 		bottomTxt = "eqInterfaceBottom";
 		topTxt = "eqInterfaceTop";
 		eqName = "Data\\itemStats";
 		numOfItems = 1;
-		eqItem = new Item[9999];
-		equippedItem = new Item[8];
 	}
 
 	void addItem(int id, int howManyItems);
