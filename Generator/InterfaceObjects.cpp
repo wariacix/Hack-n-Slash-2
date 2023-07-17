@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "InterfaceObjects.h"
 
+
 void TextObject::SetTitle(std::wstring input)
 {
 	title.setString(input);
@@ -46,7 +47,7 @@ void hns::Scroll::Draw(sf::RenderWindow& window)
 
 void hns::ScrollList::AddTextObject(std::string objectString, std::wstring textString)
 {
-	textObject.insert(textObject.begin(), std::move(hns::TextObject(x + 10, y + 80 + (distance + 50)*textObject.size(), 32, 10, objectString, 22, sf::Color::White, textString, 20, 5, sf::Color::Black, 2.0f)));
+	textObject.insert(textObject.begin(), std::move(hns::TextObject(x + 20, y + 80 + (distance + 50)*textObject.size(), 32, 10, objectString, 22, sf::Color::White, textString, 20, 5, sf::Color::Black, 2.0f)));
 	textObject[textObject.size()-1].SetTitle(textString);
 }
 

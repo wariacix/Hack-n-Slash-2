@@ -99,8 +99,8 @@ public:
 		topSprite.setScale(5, 5);
 		bottomSprite.setScale(5, 5);
 
-		scrollRect.setPosition(x, y + 30);
-		scrollRect.setSize(sf::Vector2f(sizeX*5 + 15, sizeY*5 - 20));
+		scrollRect.setPosition(x + 5, y + 30);
+		scrollRect.setSize(sf::Vector2f(sizeX*5 + 10, sizeY*5 - 20));
 		scrollRect.setFillColor(sf::Color(198, 165, 109, 255));
 	}
 
@@ -120,10 +120,10 @@ public:
 	ScrollList(int x, int y, int sizeX, int sizeY, int titleSizeX, std::wstring titleString) : hns::Scroll(x, y, sizeX, sizeY)
 	{
 		Scroll::Scroll(x, y, sizeX, sizeY);
-		titleObject = hns::TextObject(x + 55 + sizeX * 1 / 3, y + 10, titleSizeX, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, titleString, 15, 5, sf::Color::Black, 2.0f);
+		titleObject = hns::TextObject(x + 55 + sizeX * 1 / 3, y - 30, titleSizeX, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, titleString, 15, 5, sf::Color::Black, 2.0f);
 		titleObject.SetTitle(titleString);
-		leftTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 - 75, y + 10, 16, 12, "UI\\Scrolls\\titleLeft");
-		rightTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 + titleSizeX * 5, y + 5, 16, 12, "UI\\Scrolls\\titleRight");
+		leftTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 - 75, y - 30, 16, 12, "UI\\Scrolls\\titleLeft");
+		rightTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 + titleSizeX * 5, y - 25, 16, 12, "UI\\Scrolls\\titleRight");
 
 		textObject = std::vector<hns::TextObject>();
 	}
