@@ -855,13 +855,16 @@ exit:;
 
 void hns::Equipment::drawItemSprite(sf::RenderWindow &window, int x, int y, int id)
 {
-	sf::Texture tItem;
-	sf::Sprite sItem;
-	tItem.loadFromFile("Textures\\Items\\" + std::to_string(id) + ".png", sf::IntRect(0, 0, 12, 12));
-	sItem.setTexture(tItem);
-	sItem.setScale(5.f, 5.f);
-	sItem.setPosition(x, y);
-	window.draw(sItem);
+	if (id != -1)
+	{
+		sf::Texture tItem;
+		sf::Sprite sItem;
+		tItem.loadFromFile("Textures\\Items\\" + std::to_string(id) + ".png", sf::IntRect(0, 0, 12, 12));
+		sItem.setTexture(tItem);
+		sItem.setScale(5.f, 5.f);
+		sItem.setPosition(x, y);
+		window.draw(sItem);
+	}
 }
 
 void hns::Equipment::itemSwapping(Item& item, int type)
