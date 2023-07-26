@@ -119,7 +119,6 @@ public:
 	int distance = 10; // in pixels
 	ScrollList(int x, int y, int sizeX, int sizeY, int titleSizeX, std::wstring titleString) : hns::Scroll(x, y, sizeX, sizeY)
 	{
-		Scroll::Scroll(x, y, sizeX, sizeY);
 		titleObject = hns::TextObject(x + 55 + sizeX * 1 / 3, y - 30, titleSizeX, 10, "UI\\Scrolls\\titleMid", 27, sf::Color::White, titleString, 15, 5, sf::Color::Black, 2.0f);
 		titleObject.SetTitle(titleString);
 		leftTitlePart = hns::GameObject(x + 55 + sizeX * 1 / 3 - 75, y - 30, 16, 12, "UI\\Scrolls\\titleLeft");
@@ -128,7 +127,7 @@ public:
 		textObject = std::vector<hns::TextObject>();
 	}
 
-	void AddTextObject(std::string objectString, std::wstring textString);
+	void AddTextObject(int sizeX, int sizeY, std::string objectString, std::wstring textString);
 	void Draw(sf::RenderWindow& window);
 };
 

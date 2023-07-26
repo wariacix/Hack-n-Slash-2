@@ -86,7 +86,6 @@ class hns::Equipment
 {
 private:
 	virtual void viewItemStats(sf::RenderWindow& window, Item& item, int x, int y);
-
 protected:
 	int equipmentWidth = 10;
 	int equipmentHeight = 6;

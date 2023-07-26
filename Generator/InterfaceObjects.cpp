@@ -45,9 +45,9 @@ void hns::Scroll::Draw(sf::RenderWindow& window)
 	window.draw(scrollRect);
 }
 
-void hns::ScrollList::AddTextObject(std::string objectString, std::wstring textString)
+void hns::ScrollList::AddTextObject(int sizeX, int sizeY, std::string objectString, std::wstring textString)
 {
-	textObject.insert(textObject.begin(), std::move(hns::TextObject(x + 20, y + 80 + (distance + 50)*textObject.size(), 32, 10, objectString, 22, sf::Color::White, textString, 20, 5, sf::Color::Black, 2.0f)));
+	textObject.insert(textObject.begin(), std::move(hns::TextObject(x + 20, y + 40 + (distance + 50)*textObject.size(), sizeX, sizeY, objectString, 24, sf::Color::White, textString, 15, 7, sf::Color::Black, 2.0f)));
 	textObject[textObject.size()-1].SetTitle(textString);
 }
 

@@ -135,81 +135,78 @@ int main()
 			{
 				if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 && rand() % 12 == 0)
 				{
+					scrollList = hns::ScrollList(371, 259, 55, 20, 30, L"Items found:");
 					hns::Enemy enemy;
 					enemy.loadEnemy("forest");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
 					int itemRewardArray[4] = { 0,1,5,101 };
-					scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
 					int chosenItemId = rand() % 4;
-					int howMany = rand() % 2;
+					int howMany = 1 + rand() % 2;
 					if (rand() % 2 == 0)
 					{
-						int searchedId;
-						for (int i = 1; i < mainEquipment.eqItem.size(); i++)
+						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
+						std::wstring sampleName;
+						for (int i = 0; i < 9999; i++)
 						{
-							if (mainEquipment.eqItem[i].getItemId() == -1)
+							if (itemRewardArray[chosenItemId] == mainEquipment.eqItem[i].getItemId())
 							{
-								searchedId = mainEquipment.eqItem[i - 1].getItemId();
-								break;
+								sampleName = mainEquipment.eqItem[i].getItemName();
 							}
 						}
-						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
-						scrollList.AddTextObject("UI\\Scrolls\\scrollButton", std::to_wstring(howMany) + L"x " + mainEquipment.eqItem[searchedId].getItemName());
+						scrollList.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", std::to_wstring(howMany) + L"x " + sampleName);
 						scrollList.Draw(window);
 						hasClickedConfirmation = false;
 					}
 				}
 				else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 6 && rand() % 12 == 0)
 				{
+					scrollList = hns::ScrollList(371, 259, 55, 20, 30, L"Items found:");
 					hns::Enemy enemy;
 					enemy.loadEnemy("forestCold");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
 					int itemRewardArray[4] = { 0,1,5,102 };
-					scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
 					int chosenItemId = rand() % 4;
-					int howMany = rand() % 2;
+					int howMany = 1 + rand() % 2;
 					if (rand() % 2 == 0)
 					{
-						int searchedId;
-						for (int i = 1; i < mainEquipment.eqItem.size(); i++)
+						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
+						std::wstring sampleName;
+						for (int i = 0; i < 9999; i++)
 						{
-							if (mainEquipment.eqItem[i].getItemId() == -1)
+							if (itemRewardArray[chosenItemId] == mainEquipment.eqItem[i].getItemId())
 							{
-								searchedId = mainEquipment.eqItem[i - 1].getItemId();
-								break;
+								sampleName = mainEquipment.eqItem[i].getItemName();
 							}
 						}
-						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
-						scrollList.AddTextObject("UI\\Scrolls\\scrollButton", std::to_wstring(howMany) + L"x " + mainEquipment.eqItem[searchedId].getItemName());
+						scrollList.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", std::to_wstring(howMany) + L"x " + sampleName);
 						scrollList.Draw(window);
 						hasClickedConfirmation = false;
 					}
 				}
 				else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 1 && rand() % 15 == 0)
 				{
+					scrollList = hns::ScrollList(371, 259, 55, 20, 30, L"Items found:");
 					hns::Enemy enemy;
 					enemy.loadEnemy("mountains");
 					hns::Fight fight(enemy);
 					fight.start(window, mainPlayer, fightUI, mainEquipment);
 					int itemRewardArray[3] = { 0,1,103 };
-					scrollList = hns::ScrollList(350, 250, 96, 48, 64, L"Enemy's dead. Items dropped:");
 					int chosenItemId = rand() % 3;
-					int howMany = rand() % 2;
+					int howMany = 1 + rand() % 2;
 					if (rand() % 2 == 0)
 					{
-						int searchedId;
-						for (int i = 1; i < mainEquipment.eqItem.size(); i++)
+						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
+						std::wstring sampleName;
+						for (int i = 0; i < 9999; i++)
 						{
-							if (mainEquipment.eqItem[i].getItemId() == -1)
+							if (itemRewardArray[chosenItemId] == mainEquipment.eqItem[i].getItemId())
 							{
-								searchedId = mainEquipment.eqItem[i - 1].getItemId();
-								break;
+								sampleName = mainEquipment.eqItem[i].getItemName();
 							}
 						}
-						mainEquipment.addItem(itemRewardArray[chosenItemId], howMany);
-						scrollList.AddTextObject("UI\\Scrolls\\scrollButton", std::to_wstring(howMany) + L"x " + mainEquipment.eqItem[searchedId].getItemName());
+						scrollList.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", std::to_wstring(howMany) + L"x " + sampleName);
 						scrollList.Draw(window);
 						hasClickedConfirmation = false;
 					}

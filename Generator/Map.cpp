@@ -509,7 +509,7 @@ void hns::Map::BakeMap()
 					}
 					else sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 2, biome, "desert.png");
 				}
-				else if (biome[c][u] == 3) sprIndex[c][u] = LookForIndex("arctic.png");
+				else if (biome[c][u] == 3) sprIndex[c][u] = ChooseConnectedSpriteIndex(c, u, 3, biome, "arctic.png");
 				else if (biome[c][u] == 4)
 				{
 					if (city[c][u] == 1)
@@ -550,7 +550,6 @@ void hns::Map::BakeTextures()
 	AssignNewTexture("forestcity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("forestColdCity.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("desertcity.png", sf::IntRect(0, 0, 16, 16));
-	AssignNewTexture("arctic.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("player.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("fog.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("fog.png", sf::IntRect(16, 0, 16, 16));
@@ -616,6 +615,22 @@ void hns::Map::BakeTextures()
 	AssignNewTexture("desert.png", sf::IntRect(208, 0, 16, 16));
 	AssignNewTexture("desert.png", sf::IntRect(224, 0, 16, 16));
 	AssignNewTexture("desert.png", sf::IntRect(240, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(0, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(16, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(32, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(48, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(64, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(80, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(96, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(112, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(128, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(144, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(160, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(176, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(192, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(208, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(224, 0, 16, 16));
+	AssignNewTexture("arctic.png", sf::IntRect(240, 0, 16, 16));
 }
 
 void hns::Map::Initialize()
