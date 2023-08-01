@@ -1,7 +1,7 @@
 # Hack-n-Slash-2
 Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 
-![Equipment interface](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/eqimg.png)
+![Menu (work in progress)](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/mainmenuimg.png)
 
 # Planned features:
 - Quests.
@@ -20,7 +20,7 @@ Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 - Dialogue & choice system working.
 - Fights with monsters.
  
+![Equipment interface](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/eqimg.png)
 ![Map interface WIP](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/mainmapimg.png)
 ![City view](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/dialogueimg.png)
 ![Alchemy shop view](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/shopimg.png)
-![Menu (work in progress)](https://raw.githubusercontent.com/wariacix/Hack-n-Slash-2/master/Generator/Screenshots/mainmenuimg.png)
