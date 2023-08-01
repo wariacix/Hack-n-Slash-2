@@ -134,7 +134,7 @@ private:
 	std::string shopName;
 	void viewItemStats(sf::RenderWindow& window, hns::Item& item, int x, int y);
 public:
-	Shop(int equipmentWidth, int equipmentHeight, std::string fileName, float priceMultiplier = 1.20f, std::string shopName = "alchemyUI") : Equipment::Equipment()
+	Shop(int equipmentWidth, int equipmentHeight, std::string fileName, float priceMultiplier = 1.0f, std::string shopName = "alchemy") : Equipment::Equipment()
 	{
 		this->equipmentWidth = equipmentWidth;
 		this->equipmentHeight = equipmentHeight;

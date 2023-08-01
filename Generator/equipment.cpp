@@ -612,7 +612,7 @@ afterItemUse:
 
 	sf::Texture tBottom, tTop, tSlot;
 	tBottom.loadFromFile("Textures\\"+ bottomTxt +".png", sf::IntRect(0, 0, 320, 200));
-	tTop.loadFromFile("Textures\\" + topTxt + ".png", sf::IntRect(0, 0, 320, 200));
+	tTop.loadFromFile("Textures\\interface.png", sf::IntRect(0, 0, 320, 200));
 	tSlot.loadFromFile("Textures\\eqSlot.png", sf::IntRect(0, 0, 15, 15));
 
 	sf::Sprite eqSlot;

@@ -301,7 +301,7 @@ void CityEnter(sf::RenderWindow& window, Map &mainMap, hns::Player &mainPlayer, 
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 2) cityDialogue.Dialogue::Dialogue("orcCityView", "HORN3", "interface", "dpcomic");
 	else if (mainMap.biome[mainPlayer.x][mainPlayer.y] == 4 || mainMap.biome[mainPlayer.x][mainPlayer.y] == 6) cityDialogue.Dialogue::Dialogue("forestCityView", "city_elven", "interface", "dpcomic");
 
-	hns::Shop alchemyShop(3, 4, "alchemy"), armorerShop(4, 4, "armorer"), blacksmithShop(4, 4, "blacksmith"), jewelerShop(4,4, "jeweler");
+	hns::Shop alchemyShop(3, 4, "alchemy", 1.0f, "alchemy"), armorerShop(4, 4, "armorer", 1.0f, "armorer"), blacksmithShop(4, 4, "blacksmith", 1.0f, "armorer"), jewelerShop(4, 4, "jeweler", 1.0f, "alchemy");
 
 	int exit = false;
 	while (exit == false)
