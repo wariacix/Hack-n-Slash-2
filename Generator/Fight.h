@@ -22,15 +22,23 @@ public:
 	void loadEnemy(std::string fileName);
 };
 
+class hns::FightReward
+{
+
+};
+
 class hns::Fight
 {
+private:
+	hns::FightReward reward;
 	hns::Enemy enemy;
 	std::string sprName;
 	sf::Sprite sprite;
-	void viewBackground(sf::RenderWindow& window);
+	void ViewBackground(sf::RenderWindow& window);
 public:
 	Fight(hns::Enemy enemy = Enemy(), std::string sprName = "forest.png");
-	void start(sf::RenderWindow& window, Player& mainPlayer, hns::Interface mainInterface, hns::Equipment& mainEquipment);
+	void RollReward(int biome);
+	void Start(sf::RenderWindow& window, Player& mainPlayer, hns::Interface mainInterface, hns::Equipment& mainEquipment);
 };
 
 class hns::FightDialogue : public hns::Dialogue
@@ -63,3 +71,4 @@ public:
 	void Push(std::wstring string, sf::Color inColor = sf::Color::Yellow, sf::Color outColor = sf::Color::Black);
 	void Draw(sf::RenderWindow& window);
 };
+

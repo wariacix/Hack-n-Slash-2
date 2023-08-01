@@ -18,9 +18,10 @@ namespace hns
 	class Enemy;
 	class Dialogue;
 	class FightDialogue;
+	class FightDiary;
+	class FightReward;
 	class Menu;
 	class TextObject;
-	class FightDiary;
 	class City;
 	class Player;
 	class Map;

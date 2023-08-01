@@ -139,7 +139,7 @@ int main()
 					hns::Enemy enemy;
 					enemy.loadEnemy("forest");
 					hns::Fight fight(enemy);
-					fight.start(window, mainPlayer, fightUI, mainEquipment);
+					fight.Start(window, mainPlayer, fightUI, mainEquipment);
 					int itemRewardArray[4] = { 0,1,5,101 };
 					int chosenItemId = rand() % 4;
 					int howMany = 1 + rand() % 2;
@@ -165,7 +165,7 @@ int main()
 					hns::Enemy enemy;
 					enemy.loadEnemy("forestCold");
 					hns::Fight fight(enemy);
-					fight.start(window, mainPlayer, fightUI, mainEquipment);
+					fight.Start(window, mainPlayer, fightUI, mainEquipment);
 					int itemRewardArray[4] = { 0,1,5,102 };
 					int chosenItemId = rand() % 4;
 					int howMany = 1 + rand() % 2;
@@ -191,7 +191,7 @@ int main()
 					hns::Enemy enemy;
 					enemy.loadEnemy("mountains");
 					hns::Fight fight(enemy);
-					fight.start(window, mainPlayer, fightUI, mainEquipment);
+					fight.Start(window, mainPlayer, fightUI, mainEquipment);
 					int itemRewardArray[3] = { 0,1,103 };
 					int chosenItemId = rand() % 3;
 					int howMany = 1 + rand() % 2;

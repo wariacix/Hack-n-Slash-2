@@ -61,23 +61,23 @@ void hns::Map::SetBaseValues()
 			{
 				for (int y = 0; y < mapHeight; y++)
 				{
-					biome[x][y] = 0;
+					biome[x][y] = plains;
 					city[x][y] = 0;
 					hero[x][y] = 0;
 					path[x][y] = 0;
 					fog[x][y] = 1;
 					path[x][y] = 0;
-					if (rand() % mtnChance == 1) biome[x][y] = 1;
+					if (rand() % mtnChance == 1) biome[x][y] = mountains;
 					if (biome[x][y] == 1) //Enlargening the mountains
 					{
-						if (rand() % 5 > 1 and x < mapWidth - 1) biome[x + 1][y] = 1;
-						if (rand() % 5 > 1 and x > 0) biome[x - 1][y] = 1;
-						if (rand() % 5 > 1 and y < mapHeight - 1) biome[x][y + 1] = 1;
-						if (rand() % 5 > 1 and y > 0) biome[x][y - 1] = 1;
-						if (rand() % 5 > 0 and x < mapWidth - 1 and y < mapHeight - 1) biome[x + 1][y + 1] = 1;
-						if (rand() % 5 > 0 and x > 0 and y < mapHeight - 1) biome[x - 1][y + 1] = 1;
-						if (rand() % 5 > 0 and x < mapWidth - 1 and y > 0) biome[x + 1][y - 1] = 1;
-						if (rand() % 5 > 0 and x > 0 and y > 0) biome[x - 1][y - 1] = 1;
+						if (rand() % 5 > 1 and x < mapWidth - 1) biome[x + 1][y] = mountains;
+						if (rand() % 5 > 1 and x > 0) biome[x - 1][y] = mountains;
+						if (rand() % 5 > 1 and y < mapHeight - 1) biome[x][y + 1] = mountains;
+						if (rand() % 5 > 1 and y > 0) biome[x][y - 1] = mountains;
+						if (rand() % 5 > 0 and x < mapWidth - 1 and y < mapHeight - 1) biome[x + 1][y + 1] = mountains;
+						if (rand() % 5 > 0 and x > 0 and y < mapHeight - 1) biome[x - 1][y + 1] = mountains;
+						if (rand() % 5 > 0 and x < mapWidth - 1 and y > 0) biome[x + 1][y - 1] = mountains;
+						if (rand() % 5 > 0 and x > 0 and y > 0) biome[x - 1][y - 1] = mountains;
 					}
 				}
 			}
@@ -90,8 +90,8 @@ void hns::Map::EnlargeMountains()
 			{
 				for (int y = 0; y < mapHeight; y++)
 				{
-					if (x > 1 and x < mapWidth - 1 and y > 1 and y < mapHeight - 1 and biome[x][y] == 1 and biome[x + 1][y] == 0 and biome[x - 1][y] == 0 and biome[x][y - 1] == 0 and biome[x][y + 1] == 0) biome[x][y] = 0;
-					if (x > 1 and x < mapWidth - 1 and y > 1 and y < mapHeight - 1 and biome[x][y] == 0 and biome[x + 1][y] == 1 and biome[x - 1][y] == 1 and biome[x][y - 1] == 1 and biome[x][y + 1] == 1) biome[x][y] = 1;
+					if (x > 1 and x < mapWidth - 1 and y > 1 and y < mapHeight - 1 and biome[x][y] == 1 and biome[x + 1][y] == 0 and biome[x - 1][y] == 0 and biome[x][y - 1] == 0 and biome[x][y + 1] == 0) biome[x][y] = plains;
+					if (x > 1 and x < mapWidth - 1 and y > 1 and y < mapHeight - 1 and biome[x][y] == 0 and biome[x + 1][y] == 1 and biome[x - 1][y] == 1 and biome[x][y - 1] == 1 and biome[x][y + 1] == 1) biome[x][y] = mountains;
 				}
 			}
 		};
@@ -100,10 +100,10 @@ void hns::Map::CreateDeserts()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
-				if (rand() % 2 == 0) biome[x][mapHeight*10/13] = 2;
+				if (rand() % 2 == 0) biome[x][mapHeight*10/13] = desert;
 				for (int y = (mapHeight * 10 / 13) + 1; y < mapHeight; y++)
 				{
-					biome[x][y] = 2;
+					biome[x][y] = desert;
 				}
 			}
 		};
@@ -112,8 +112,8 @@ void hns::Map::CreateArctic()
 		{
 			for (int x = 0; x < mapWidth; x++)
 			{
-				if (rand() % 2 == 0) biome[x][5] = 3;
-				for (int y = 0; y < 5; y++) biome[x][y] = 3;
+				if (rand() % 2 == 0) biome[x][5] = arctic;
+				for (int y = 0; y < 5; y++) biome[x][y] = arctic;
 			}
 		};
 
@@ -217,7 +217,7 @@ void hns::Map::CreateForests()
 						{
 							for (y1 = 0; y1 < 3; y1++)
 							{
-								if (x + x1 - 1 >= 0 && x + x1 - 1 < mapWidth && y + y1 - 1 >= 0 && y + y1 - 1 < mapHeight && biome[x + x1 - 1][y + y1 - 1] == 0) biome[x + x1 - 1][y + y1 - 1] = 4;
+								if (x + x1 - 1 >= 0 && x + x1 - 1 < mapWidth && y + y1 - 1 >= 0 && y + y1 - 1 < mapHeight && biome[x + x1 - 1][y + y1 - 1] == 0) biome[x + x1 - 1][y + y1 - 1] = forest;
 							}
 						}
 					}
@@ -234,28 +234,28 @@ void hns::Map::CreateForests()
 						{
 							if (biome[x + 1][y] == 0)
 							{
-								biome[x + 1][y] = 100;
+								biome[x + 1][y] = temporary;
 							}
 						}
 						if (x > 0)
 						{
 							if (biome[x - 1][y] == 0)
 							{
-								biome[x - 1][y] = 100;
+								biome[x - 1][y] = temporary;
 							}
 						}
 						if (y < mapHeight)
 						{
 							if (biome[x][y + 1] == 0)
 							{
-								biome[x][y + 1] = 100;
+								biome[x][y + 1] = temporary;
 							}
 						}
 						if (y > 0)
 						{
 							if (biome[x][y - 1] == 0)
 							{
-								biome[x][y - 1] = 100;
+								biome[x][y - 1] = temporary;
 							}
 						}
 					}
@@ -268,7 +268,7 @@ void hns::Map::CreateForests()
 				{
 					if (biome[x][y] == 100)
 					{
-						biome[x][y] = 4;
+						biome[x][y] = forest;
 					}
 				}
 			}
@@ -325,8 +325,8 @@ void hns::Map::FurtherCityGen()
 				{
 					if (y < mapHeight*2 / 5)
 					{
-						if (biome[x][y] == 0) biome[x][y] = 5;
-						if (biome[x][y] == 4) biome[x][y] = 6;
+						if (biome[x][y] == 0) biome[x][y] = cold_plains;
+						if (biome[x][y] == 4) biome[x][y] = cold_forest;
 					}
 
 					for (int i = 0; i < 20; i++)
@@ -640,6 +640,32 @@ void hns::Map::Initialize()
 	wcout << L"Baked the textures." << std::endl;
 	BakeMap();
 	wcout << L"Baked the map." << std::endl;
+}
+
+int hns::Map::ChooseConnectedSpriteIndex(int c, int u, int value, std::vector<std::vector<Biome>> valueType, std::string fileName)
+{
+	int i;
+	for (i = 0; i < mapTextures.size(); i++)
+	{
+		if (mapTextures[i].name == fileName) break;
+	}
+
+	if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return i + 1;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return i + 2;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] != value) return i + 3;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 4;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 5;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 6;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 7;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 8;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 9;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 10;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] == value) return i + 11;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 12;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] != value and valueType[c][u - 1] == value) return i + 13;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] == value and valueType[c + 1][u] != value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 14;
+	else if (u + 1 < mapHeight and u - 1 >= 0 and c + 1 < mapWidth and c - 1 >= 0 and valueType[c - 1][u] != value and valueType[c + 1][u] == value and valueType[c][u + 1] == value and valueType[c][u - 1] != value) return i + 15;
+	else return i;
 }
 
 int hns::Map::ChooseConnectedSpriteIndex(int c, int u, int value, std::vector<std::vector<int>> valueType, std::string fileName)

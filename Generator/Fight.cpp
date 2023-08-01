@@ -90,9 +90,10 @@ hns::Fight::Fight(hns::Enemy enemy, std::string sprName)
 {
 	this->enemy = enemy;
 	this->sprName = sprName;
+	reward = hns::FightReward();
 }
 
-void hns::Fight::viewBackground(sf::RenderWindow &window)
+void hns::Fight::ViewBackground(sf::RenderWindow &window)
 {
 	sf::Texture texture;
 	texture.loadFromFile("Textures\\" + sprName);
@@ -100,7 +101,7 @@ void hns::Fight::viewBackground(sf::RenderWindow &window)
 	window.draw(sprite);
 }
 
-void hns::Fight::start(sf::RenderWindow &window, Player &mainPlayer, hns::Interface mainInterface, hns::Equipment &mainEquipment)
+void hns::Fight::Start(sf::RenderWindow &window, Player &mainPlayer, hns::Interface mainInterface, hns::Equipment &mainEquipment)
 {
 	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "fightInterface", "dpcomic");
 	hns::FightDiary fightDiary = hns::FightDiary();

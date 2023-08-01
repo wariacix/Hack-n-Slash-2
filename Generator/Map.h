@@ -6,6 +6,18 @@
 
 class hns::Player;
 
+enum Biome
+{
+	plains,
+	mountains,
+	desert,
+	arctic,
+	forest,
+	cold_plains,
+	cold_forest,
+	temporary = 100
+};
+
 class ExtendedTexture
 {
 public:
@@ -32,7 +44,7 @@ private:
 	std::string mapName;
 	std::vector<ExtendedTexture> mapTextures;
 public:
-	std::vector<std::vector<int>> biome;
+	std::vector<std::vector<Biome>> biome;
 	std::vector<std::vector<int>> city;
 	std::vector<std::vector<int>> cityID;
 	std::vector<std::vector<int>> cityGuardian;
@@ -48,7 +60,7 @@ public:
 		this->mapName = mapName;
 
 		mapTextures.begin();
-		biome.resize(mW, std::vector<int>(mH, 0));
+		biome.resize(mW, std::vector<Biome>(mH, (Biome) 0));
 		city.resize(mW, std::vector<int>(mH, 0));
 		cityID.resize(mW, std::vector<int>(mH, 0));
 		cityGuardian.resize(mW, std::vector<int>(mH, 0));
@@ -68,6 +80,7 @@ public:
 	void ClearFog(Player& player1);
 
 	int ChooseConnectedSpriteIndex(int c, int u, int biomeId, std::vector<std::vector<int>> valueType, std::string fileName);
+	int ChooseConnectedSpriteIndex(int c, int u, int biomeId, std::vector<std::vector<Biome>> valueType, std::string fileName);
 
 	sf::Texture LookForTexture(std::string name);
 
