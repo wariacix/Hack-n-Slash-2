@@ -1,0 +1,8 @@
+0,Buffy Gladiator,18,180,500,0;
+1,Gladiator,15,140,400,0;
+2,Gladiator,15,140,400,0;
+3,Gladiator,15,140,400,0;
+4,Gladiator,15,140,400,0;
+5,Weak Gladiator,13,120,325,0;
+6,Weak Gladiator,13,120,325,0;
+7,Weak Gladiator,13,120,325,0;

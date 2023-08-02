@@ -91,6 +91,7 @@ hns::Fight::Fight(hns::Enemy enemy, std::string sprName)
 	this->enemy = enemy;
 	this->sprName = sprName;
 	reward = hns::FightReward();
+	wasDefeated = false;
 }
 
 void hns::Fight::ViewBackground(sf::RenderWindow &window)
@@ -101,9 +102,9 @@ void hns::Fight::ViewBackground(sf::RenderWindow &window)
 	window.draw(sprite);
 }
 
-void hns::Fight::Start(sf::RenderWindow &window, Player &mainPlayer, hns::Interface mainInterface, hns::Equipment &mainEquipment)
+void hns::Fight::Start(sf::RenderWindow &window, Player &mainPlayer, hns::Interface mainInterface, hns::Equipment &mainEquipment, std::string backgroundName)
 {
-	hns::FightDialogue fightDialogue("forestView", "GARDENS3", "fightInterface", "dpcomic");
+	hns::FightDialogue fightDialogue(backgroundName, "city_elven", "fightInterface", "dpcomic");
 	hns::FightDiary fightDiary = hns::FightDiary();
 
 	float missChance = 90;
@@ -166,6 +167,7 @@ void hns::Fight::Start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 		}
 		else if (enemy.hp <= 0)
 		{
+			wasDefeated = true;
 			left = true;
 			mainPlayer.gold += enemy.gold;
 			mainPlayer.xp += enemy.xp;

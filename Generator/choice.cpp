@@ -18,6 +18,7 @@
 #include "InterfaceObjects.h"
 #include "equipment.h"
 #include "GameObject.h"
+#include "Fight.h"
 
 class hns::Interface;
 
@@ -309,27 +310,96 @@ void CityEnter(sf::RenderWindow& window, Map &mainMap, hns::Player &mainPlayer, 
 		switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
 		{
 		case 0:
-			switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Alchemist",L"Armorer",L"Blacksmith",L"Jeweler",L"Exit the City",L"",L""}))
+		backFromInnerCity:
+			switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the Main Square",L"Enter the Arena",L"Exit the City",L"",L"",L""}))
 			{
 			case 0:
-				alchemyShop.viewEquipment(window, mainPlayer, mainEquipment);
+				switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Alchemist",L"Armorer",L"Blacksmith",L"Jeweler",L"Exit the Main Square",L"",L"" }))
+				{
+				case 0:
+					alchemyShop.viewEquipment(window, mainPlayer, mainEquipment);
+					break;
+				case 1:
+					armorerShop.viewEquipment(window, mainPlayer, mainEquipment);
+					break;
+				case 2:
+					blacksmithShop.viewEquipment(window, mainPlayer, mainEquipment);
+					break;
+				case 3:
+					jewelerShop.viewEquipment(window, mainPlayer, mainEquipment);
+					break;
+				case 4:
+					exit = true;
+					break;
+				case 999:
+					break;
+				}
 				break;
 			case 1:
-				armorerShop.viewEquipment(window, mainPlayer, mainEquipment);
-				break;
-			case 2:
-				blacksmithShop.viewEquipment(window, mainPlayer, mainEquipment);
-				break;
-			case 3:
-				jewelerShop.viewEquipment(window, mainPlayer, mainEquipment);
-				break;
-			case 4:
-				exit = true;
-				break;
-			case 999:
+				hns::Interface fightUI(mainPlayer, 0, 0, 320, 200, "fightInterface");
+				hns::Enemy enemy;
+				enemy.loadEnemy("arena1");
+				hns::Fight fight(enemy);
+				hns::ScrollList scroll = hns::ScrollList(350, 250, 65, 65, 50, L"You won! Rewards:");
+				switch(cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Fight on the Arena!",L"Exit the Arena",L"",L"",L"",L"" }, 1))
+				{
+				case 0:
+					fight.Start(window, mainPlayer, fightUI, mainEquipment, "arena");
+					if (fight.wasDefeated == true)
+					{
+						if (mainPlayer.lvl == 1)
+						{
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"2x Potion +50HP");
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Leather Armor");
+							mainEquipment.addItem(1, 2);
+							mainEquipment.addItem(2001, 1);
+						}
+						else if (mainPlayer.lvl == 2)
+						{
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"2x Potion +50HP");
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Wooden Buckler");
+							mainEquipment.addItem(1, 2);
+							mainEquipment.addItem(3002, 1);
+						}
+						else if (mainPlayer.lvl == 3)
+						{
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Potion +100HP");
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Copper Breastplate");
+							mainEquipment.addItem(2, 1);
+							mainEquipment.addItem(2002, 1);
+						}
+						else if (mainPlayer.lvl == 4 || mainPlayer.lvl == 5)
+						{
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Potion +100HP");
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Giant Ring of Vitality");
+							mainEquipment.addItem(2, 1);
+							mainEquipment.addItem(7006, 1);
+						}
+						else if (mainPlayer.lvl > 5)
+						{
+							scroll.AddTextObject(48, 10, "UI\\Scrolls\\paper-piece", L"1x Potion +200HP");
+							mainEquipment.addItem(3, 1);
+						}
+						while (true)
+						{
+							window.clear();
+							cityDialogue.drawView(window);
+							mainInterface.Draw(window, mainPlayer);
+							scroll.Draw(window);
+							hns::Cursor::Draw(window);
+							if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) break;
+							window.display();
+						}
+					}
+					break;
+				case 1:
+					break;
+				case 999:
+					break;
+				}
+				goto backFromInnerCity;
 				break;
 			}
-			break;
 		case 1:
 			exit = true;
 			break;

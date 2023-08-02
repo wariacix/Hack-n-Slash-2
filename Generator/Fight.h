@@ -36,9 +36,10 @@ private:
 	sf::Sprite sprite;
 	void ViewBackground(sf::RenderWindow& window);
 public:
+	bool wasDefeated;
 	Fight(hns::Enemy enemy = Enemy(), std::string sprName = "forest.png");
 	void RollReward(int biome);
-	void Start(sf::RenderWindow& window, Player& mainPlayer, hns::Interface mainInterface, hns::Equipment& mainEquipment);
+	void Start(sf::RenderWindow& window, Player& mainPlayer, hns::Interface mainInterface, hns::Equipment& mainEquipment, std::string backgroundName = "forestView");
 };
 
 class hns::FightDialogue : public hns::Dialogue
