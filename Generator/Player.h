@@ -57,7 +57,7 @@ public:
 		heroName = L"NO NAME";
 		alive = true;
 	}
-	void movePlayer(Map &map1, sf::RenderWindow& window, hns::Equipment &eq, Player& player);
+	void MovePlayer(Map &map1, sf::RenderWindow& window, hns::Equipment &eq, Player& player);
 	void Regenerate();
 private:
 	void CheckForKeyActivity(sf::RenderWindow& window);

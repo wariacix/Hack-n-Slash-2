@@ -30,11 +30,11 @@ public:
 
 	Dialogue(const hns::Dialogue& copiedDialogue);
 
-	virtual int getDialogueAnswer(sf::RenderWindow& window, hns::Player player, hns::Interface ui, std::wstring choiceString[6], bool playSound = false);
+	virtual int GetDialogueAnswer(sf::RenderWindow& window, hns::Player player, hns::Interface ui, std::wstring choiceString[6], bool playSound = false);
 
-	void playViewSound();
+	void PlayViewSound();
 
-	void drawView(sf::RenderWindow& window);
+	void DrawView(sf::RenderWindow& window);
 
 
 	static void textWriting(std::wstring input, sf::Text textEnt, sf::RenderWindow& window, hns::Map mainMap, hns::Player mainPlayer);

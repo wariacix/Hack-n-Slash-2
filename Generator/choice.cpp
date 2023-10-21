@@ -85,7 +85,7 @@ hns::Dialogue::Dialogue(const hns::Dialogue& copiedDialogue)
 		enterSound = copiedDialogue.enterSound;
 	};
 
-int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, hns::Player player, hns::Interface ui, wstring choiceString[6], bool playSound)
+int hns::Dialogue::GetDialogueAnswer(sf::RenderWindow& window, hns::Player player, hns::Interface ui, wstring choiceString[6], bool playSound)
 	{
 		int numberOfButtons = 0;
 		for (int i = 0; i < 6; i++)
@@ -102,7 +102,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, hns::Player playe
 
 		hns::GameObject button(288, 778, 53, 13, "button");
 
-		if (playSound == true) playViewSound();
+		if (playSound == true) PlayViewSound();
 
 		while (window.isOpen())
 		{
@@ -136,7 +136,7 @@ int hns::Dialogue::getDialogueAnswer(sf::RenderWindow& window, hns::Player playe
 
 void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& button, int& numberOfButtons, int& choice, wstring choiceString[6], sf::RenderWindow& window, hns::Player player, hns::Interface ui)
 {
-	drawView(window);
+	DrawView(window);
 	ui.Draw(window, player);
 
 	for (int i = 0; i < numberOfButtons; i++)
@@ -243,7 +243,7 @@ void hns::Dialogue::getDialogueAnswerTick(bool& clickFlag, hns::GameObject& butt
 	}
 }
 
-void hns::Dialogue::playViewSound()
+void hns::Dialogue::PlayViewSound()
 		{
 			if (hasSoundBeenPlayed == false)
 			{
@@ -252,7 +252,7 @@ void hns::Dialogue::playViewSound()
 			}
 		}
 
-void hns::Dialogue::drawView(sf::RenderWindow& window)
+void hns::Dialogue::DrawView(sf::RenderWindow& window)
 {
 	window.draw(viewSprite);
 }
@@ -307,14 +307,14 @@ void CityEnter(sf::RenderWindow& window, Map &mainMap, hns::Player &mainPlayer, 
 	int exit = false;
 	while (exit == false)
 	{
-		switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
+		switch (cityDialogue.GetDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the City",L"Get Back to Main Map",L"",L"",L"",L"" }, 1))
 		{
 		case 0:
 		backFromInnerCity:
-			switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the Main Square",L"Enter the Arena",L"Exit the City",L"",L"",L""}))
+			switch (cityDialogue.GetDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Enter the Main Square",L"Enter the Arena",L"Exit the City",L"",L"",L""}))
 			{
 			case 0:
-				switch (cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Alchemist",L"Armorer",L"Blacksmith",L"Jeweler",L"Exit the Main Square",L"",L"" }))
+				switch (cityDialogue.GetDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Alchemist",L"Armorer",L"Blacksmith",L"Jeweler",L"Exit the Main Square",L"",L"" }))
 				{
 				case 0:
 					alchemyShop.viewEquipment(window, mainPlayer, mainEquipment);
@@ -341,7 +341,7 @@ void CityEnter(sf::RenderWindow& window, Map &mainMap, hns::Player &mainPlayer, 
 				enemy.loadEnemy("arena1");
 				hns::Fight fight(enemy);
 				hns::ScrollList scroll = hns::ScrollList(350, 250, 65, 65, 50, L"You won! Rewards:");
-				switch(cityDialogue.getDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Fight on the Arena!",L"Exit the Arena",L"",L"",L"",L"" }, 1))
+				switch(cityDialogue.GetDialogueAnswer(window, mainPlayer, mainInterface, new (std::wstring[]){ L"Fight on the Arena!",L"Exit the Arena",L"",L"",L"",L"" }, 1))
 				{
 				case 0:
 					fight.Start(window, mainPlayer, fightUI, mainEquipment, "arena");
@@ -383,7 +383,7 @@ void CityEnter(sf::RenderWindow& window, Map &mainMap, hns::Player &mainPlayer, 
 						while (true)
 						{
 							window.clear();
-							cityDialogue.drawView(window);
+							cityDialogue.DrawView(window);
 							mainInterface.Draw(window, mainPlayer);
 							scroll.Draw(window);
 							hns::Cursor::Draw(window);

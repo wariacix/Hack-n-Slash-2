@@ -17,7 +17,7 @@
 #include "Interface.h"
 #include "GameObject.h"
 
-//BAR
+//Bar class
 
 hns::Bar::Bar(Player player, int x, int y, int sizeX, int sizeY, std::string topTexName, std::string botTexName)
 {
@@ -28,10 +28,10 @@ hns::Bar::Bar(Player player, int x, int y, int sizeX, int sizeY, std::string top
 	frontSpr.setTexture(frontTexture);
 	frontSpr.setPosition(x, y);
 	frontSpr.setScale(5.f, 5.f);
-	setSize(player.hp, player.maxhp);
+	SetSize(player.hp, player.maxhp);
 }
 
-void hns::Bar::setSize(float stat1, float stat2, bool vertical, bool inverted)
+void hns::Bar::SetSize(float stat1, float stat2, bool vertical, bool inverted)
 {
 	if (vertical == true && inverted == true)
 	{
@@ -55,17 +55,17 @@ void hns::Bar::setSize(float stat1, float stat2, bool vertical, bool inverted)
 
 void hns::Bar::Draw(sf::RenderWindow& window, float stat1, float stat2, bool vertical, bool inverted)
 {
-	setSize(stat1, stat2, vertical, inverted);
+	SetSize(stat1, stat2, vertical, inverted);
 	window.draw(sprite);
 	window.draw(frontSpr);
 }
 
-//INTERFACE
+//Interface class
 
 hns::Interface::Interface(Player player, int x, int y, int sizeX, int sizeY, std::string texName)
 {
 	this->GameObject::GameObject(x, y, sizeX, sizeY, texName);
-	mpBar.setSize(player.mp, player.maxmp);
+	mpBar.SetSize(player.mp, player.maxmp);
 }
 
 void hns::Interface::Draw(sf::RenderWindow& window, Player player)

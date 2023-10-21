@@ -110,12 +110,13 @@ void hns::Fight::Start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 	float missChance = 90;
 
 	mainPlayer.hp += mainPlayer.def;
+
 	bool left = false;
 	while (left == false)
 	{
 		int damageResult = enemy.damage + (rand() % 3);
 		int enemyDamageResult = mainPlayer.dmg + (rand() % 3);
-		switch (fightDialogue.getDialogueAnswer(window, mainPlayer, enemy, fightDiary, mainInterface, new (std::wstring[]){ L"Attack",L"Equipment",L"Try to Break Free",L"",L"",L"" }, false))
+		switch (fightDialogue.GetDialogueAnswer(window, mainPlayer, enemy, fightDiary, mainInterface, new (std::wstring[]){ L"Attack",L"Equipment",L"Try to Break Free",L"",L"",L"" }, false))
 		{
 		case 0:
 			damageResult = enemy.damage + (rand() % 3);
@@ -128,12 +129,12 @@ void hns::Fight::Start(sf::RenderWindow &window, Player &mainPlayer, hns::Interf
 			{
 				if (mainPlayer.crit >= rand() % 100)
 				{
-					enemy.hp -= enemyDamageResult * 3;
+					enemy.hp = enemy.hp - (enemyDamageResult * 3);
 					fightDiary.Push(L"You attacked enemy critically for " + std::to_wstring(enemyDamageResult * 3) + L"dmg.", sf::Color(255, 55, 29, 255));
 				}
 				else
 				{
-					enemy.hp -= enemyDamageResult;
+					enemy.hp = enemy.hp - enemyDamageResult;
 					fightDiary.Push(L"You attacked enemy for " + std::to_wstring(enemyDamageResult) + L"dmg.", sf::Color(255, 220, 0, 255));
 				}
 			}
@@ -205,7 +206,7 @@ hns::FightDialogue::FightDialogue(std::string viewTextureName, std::string enter
 
 };
 
-int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::FightDiary diary, hns::Interface ui, std::wstring choiceString[6], bool playSound)
+int hns::FightDialogue::GetDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::FightDiary diary, hns::Interface ui, std::wstring choiceString[6], bool playSound)
 {
 	int numberOfButtons = 0;
 	for (int i = 0; i < 6; i++)
@@ -231,7 +232,7 @@ int hns::FightDialogue::getDialogueAnswer(sf::RenderWindow& window, Player playe
 
 	hns::GameObject button(290, 780, 51, 11, "button");
 
-	if (playSound == true) playViewSound();
+	if (playSound == true) PlayViewSound();
 
 	while (window.isOpen())
 	{

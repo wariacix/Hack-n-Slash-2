@@ -72,8 +72,8 @@ public:
 
 	std::wstring GenCityName();
 
-	int getMapWidth();
-	int getMapHeight();
+	int GetMapWidth();
+	int GetMapHeight();
 
 	void DrawTile(sf::RenderWindow& window, int sprIndex, int x, int y, int playerX, int playerY, int textureRes = 48);
 
@@ -90,13 +90,13 @@ public:
 
 	void ViewMap(sf::RenderWindow &window, Player player, sf::Clock& clock);
 
-	void BakeMap();
+	void PrepMap();
 
-	void BakeTextures();
-
-	void Initialize();
+	void PrepTextures();
 
 	void SetBaseValues();
+
+	void Initialize();
 
 	void EnlargeMountains();
 

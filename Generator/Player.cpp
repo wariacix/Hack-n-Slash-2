@@ -24,7 +24,7 @@ void hns::Player::CheckForKeyActivity(sf::RenderWindow& window)
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == true && window.hasFocus()) hasBeenPressed[3] = false;
 }
 
-void hns::Player::movePlayer(hns::Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
+void hns::Player::MovePlayer(hns::Map &map1, sf::RenderWindow &window, hns::Equipment &eq, Player& player)
 {
 		CheckForKeyActivity(window);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && hasBeenPressed[0] == false && window.hasFocus())
@@ -40,7 +40,7 @@ void hns::Player::movePlayer(hns::Map &map1, sf::RenderWindow &window, hns::Equi
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && hasBeenPressed[1] == false && window.hasFocus())
 		{
 			hasBeenPressed[1] = true;
-			if (x < map1.getMapWidth() - 1)
+			if (x < map1.GetMapWidth() - 1)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x + 1][y] = 1;
@@ -64,7 +64,7 @@ void hns::Player::movePlayer(hns::Map &map1, sf::RenderWindow &window, hns::Equi
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && hasBeenPressed[3] == false && window.hasFocus())
 		{
 			hasBeenPressed[3] = true;
-			if (y < map1.getMapHeight() - 1)
+			if (y < map1.GetMapHeight() - 1)
 			{
 				map1.hero[x][y] = 0;
 				map1.hero[x][y + 1] = 1;

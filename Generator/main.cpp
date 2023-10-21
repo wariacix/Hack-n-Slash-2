@@ -38,7 +38,7 @@ std::wstring enemyName;
 using namespace std;
 
 
-void xpCount()
+void XpCount()
 {
 	while (mainPlayer.xp >= mainPlayer.reqexp)
 	{
@@ -213,7 +213,7 @@ int main()
 				}
 				else hasRolled = true;
 			}
-			mainPlayer.movePlayer(mainMap, window, mainEquipment, mainPlayer);
+			mainPlayer.MovePlayer(mainMap, window, mainEquipment, mainPlayer);
 			if (hasClickedConfirmation == false) scrollList.Draw(window);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::W) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::S) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::E) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::A) == true || sf::Keyboard::isKeyPressed(sf::Keyboard::D) == true) hasClickedConfirmation = true;
 			window.display();

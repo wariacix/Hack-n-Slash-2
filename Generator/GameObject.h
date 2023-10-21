@@ -21,7 +21,7 @@ public:
 
 	void SetPosition(int x, int y);
 
-	void Draw(sf::RenderWindow& window);
+	virtual void Draw(sf::RenderWindow& window);
 
 	bool isHovered(sf::RenderWindow& window);
 	bool isClicked(sf::RenderWindow& window);

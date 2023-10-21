@@ -8,5 +8,22 @@
 
 class hns::City
 {
+private:
+	std::string name;
+	CityType type;
+public:
+	City()
+	{
+		name = "unnamed";
+		type = human;
+	}
+};
 
+enum CityType
+{
+	human = 0,
+	orc = 1,
+	elve = 2,
+	viking = 3,
+	goblin = 4
 };

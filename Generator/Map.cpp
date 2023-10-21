@@ -20,22 +20,10 @@ using namespace std;
 std::wstring hns::Map::GenCityName() //to be changed, I will expand the city name generation system and will convert it to reading from file instead of names existing in code.
 		{
 			wstring part1, part2, all;
+			wstring part1Container[14] = { L"Goten", L"Uru", L"Ham", L"Kor", L"Hindel", L"Ter", L"Ant", L"Pers", L"Ber", L"Toro", L"Rotter", L"Porto", L"Bur", L"Dore" };
 			int random;
 			random = rand() % 14;
-			if (random == 0) part1 = L"Goten";
-			else if (random == 1) part1 = L"Uru";
-			else if (random == 2) part1 = L"Ham";
-			else if (random == 3) part1 = L"Kor";
-			else if (random == 4) part1 = L"Hindel";
-			else if (random == 5) part1 = L"Ter";
-			else if (random == 6) part1 = L"Ant";
-			else if (random == 7) part1 = L"Pers";
-			else if (random == 8) part1 = L"Ber";
-			else if (random == 9) part1 = L"Toro";
-			else if (random == 10) part1 = L"Rotter";
-			else if (random == 11) part1 = L"Porto";
-			else if (random == 12) part1 = L"Bur";
-			else if (random == 13) part1 = L"Dore";
+			part1 = part1Container[random];
 			random = rand() % 11;
 			if (random == 0) part2 = L"burg";
 			else if (random == 1) part2 = L"owo";
@@ -120,6 +108,7 @@ void hns::Map::CreateArctic()
 void hns::Map::CreateBaseBiomes()
 		{
 			srand(time(NULL));
+
 			SetBaseValues();
 			EnlargeMountains();
 			CreateArctic();
@@ -406,11 +395,11 @@ void hns::Map::ClearFog(Player &player1)
 	}
 }
 
-int hns::Map::getMapHeight()
+int hns::Map::GetMapHeight()
 {
 	return mapHeight;
 }
-int hns::Map::getMapWidth()
+int hns::Map::GetMapWidth()
 {
 	return mapWidth;
 }
@@ -467,7 +456,7 @@ int hns::Map::LookForIndex(std::string name)
 	}
 }
 
-void hns::Map::BakeMap()
+void hns::Map::PrepMap()
 {
 	for (int u = 0; u < mapHeight; u++)
 	{
@@ -539,7 +528,7 @@ void hns::Map::BakeMap()
 	}
 }
 
-void hns::Map::BakeTextures()
+void hns::Map::PrepTextures()
 {
 	AssignNewTexture("grass.png", sf::IntRect(0, 0, 16, 16));
 	AssignNewTexture("grassCold.png", sf::IntRect(0, 0, 16, 16));
@@ -636,9 +625,9 @@ void hns::Map::BakeTextures()
 void hns::Map::Initialize()
 {
 	GenerateMap();
-	BakeTextures();
+	PrepTextures();
 	wcout << L"Baked the textures." << std::endl;
-	BakeMap();
+	PrepMap();
 	wcout << L"Baked the map." << std::endl;
 }
 

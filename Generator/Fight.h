@@ -46,7 +46,7 @@ class hns::FightDialogue : public hns::Dialogue
 {
 public:
 	FightDialogue(std::string viewTextureName, std::string enterSoundName, std::string interfaceStr, std::string fontName);
-	int getDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::FightDiary diary, hns::Interface ui, std::wstring choiceString[6], bool playSound);
+	int GetDialogueAnswer(sf::RenderWindow& window, Player player, Enemy enemy, hns::FightDiary diary, hns::Interface ui, std::wstring choiceString[6], bool playSound);
 };
 
 class hns::FightDiary

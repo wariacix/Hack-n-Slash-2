@@ -1005,7 +1005,7 @@ void hns::Equipment::viewItemStats(sf::RenderWindow& window, Item &item, int x, 
 	//Item stats black backside
 	sf::RectangleShape backside;
 	backside.setScale(1.f, 1.f);
-	backside.setSize(sf::Vector2f((textWidth * 8.85) + 44, 36 + (textHeight * 17.6)));
+	backside.SetSize(sf::Vector2f((textWidth * 8.85) + 44, 36 + (textHeight * 17.6)));
 	backside.setFillColor(sf::Color{ 23,8,0,255 });
 	backside.setPosition(255.f + x, 135.f + y);
 	window.draw(backside);
@@ -1067,7 +1067,7 @@ void hns::Shop::viewItemStats(sf::RenderWindow& window, Item& item, int x, int y
 	//Item stats black backside
 	sf::RectangleShape backside;
 	backside.setScale(1.f, 1.f);
-	backside.setSize(sf::Vector2f((textWidth * 9) + 44, 36 + (textHeight * 18)));
+	backside.SetSize(sf::Vector2f((textWidth * 9) + 44, 36 + (textHeight * 18)));
 	backside.setFillColor(sf::Color{ 23,8,0,255 });
 	backside.setPosition(255.f + x, 135.f + y);
 	window.draw(backside);

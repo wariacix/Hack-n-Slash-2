@@ -20,6 +20,7 @@ namespace hns
 	class FightDialogue;
 	class FightDiary;
 	class FightReward;
+	class Building;
 	class Menu;
 	class TextObject;
 	class City;

@@ -28,7 +28,7 @@ protected:
 	sf::Sprite frontSpr;
 public:
 	Bar(Player player = Player(), int x = 40, int y = 10, int sizeX = 41, int sizeY = 5, std::string topTexName = "hpUItop", std::string botTexName = "hpUIbot");
-	void setSize(float stat1, float stat2, bool vertical = false, bool inverted = false);
+	void SetSize(float stat1, float stat2, bool vertical = false, bool inverted = false);
 	void Draw(sf::RenderWindow& window, float stat1, float stat2, bool vertical = false, bool inverted = false);
 };
 
