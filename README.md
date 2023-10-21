@@ -15,6 +15,7 @@ Hack n' Slash 2 is a C++ roguelike/RPG game using SFML library.
 - Equipment with many types of armor, potions & weapons.
 - Showing items' many stats.
 - Interface gfx + health, mana, and xp bars, also a level and gold indicator.
+- 9-sliced UI component used by item rewards system.
 - Displaying city view & sound when entered - cities use dialogue system.
 - Working shop system.
 - Dialogue & choice system working.
